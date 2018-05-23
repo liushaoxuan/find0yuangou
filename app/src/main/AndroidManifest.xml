@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ahxd.lingyuangou">
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        tools:overrideLibrary="cn.sharesdk" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
+    <application
+        android:name=".MaoApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_app_start"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_app_start"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon, android:theme,android:name">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.wpc.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- 高德地图配置 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="d0ee215f9993884d5531c62c2f8d7830" />
+        <!-- android:value="d0ee215f9993884d5531c62c2f8d7830"  mao -->
+        <!-- android:value="2fed24f7770cbb86606cd9ef7f20a0ab" -->
+        <service android:name="com.amap.api.location.APSService" />
+        <!-- 高德地图配置 -->
+        <activity
+            android:name=".ui.main.activity.StartActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.main.activity.MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+        <activity
+            android:name=".ui.home.activity.FoodShopListActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".ui.home.activity.FoodShopEvaluateListActivity" />
+        <activity android:name=".ui.home.activity.FoodShopDetailActivity" />
+        <activity android:name=".ui.mine.activity.LoginActivity" />
+        <activity android:name=".ui.mine.activity.RegisterActivity" />
+        <activity android:name=".ui.home.activity.RechargeActivity" />
+        <activity android:name=".ui.mine.activity.ShopStayActivity" />
+        <activity android:name=".ui.home.activity.OfflinePayActivity" />
+        <activity android:name=".ui.cart.activity.OnlinePayActivity" />
+        <activity android:name=".ui.home.activity.GoodDetailActivity" />
+        <activity android:name=".ui.mine.activity.AddressListActivity" />
+        <activity android:name=".ui.mine.activity.EditAddressActivity" />
+        <activity android:name=".ui.home.activity.ArticleListActivity" />
+        <activity android:name=".ui.home.activity.ArticleDetailActivity" />
+        <activity
+            android:name=".ui.home.activity.GoodsListActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".ui.mine.activity.FavoriteActivity" />
+        <activity android:name=".ui.mine.activity.SettingActivity" />
+        <activity android:name=".ui.mine.activity.PersonalInfoActivity" />
+        <activity android:name=".ui.mine.activity.EditPersonalActivity" />
+        <activity android:name=".ui.mine.activity.OrderListActivity" />
+        <activity android:name=".ui.mine.activity.OrderDetailActivity" />
+        <activity android:name=".ui.home.activity.SearchActivity" />
+        <activity
+            android:name=".ui.home.activity.SearchListActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".ui.mine.activity.EvaluateActivity" />
+        <activity android:name=".ui.cart.activity.PayResultActivity" />
+        <activity android:name=".ui.mine.activity.WalletActivity" />
+        <activity android:name=".ui.mine.activity.BalanceRechargeRecordActivity" />
+        <activity android:name=".ui.mine.activity.BalanceConsumptionRecordActivity" />
+        <activity android:name=".ui.mine.activity.PresentRecordActivity" />
+        <activity android:name=".ui.mine.activity.AdvertisingRecordActivity" />
+        <activity android:name=".ui.mine.activity.MarketingRevenueRecordActivity" />
+        <activity
+            android:name=".ui.mine.activity.WithdrawalsActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".ui.mine.activity.AddPresentAccountActivity" />
+        <activity android:name=".ui.mine.activity.AddAlipayAccountActivity" />
+        <activity android:name=".ui.mine.activity.AddWechatAccountActivity" />
+        <activity android:name=".ui.mine.activity.AddBankCardAccountActivity" />
+        <activity android:name=".ui.mine.activity.ExtensionCenterActivity" />
+        <activity android:name=".ui.mine.activity.MyMembersActivity" />
+        <activity android:name=".ui.mine.activity.MarketingApplyActivity" />
+        <activity android:name=".ui.mine.activity.MarketingCenterActivity" />
+        <activity android:name=".ui.mine.activity.ShopManagementListActivity" />
+        <activity android:name=".ui.mine.activity.MyMarketingCodeActivity" />
+        <activity android:name=".ui.mine.activity.ShopManagemntDetailActivity" />
+        <activity android:name=".ui.mine.activity.ForgetActivity" />
+        <activity android:name=".ui.mine.activity.MyBusinessCardActivity" />
+        <activity android:name=".ui.mine.activity.MineContactActivity" />
+        <activity android:name=".ui.home.activity.ExchangeGiftActivity" />
+        <activity android:name=".ui.home.activity.ExchangeGiftListActivity" />
+        <activity android:name=".ui.home.activity.GiftShopListActivity" />
+        <activity android:name=".ui.home.activity.ExchangeRecordListActivity" />
+        <activity android:name=".ui.home.activity.GiftShopDetailActivity" />
+        <activity android:name=".ui.home.activity.AmapActivity" />
+        <activity android:name=".ui.home.activity.GiftGoodDetailActivity" />
+        <activity android:name=".ui.home.activity.ShopGoodsListActivity" />
+        <activity android:name=".ui.mine.activity.MessageListActivity" />
+        <activity android:name=".ui.home.activity.GiftGoodsListActivity" />
+        <activity android:name=".ui.mine.activity.IntegralRecordActivity" />
+
+        <!-- 权限Activity -->
+        <activity
+            android:name=".permission.HelpActivity"
+            android:theme="@style/EasyPermissions.Transparent" />
+        <!-- 权限Activity -->
+
+
+        <!-- 支付宝支付 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- 支付宝支付 -->
+
+
+        <!-- 微信支付 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- 微信支付 -->
+
+
+        <!-- PhotoPicker -->
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <!-- PhotoPicker -->
+
+    </application>
+
+</manifest>

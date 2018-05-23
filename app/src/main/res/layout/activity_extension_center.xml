@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_tool_bar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@mipmap/mine_wallet_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/draw_wallet_white_transparent"
+            android:paddingBottom="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
+            android:text="@string/string_promotion_of_advertising_fees"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥"
+            android:textSize="@dimen/text_18sp"
+            android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tv_user_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="0.00"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.ahxd.lingyuangou.widget.PicTextRightItem
+            android:id="@+id/ptr_my_members"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            app:image="@mipmap/ic_my_members"
+            android:background="@color/white"
+            app:label="@string/string_my_members" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_bg" />
+
+        <com.ahxd.lingyuangou.widget.PicTextRightItem
+            android:id="@+id/ptr_membership_income"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            app:image="@mipmap/ic_record"
+            app:label="@string/string_membership_income"
+            app:tipVisible="true" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_bg" />
+
+    <LinearLayout
+        android:id="@+id/ll_tabone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <com.ahxd.lingyuangou.widget.PicTextRightItem
+        android:id="@+id/ptr_member_sharing"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        app:image="@mipmap/ic_member_sharing"
+        android:background="@color/white"
+        app:label="@string/string_member_sharing" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bg" />
+
+    <com.ahxd.lingyuangou.widget.PicTextRightItem
+        android:id="@+id/ptr_my_business_card"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        app:image="@mipmap/ic_my_business_card"
+        app:tipVisible="true"
+        android:background="@color/white"
+        app:label="@string/string_my_business_card" />
+    </LinearLayout>
+</LinearLayout>

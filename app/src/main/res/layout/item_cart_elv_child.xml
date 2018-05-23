@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/rb_cart_child_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:src="@drawable/draw_cart_group_rb_bg" />
+
+        <ImageView
+            android:id="@+id/iv_cart_child_good_image"
+            android:layout_width="@dimen/image_shop_list_item"
+            android:layout_height="@dimen/image_shop_list_item"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/rb_cart_child_check"
+            android:layout_toRightOf="@+id/rb_cart_child_check"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+
+        <RelativeLayout
+            android:id="@+id/ll_cart_good_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_shop_list_item"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/iv_cart_child_good_image"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_cart_child_good_now_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当前价格"
+                    android:textColor="#e32300"
+                    android:textSize="@dimen/text_14sp" />
+
+                <TextView
+                    android:id="@+id/tv_cart_child_good_old_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/tv_cart_child_good_now_price"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/tv_cart_child_good_now_price"
+                    android:text="原先价格"
+                    android:textSize="@dimen/text_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_cart_child_good_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="数量："
+                    android:textSize="@dimen/text_13sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_cart_child_good_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:minLines="2"
+                android:text="商品名称肯定卡打飞机快递反馈开发大书法家开始打飞机上课了的分类开始打飞机  亏大发第三方爱都"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_15sp" />
+
+            <!--<TextView-->
+            <!--android:layout_below="@id/tv_cart_child_good_name"-->
+            <!--android:id="@+id/tv_home_food_item_price"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:drawableLeft="@mipmap/ic_good_price_icon"-->
+            <!--android:drawablePadding="5dp"-->
+            <!--android:text="44444444"-->
+            <!--android:textColor="@color/color_price"-->
+            <!--android:textSize="@dimen/text_14sp" />-->
+
+
+            <TextView
+                android:id="@+id/tv_cart_child_good_params"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_cart_child_good_name"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="规格："
+                android:textSize="@dimen/text_14sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ll_cart_edit_good_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_shop_list_item"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/iv_cart_child_good_image"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_cart_child_edit_good_del"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/color_theme"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/string_cart_child_good_del"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/tv_cart_child_edit_good_del"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_cart_child_edit_good_reduce"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:src="@mipmap/ic_cart_child_goods_reduce" />
+
+                    <TextView
+                        android:id="@+id/iv_cart_child_edit_good_num"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textSize="@dimen/text_15sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_cart_child_edit_good_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:src="@mipmap/ic_cart_child_goods_add" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_cart_child_edit_good_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:text="商品名称肯定卡打飞机快递反馈开发大书法家开始打飞机上课了的分类开始打飞机 快点快点看反馈 亏大发第三方爱都"
+                    android:textColor="#4b4b4b"
+                    android:textSize="@dimen/text_15sp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_bg"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</RelativeLayout>

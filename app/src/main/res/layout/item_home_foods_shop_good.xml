@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_home_shop_item_good_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:id="@+id/tv_home_shop_good_item_sale_num"
+                android:layout_width="wrap_content"
+                android:text="3333333"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_14sp" />
+            <TextView
+                android:id="@+id/tv_home_food_item_sale_delete"
+                android:layout_width="wrap_content"
+                android:text="删除"
+                android:layout_alignParentRight="true"
+                android:paddingTop="3dp"
+                android:layout_marginTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone"
+                android:background="@drawable/draw_wallet_theme_white"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_theme"
+                android:textSize="@dimen/text_12sp" />
+
+            <TextView
+                android:id="@+id/tv_home_shop_item_good_now_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:text="44444444"
+                android:textColor="@color/color_price"
+                android:textSize="@dimen/text_14sp" />
+
+            <TextView
+                android:id="@+id/tv_home_shop_item_good_old_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_home_shop_item_good_now_price"
+                android:text="444444"
+                android:textSize="@dimen/text_13sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_home_shop_good_item_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="JJJJJJJJ亏大发卡第三方卡萨丁九分裤撒大家分开连锁店加打发打发的夫就的咖啡卡萨丁 盛大开放"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_home_food_item_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_first"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/text_14sp" />
+
+        <TextView
+            android:layout_below="@id/tv_home_food_item_tips"
+            android:id="@+id/tv_home_food_item_return_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/ic_good_price_icon"
+            android:drawablePadding="5dp"
+            android:text="44444444"
+            android:textColor="@color/color_price"
+            android:textSize="@dimen/text_14sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

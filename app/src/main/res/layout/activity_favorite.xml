@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_tool_bar" />
+
+    <RadioGroup
+        android:id="@+id/rg_favorite_label"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb_favorite_goods"
+            style="@style/style_favorite_label_radio_button"
+            android:text="@string/string_favorite_goods" />
+
+        <View
+            android:background="@color/color_bg"
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <RadioButton
+            android:id="@+id/rb_favorite_foods"
+            style="@style/style_favorite_label_radio_button"
+            android:text="@string/string_favorite_foods" />
+
+        <View
+            android:background="@color/color_bg"
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <RadioButton
+            android:id="@+id/rb_favorite_hotels"
+            style="@style/style_favorite_label_radio_button"
+            android:text="@string/string_favorite_hotels" />
+
+        <View
+            android:background="@color/color_bg"
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <RadioButton
+            android:id="@+id/rb_favorite_shops"
+            style="@style/style_favorite_label_radio_button"
+            android:text="@string/string_favorite_shops" />
+
+    </RadioGroup>
+
+    <View
+        android:background="@color/color_bg"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_favorite_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_favorite_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

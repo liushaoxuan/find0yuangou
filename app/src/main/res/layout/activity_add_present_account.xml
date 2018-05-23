@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_tool_bar" />
+    <com.ahxd.lingyuangou.widget.PicTextRightItem
+        android:id="@+id/ptr_add_alipay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:image="@color/white"
+        app:tipVisible="true"
+        android:background="@color/white"
+        app:label="@string/string_add_alipay" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bg" />
+    <com.ahxd.lingyuangou.widget.PicTextRightItem
+        android:id="@+id/ptr_add_weixin"
+        android:layout_width="match_parent"
+        app:image="@color/white"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:tipVisible="true"
+        android:background="@color/white"
+        app:label="@string/string_add_weixin" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bg" />
+    <com.ahxd.lingyuangou.widget.PicTextRightItem
+        android:id="@+id/ptr_add_bank_card"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:image="@color/white"
+        app:tipVisible="true"
+        android:background="@color/white"
+        app:label="@string/string_add_bank_card" />
+
+
+</LinearLayout>

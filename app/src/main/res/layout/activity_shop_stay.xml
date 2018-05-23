@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_tool_bar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_mine_shop_stay_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/string_mine_shop_stay_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+            <EditText
+                android:id="@+id/et_mine_shop_stay_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/draw_mine_shop_stay_edit_view_bg"
+                android:lines="1"
+                android:hint="@string/string_mine_shop_stay_name_hint"
+                android:paddingBottom="8dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="8dp"
+                android:textSize="@dimen/text_15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/string_mine_shop_stay_tel"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+            <EditText
+                android:id="@+id/et_mine_shop_stay_tel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/draw_mine_shop_stay_edit_view_bg"
+                android:inputType="phone"
+                android:hint="@string/string_mine_shop_stay_tel_hint"
+                android:lines="1"
+                android:paddingBottom="8dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="8dp"
+                android:textSize="@dimen/text_15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/string_mine_shop_stay_invite"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+            <EditText
+                android:id="@+id/et_mine_shop_stay_shop_invite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/draw_mine_shop_stay_edit_view_bg"
+                android:hint="@string/string_mine_shop_stay_invite_hint"
+                android:inputType="phone"
+                android:lines="1"
+                android:paddingBottom="8dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="8dp"
+                android:textSize="@dimen/text_15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/string_mine_shop_stay_code"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+            <EditText
+                android:id="@+id/et_mine_shop_stay_shop_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/draw_mine_shop_stay_edit_view_bg"
+                android:hint="@string/string_mine_shop_stay_code_hint"
+                android:inputType="phone"
+                android:lines="1"
+                android:paddingBottom="8dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="8dp"
+                android:textSize="@dimen/text_15sp" />
+
+            <Button
+                android:id="@+id/btn_mine_shop_stay_get_code"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/draw_register_get_code_button_bg_theme"
+                android:text="@string/string_register_get_code"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_mine_shop_stay_remark"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+            <EditText
+                android:id="@+id/et_mine_shop_stay_remake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/draw_mine_shop_stay_edit_view_bg"
+                android:hint="@string/string_mine_shop_stay_remark_hint"
+                android:gravity="top|left"
+                android:lines="4"
+                android:padding="10dp"
+                android:textSize="@dimen/text_15sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_mine_shop_stay_commit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/draw_register_get_code_button_bg_theme"
+        android:text="@string/string_mine_shop_stay_commit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_15sp" />
+
+</LinearLayout>

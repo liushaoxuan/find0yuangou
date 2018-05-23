@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_home_finance_item_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_home_finance_item_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/ic_good_price_icon"
+                android:drawablePadding="5dp"
+                android:text="44444444"
+                android:textColor="@color/color_price"
+                android:textSize="@dimen/text_14sp" />
+
+            <TextView
+                android:id="@+id/tv_home_finance_item_sale_num"
+                android:layout_width="wrap_content"
+                android:text="3333333"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_home_finance_item_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="JJJJJJJJ"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_home_finance_item_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_first"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textSize="@dimen/text_15sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

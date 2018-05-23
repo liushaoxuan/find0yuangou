@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_tool_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/iv_evaluate_image"
+            android:layout_width="@dimen/image_shop_list_item"
+            android:layout_height="@dimen/image_shop_list_item"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_goods_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_evaluate_good_evaluate"
+                    android:textSize="@dimen/text_15sp" />
+
+                <RatingBar
+                    android:id="@+id/rbar_evaluate_goods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:maxHeight="12dp"
+                    android:minHeight="12dp"
+                    android:numStars="5"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:progressDrawable="@drawable/draw_rating_star"
+                    android:rating="4"
+                    android:stepSize="0.5" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_evaluate_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="开发感慨加快两地分居打赏了开发 卡萨丁附近开了发生大路口废旧塑料卡迪夫浪费萨芬爱都"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/color_bg" />
+
+    <EditText
+        android:id="@+id/et_evaluate_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="top|left"
+        android:hint="请填写评价内容"
+        android:lines="6"
+        android:padding="10dp"
+        android:textSize="@dimen/text_14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/color_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_evaluate_server_evaluate"
+                android:textSize="@dimen/text_15sp" />
+
+            <RatingBar
+                android:id="@+id/rbar_evaluate_server"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:maxHeight="12dp"
+                android:minHeight="12dp"
+                android:numStars="5"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:progressDrawable="@drawable/draw_rating_star"
+                android:rating="4"
+                android:stepSize="0.5" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_evaluate_send_evaluate"
+                android:textSize="@dimen/text_15sp" />
+
+            <RatingBar
+                android:id="@+id/rbar_evaluate_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:maxHeight="12dp"
+                android:minHeight="12dp"
+                android:numStars="5"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:progressDrawable="@drawable/draw_rating_star"
+                android:rating="4"
+                android:stepSize="0.5" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_bg" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_evaluate_submit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/draw_ads_pop_window_button_bg"
+        android:text="@string/string_evaluate_submit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_15sp" />
+
+</LinearLayout>

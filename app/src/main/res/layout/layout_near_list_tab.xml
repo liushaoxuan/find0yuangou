@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.ahxd.lingyuangou.widget.ListTabView
+        android:id="@+id/ltv_one"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:img="@mipmap/ic_list_tab_right_icon"
+        app:text="品类" />
+
+    <com.ahxd.lingyuangou.widget.ListTabView
+        android:id="@+id/ltv_two"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:img="@mipmap/ic_list_tab_right_icon"
+        app:text="@string/string_near_list_tab_near" />
+
+    <com.ahxd.lingyuangou.widget.ListTabView
+        android:id="@+id/ltv_three"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:img="@mipmap/ic_list_tab_right_icon"
+        app:text="智能排序" />
+
+    <com.ahxd.lingyuangou.widget.ListTabView
+        android:id="@+id/ltv_four"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:img="@mipmap/ic_list_tab_right_icon"
+        app:text="筛选" />
+
+</LinearLayout>

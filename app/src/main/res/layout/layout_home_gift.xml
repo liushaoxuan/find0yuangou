@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.ahxd.lingyuangou.widget.HomeBigGoodView
+            android:id="@+id/good_first"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <com.ahxd.lingyuangou.widget.HomeSmallGoodView
+                android:id="@+id/good_second"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+           <!-- <com.ahxd.lingyuangou.widget.HomeSmallGoodView
+                android:id="@+id/good_third"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />-->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_home_gift_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.ahxd.lingyuangou.widget.HomeSmallGoodView
+            android:id="@+id/good_third"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <com.ahxd.lingyuangou.widget.HomeSmallGoodView
+            android:id="@+id/good_forth"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <com.ahxd.lingyuangou.widget.HomeSmallGoodView
+            android:id="@+id/good_fifth"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

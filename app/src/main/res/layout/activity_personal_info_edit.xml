@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_tool_bar" />
+
+    <LinearLayout
+        android:id="@+id/ll_personal_edit_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <com.ahxd.lingyuangou.widget.CircleImageView
+            android:id="@+id/iv_header_pic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_mine_person_header_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="点击更换头像"
+            android:textSize="@dimen/text_14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/style_personal_edit_label"
+            android:text="@string/string_personal_info_name" />
+
+        <EditText
+            android:id="@+id/et_personal_edit_name"
+            style="@style/style_personal_edit_content"
+            android:hint="请输入昵称" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/color_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/style_personal_edit_label"
+            android:text="@string/string_personal_info_sex" />
+
+        <EditText
+            android:id="@+id/et_personal_edit_sex"
+            style="@style/style_personal_edit_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:hint="请选择性别" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/style_personal_edit_label"
+            android:text="@string/string_personal_info_age" />
+
+        <EditText
+            android:id="@+id/et_personal_edit_age"
+            style="@style/style_personal_edit_content"
+            android:focusable="false"
+            android:cursorVisible="false"
+            android:hint="请选择生日" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/style_personal_edit_label"
+            android:text="@string/string_personal_info_phone" />
+
+        <EditText
+            android:id="@+id/et_personal_edit_phone"
+            style="@style/style_personal_edit_content"
+            android:hint="请填写手机"
+            android:inputType="phone"
+            android:maxLength="11" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/style_personal_edit_label"
+            android:text="@string/string_personal_info_weixin" />
+
+        <EditText
+            android:id="@+id/et_personal_edit_weixin"
+            style="@style/style_personal_edit_content"
+            android:hint="请填写微信" />
+
+    </LinearLayout>
+
+</LinearLayout>

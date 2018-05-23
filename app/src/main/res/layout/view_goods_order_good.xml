@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/iv_goods_order_good_image"
+            android:layout_width="@dimen/image_shop_list_item"
+            android:layout_height="@dimen/image_shop_list_item"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_shop_list_item"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_goods_order_good_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="kkkkkkk"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_14sp" />
+
+            <TextView
+                android:id="@+id/iv_goods_order_good_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="看我上岛咖啡撒快递费萨克的福建省卡掉了九分裤楼上的房间快速拉动房价克里斯多夫监考老师打飞机快乐十分接口奥拉夫金坷垃方式阿斯蒂芬撒地方是否"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/iv_goods_order_good_back_coin"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_above="@id/tv_goods_order_good_price"-->
+                <!--android:text="44444444"-->
+                <!--android:textSize="@dimen/text_14sp" />-->
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/iv_goods_order_good_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="规格："
+            android:textSize="@dimen/text_14sp" />
+
+        <TextView
+            android:id="@+id/iv_goods_order_good_spec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="adfafasdfa"
+            android:textSize="@dimen/text_14sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_bg" />
+
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_login_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="70dp"
+        android:src="@mipmap/ic_login_logo" />
+
+    <EditText
+        android:id="@+id/et_register_invite"
+        style="@style/style_pic_edit_text"
+        android:drawableLeft="@mipmap/ic_register_invite_icon"
+        android:hint="@string/string_register_invite_hint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_register_account"
+        style="@style/style_pic_edit_text"
+        android:layout_marginTop="6dp"
+        android:drawableLeft="@mipmap/ic_login_account"
+        android:hint="@string/string_login_account_hint"
+        android:inputType="phone"
+        android:maxLength="11"/>
+
+    <EditText
+        android:id="@+id/et_register_password"
+        style="@style/style_pic_edit_text"
+        android:layout_marginTop="6dp"
+        android:drawableLeft="@mipmap/ic_login_password"
+        android:hint="@string/string_register_password_hint"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/et_register_password_again"
+        style="@style/style_pic_edit_text"
+        android:layout_marginTop="6dp"
+        android:drawableLeft="@mipmap/ic_login_password"
+        android:hint="@string/string_register_password_again_hint"
+        android:inputType="textPassword" />
+
+    <LinearLayout
+        android:layout_marginRight="40dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_register_validate_code"
+            style="@style/style_pic_edit_text"
+            android:drawableLeft="@mipmap/ic_register_validate_icon"
+            android:hint="@string/string_register_code_hint"
+            android:layout_width="wrap_content"
+            android:paddingRight="20dp"
+            android:layout_marginRight="20dp"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/btn_register_get_code"
+            android:text="@string/string_register_get_code"
+            android:background="@drawable/draw_register_get_code_button_bg"
+            android:textColor="@color/color_theme"
+            android:textSize="@dimen/text_14sp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="40dp"
+        android:background="@drawable/draw_login_login_button_bg"
+        android:text="@string/string_register"
+        android:textColor="@color/color_theme"
+        android:textSize="@dimen/text_16sp" />
+
+</LinearLayout>

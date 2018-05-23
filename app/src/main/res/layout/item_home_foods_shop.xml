@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_home_food_item_icon"
+        android:layout_width="@dimen/image_shop_list_item"
+        android:layout_height="@dimen/image_shop_list_item"
+        android:scaleType="fitXY" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_home_food_item_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/ic_good_price_icon"
+                android:drawablePadding="5dp"
+                android:text="44444444"
+                android:textColor="@color/color_price"
+                android:textSize="@dimen/text_14sp" />
+            <TextView
+                android:id="@+id/tv_home_food_item_sale_delete"
+                android:layout_width="wrap_content"
+                android:text="删除"
+                android:paddingTop="3dp"
+                android:layout_marginTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone"
+                android:background="@drawable/draw_wallet_theme_white"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_theme"
+                android:textSize="@dimen/text_12sp" />
+            <TextView
+                android:id="@+id/tv_home_food_item_sale_num"
+                android:layout_width="wrap_content"
+                android:text="3333333"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_home_food_item_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="JJJJJJJJ"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp" />
+
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/tv_home_food_item_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_item_distance_icon"
+                android:drawablePadding="5dp"
+                android:text="222km"
+                android:textColor="@color/color_theme" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_home_food_item_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_first"
+            android:ellipsize="end"
+            android:text=""
+            android:lines="2"
+            android:textSize="@dimen/text_15sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

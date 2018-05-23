@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+    <RelativeLayout
+        android:id="@+id/rl_recharge_zhifubao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingRight="10dp">
+        <ImageView
+            android:id="@+id/rb_recharge_zhifubao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/draw_cart_group_rb_bg" />
+        <ImageView
+            android:id="@+id/iv_icon_zhifubao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@mipmap/ic_pay_zhifubao" />
+
+        <TextView
+            android:id="@+id/tv_accaddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/iv_icon_zhifubao"
+            android:layout_toRightOf="@+id/iv_icon_zhifubao"
+            android:text="@string/string_pay_zhifubao"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_15sp" />
+
+        <TextView
+            android:id="@+id/tv_accno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_accaddress"
+            android:layout_toEndOf="@+id/iv_icon_zhifubao"
+            android:layout_toRightOf="@+id/iv_icon_zhifubao"
+            android:text="123123123222222222"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_15sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
