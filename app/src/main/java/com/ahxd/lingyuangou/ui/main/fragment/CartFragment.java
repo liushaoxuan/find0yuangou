@@ -53,8 +53,19 @@ public class CartFragment extends BaseFragment implements ICartContract.ICartVie
     TextView tvCartGoodsTotalPrice;
     @BindView(R.id.tv_cart_goods_check)
     TextView tvCartGoodsCheck;
-    @BindView(R.id.tv_cart_no_goods_tips)
-    TextView tvCartNoGoodsTips;
+//    @BindView(R.id.tv_cart_no_goods_tips)
+//    TextView tvCartNoGoodsTips;
+
+    /**
+     * 购物车无数据布局
+     */
+    @BindView(R.id.shop_car_no_data)
+    LinearLayout nodataLayout;
+    /**
+     * 去抢购按钮
+     */
+    @BindView(R.id.tv_to_snap_up)
+    TextView tvToSnapUp;
 
     private CartPresenter mPresenter;
     private CartListViewAdapter mAdapter;
@@ -161,7 +172,7 @@ public class CartFragment extends BaseFragment implements ICartContract.ICartVie
         tvCartGoodsCheck.setOnClickListener(mAdapter.getListener());
     }
 
-    @OnClick({R.id.rb_cart_tab_cart, R.id.rb_cart_tab_exchange, R.id.tv_cart_goods_check})
+    @OnClick({R.id.rb_cart_tab_cart, R.id.rb_cart_tab_exchange, R.id.tv_cart_goods_check,R.id.tv_to_snap_up})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb_cart_tab_cart:
@@ -174,6 +185,12 @@ public class CartFragment extends BaseFragment implements ICartContract.ICartVie
                 break;
             case R.id.tv_cart_goods_check:
                 break;
+                //去抢购
+            case R.id.tv_to_snap_up:
+                ToastUtils.showLong(getActivity(),"抢购时去哪啊");
+                break;
+                default:
+                    break;
         }
     }
 
@@ -183,10 +200,10 @@ public class CartFragment extends BaseFragment implements ICartContract.ICartVie
             tvCartGoodsTotalPrice.setText(String.format(Locale.CHINA, "总计：%.2f 元", cartBean.getMoney_sum()));
             tvCartGoodsTotalNum.setText(String.format("产品总数：%s 件", cartBean.getOrder_sum()));
             if (Integer.valueOf(cartBean.getOrder_sum()) == 0) {
-                tvCartNoGoodsTips.setVisibility(View.VISIBLE);
+                nodataLayout.setVisibility(View.VISIBLE);
                 elvCartGoodsList.setVisibility(View.GONE);
             } else {
-                tvCartNoGoodsTips.setVisibility(View.GONE);
+                nodataLayout.setVisibility(View.GONE);
                 elvCartGoodsList.setVisibility(View.VISIBLE);
                 mAdapter.setData(cartBean,isGift);
                 expandAllGroup(cartBean);
@@ -225,10 +242,10 @@ public class CartFragment extends BaseFragment implements ICartContract.ICartVie
             tvCartGoodsTotalPrice.setText(String.format(Locale.CHINA, "总计：%.2f 元", cartBean.getMoney_sum()));
             tvCartGoodsTotalNum.setText(String.format("产品总数：%s 件", cartBean.getOrder_sum()));
             if (Integer.valueOf(cartBean.getOrder_sum()) == 0) {
-                tvCartNoGoodsTips.setVisibility(View.VISIBLE);
+                nodataLayout.setVisibility(View.VISIBLE);
                 elvCartGoodsList.setVisibility(View.GONE);
             } else {
-                tvCartNoGoodsTips.setVisibility(View.GONE);
+                nodataLayout.setVisibility(View.GONE);
                 elvCartGoodsList.setVisibility(View.VISIBLE);
                 mAdapter.setData(cartBean,isGift);
                 expandAllGroup(cartBean);

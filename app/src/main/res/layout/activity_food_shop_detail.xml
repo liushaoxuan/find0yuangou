@@ -19,6 +19,7 @@
         android:background="@color/color_theme"
         android:padding="10dp"
         android:text="@string/string_food_shop_check"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="@dimen/text_16sp" />
 

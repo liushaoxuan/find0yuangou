@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -204,6 +205,8 @@ public class HomeFragment extends BaseFragment implements IHomeContract.IHomeVie
             popupWindow.setContentView(view);
             popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
             popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+            popupWindow.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow.setFocusable(true);// 点击空白处时，隐藏掉pop窗口
             popupWindow.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.shape_rect_white));
             RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

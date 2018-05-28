@@ -1,7 +1,5 @@
 package com.ahxd.lingyuangou.constant;
 
-import android.os.Environment;
-
 /**
  * Created by Administrator on 2017/12/26.
  * 请求URL
@@ -10,7 +8,8 @@ import android.os.Environment;
 public class HostUrl {
 
 //    public static final String HOST = "http://m.findlyg.com/index.php/";
-    public static final String HOST = "http://m.findlyg.com/";
+    public static final String HOST = "http://apptest.findlyg.com/";
+//    public static final String HOST = "http://m.findlyg.com/";
 
     // Home页数据获取
     public static final String URL_HOME = HOST + "api/index/index";

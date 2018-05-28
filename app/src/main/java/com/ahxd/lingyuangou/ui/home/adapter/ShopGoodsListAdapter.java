@@ -75,7 +75,7 @@ public class ShopGoodsListAdapter extends RecyclerView.Adapter {
 //            final GoodsBean bean =  mData.get(position);
 //            holder.tvName.setText(bean.getGoodsName());
 //            holder.tvPrice.setText("需要货币:"+bean.getShopPrice());
-//            holder.tvPriceOld.setText("原货币:"+bean.getMarketPrice());
+//            holder.tvPriceOld.setText("原价格:"+bean.getMarketPrice());
 //            holder.tvPriceOld.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
 //            holder.tvSaleNum.setText("已兑换:"+bean.getSaleNum());
 //            Glide.with(mContext).load(bean.getGoodsImg()).into(holder.ivIcon);

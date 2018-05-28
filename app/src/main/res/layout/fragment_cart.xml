@@ -68,6 +68,8 @@
         android:text="@string/string_cart_no_goods_tips"
         android:visibility="gone" />
 
+    <include layout="@layout/layout_shop_car_no_data"/>
+
     <ExpandableListView
         android:id="@+id/elv_cart_goods_list"
         android:layout_width="match_parent"

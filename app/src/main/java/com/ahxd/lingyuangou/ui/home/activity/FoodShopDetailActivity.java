@@ -44,12 +44,14 @@ import pub.devrel.easypermissions.AppSettingsDialog;
  */
 
 public class FoodShopDetailActivity extends CheckPermissionsActivity implements IFoodShopDetailContract.IFoodShopDetailView,
-        ShopDetailClickListener ,INaviInfoCallback ,OnNaviListener{
+        ShopDetailClickListener, INaviInfoCallback, OnNaviListener {
 
     @BindView(R.id.rv_food_shop_detail)
     RecyclerView rvFoodShopDetail;
     @BindView(R.id.btn_food_shop_detail_check)
     Button btnCheck;
+
+    private String catId;
 
     private JSONObject mShopInfo;
     private FoodShopDetailAdapter mAdapter;
@@ -78,6 +80,7 @@ public class FoodShopDetailActivity extends CheckPermissionsActivity implements 
     protected void initData() {
         setToolBarTitle(getIntent().getStringExtra("shopName"));
         mPresenter = new FoodShopDetailPresenter(this);
+        catId = getIntent().getStringExtra("catId");
         mPresenter.getFoodShopDetail(getIntent().getStringExtra("catId"), getIntent().getStringExtra("shopId"));
     }
 
@@ -90,7 +93,12 @@ public class FoodShopDetailActivity extends CheckPermissionsActivity implements 
     public void showShopInfo(JSONObject shopInfo) {
         mShopInfo = shopInfo;
         if (shopInfo.optInt("isPayBill") == 1) {
-            btnCheck.setVisibility(View.VISIBLE);
+            // tag_sxliu 如果是金融类的，不显示结账按钮
+            if ("373".equals(catId)) {
+                btnCheck.setVisibility(View.GONE);
+            } else {
+                btnCheck.setVisibility(View.VISIBLE);
+            }
         } else {
             btnCheck.setVisibility(View.GONE);
         }
@@ -233,7 +241,7 @@ public class FoodShopDetailActivity extends CheckPermissionsActivity implements 
 
     @Override
     public void onNaviClickListener(JSONObject object) {
-        LatLng parama = new LatLng(Double.parseDouble(mShopInfo.optString("lat")),Double.parseDouble(mShopInfo.optString("lng")));
+        LatLng parama = new LatLng(Double.parseDouble(mShopInfo.optString("lat")), Double.parseDouble(mShopInfo.optString("lng")));
         AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), new AmapNaviParams(null, null, new Poi(mShopInfo.optString("shopName"), parama, ""), AmapNaviType.DRIVER), FoodShopDetailActivity.this);
 
     }

@@ -2,6 +2,7 @@ package com.ahxd.lingyuangou.ui.home.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ public class DialogChoseCityAdapter extends RecyclerView.Adapter<DialogChoseCity
             if (index==position){
                 itemView.setBackgroundColor(mContext.getResources().getColor(R.color.pickerview_timebtn_nor));
             }else {
-                itemView.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                itemView.setBackgroundColor(Color.parseColor("#66000000"));
             }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

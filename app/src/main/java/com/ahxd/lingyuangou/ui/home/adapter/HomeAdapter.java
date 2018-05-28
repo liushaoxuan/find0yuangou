@@ -43,6 +43,9 @@ import com.ahxd.lingyuangou.widget.HomeBigGoodView;
 import com.ahxd.lingyuangou.widget.HomeSmallGoodView;
 import com.ahxd.lingyuangou.widget.RecyclerGridView;
 import com.bumptech.glide.Glide;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerClickListener;
 
@@ -337,13 +340,19 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
         int pageSize = 8;
         int totalPage = (int) Math.ceil(mCatData.size() * 1.0 / pageSize);
-        List<RecyclerGridView> viewPagerList = new ArrayList<>();
+        List<RecyclerView> viewPagerList = new ArrayList<>();
         for (int i = 0; i < totalPage; i++) {
-            RecyclerGridView gridView = (RecyclerGridView) View.inflate(mContext, R.layout.layout_home_cat_viewpager, null);
-            gridView.setAdapter(new HomeCatAdapter(mContext, mCatData, i, pageSize));
-            viewPagerList.add(gridView);
+//            RecyclerGridView gridView = (RecyclerGridView) View.inflate(mContext, R.layout.layout_home_cat_viewpager, null);
+            RecyclerView recyclerView = (RecyclerView) View.inflate(mContext, R.layout.layout_home_sort_new, null);
+            FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(mContext);
+            layoutManager.setFlexDirection(FlexDirection.COLUMN_REVERSE);
+            layoutManager.setJustifyContent(JustifyContent.FLEX_END);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(new HomeCatAdapterNew(mContext, mCatData, i, pageSize));
+            viewPagerList.add(recyclerView);
         }
-        holder.viewPager.setAdapter(new HomeCatViewPagerAdapter(viewPagerList));
+        holder.viewPager.requestFocus();
+        holder.viewPager.setAdapter(new HomeCatViewPagerAdapterNew(viewPagerList));
         //小圆点指示器
         mIvPoints = new ImageView[totalPage];
         holder.points.removeAllViews();
@@ -699,6 +708,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(mContext, FoodShopDetailActivity.class);
                 intent.putExtra("shopId", financeBean.getShopId());
                 intent.putExtra("shopName", financeBean.getShopName());
+                intent.putExtra("catId", "373");
                 mContext.startActivity(intent);
             }
         });

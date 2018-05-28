@@ -12,7 +12,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.ahxd.lingyuangou"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 5
         versionName "1.1"

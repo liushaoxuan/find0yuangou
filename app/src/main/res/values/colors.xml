@@ -35,4 +35,7 @@
     <color name="corner_color">#00FF00</color>
     <!-- QRCode scanner color end -->
 
+    <!--sxliu-->
+    <color name="to_snap_up">#e91cca</color>
+    <color name="alpha_33_white">#33FFFFFF</color>
 </resources>

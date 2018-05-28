@@ -238,7 +238,7 @@ public class ExchangeGiftActivity extends BaseActivity implements IExchangeGiftC
 
         tvName.setText(bean.getGoodsName());
         tvPrice.setText("需要货币:"+bean.getShopPrice());
-        tvPriceOld.setText("原货币:"+bean.getMarketPrice());
+        tvPriceOld.setText("原价格:"+bean.getMarketPrice());
         tvPriceOld.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
         tvSaleNum.setText("已兑换:"+bean.getSaleNum());
         Glide.with(this).load(bean.getGoodsImg()).into(imIcon);

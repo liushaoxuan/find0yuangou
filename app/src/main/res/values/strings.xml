@@ -182,4 +182,9 @@
     <string name="string_the_number_of">层数</string>
     <string name="string_consumption">消费</string>
     <string name="string_rebate">返利</string>
+    
+    <!--sxliu-->
+    <string name="string_car_no_data_text1">哎呀！购物车还是空空的</string>
+    <string name="string_car_no_data_text2">赶紧点击去挑选商品吧</string>
+    <string name="string_snap_up">去抢购</string>
 </resources>

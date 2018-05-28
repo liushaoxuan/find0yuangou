@@ -29,6 +29,7 @@ public class FoodShopListAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Object> mData = new ArrayList<>();
     private OnFavoriteListener onFavoriteListener;
+    private String mCatId;
     public FoodShopListAdapter(Context context) {
         this.mContext = context;
     }
@@ -115,10 +116,15 @@ public class FoodShopListAdapter extends RecyclerView.Adapter {
 //                    intent.putExtra("catId", favoriteShopBean.getCatId());
                     intent.putExtra("shopId", favoriteShopBean.getShopId());
                     intent.putExtra("shopName", favoriteShopBean.getShopName());
+                    intent.putExtra("mCatId", favoriteShopBean.getShopName());
                     mContext.startActivity(intent);
                 }
             });
         }
 
+    }
+
+    public void setmCatId(String mCatId){
+        this.mCatId = mCatId;
     }
 }
