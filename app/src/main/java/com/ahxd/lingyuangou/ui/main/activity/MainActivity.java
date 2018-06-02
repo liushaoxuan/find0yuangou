@@ -293,6 +293,7 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
      */
     @Override
     public void onRushToBuy() {
+        rbHome.setChecked(true);
         showFragment(0);
     }
 }
