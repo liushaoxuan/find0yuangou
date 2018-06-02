@@ -26,14 +26,10 @@ public class HomeCatAdapterNew extends RecyclerView.Adapter<HomeCatAdapterNew.Vi
     private List<HomeCatBean> mData;
     private LayoutInflater mInflater;
     private Context mContext;
-    private int mIndex;//页数下标，表示第几页，从0开始
-    private int mPagerSize;//每页显示的最大数量
 
-    public HomeCatAdapterNew(Context context, List<HomeCatBean> listData, int mIndex, int mPagerSize) {
+    public HomeCatAdapterNew(Context context, List<HomeCatBean> listData) {
         this.mContext = context;
         this.mData = listData;
-        this.mIndex = mIndex;
-        this.mPagerSize = mPagerSize;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -50,7 +46,7 @@ public class HomeCatAdapterNew extends RecyclerView.Adapter<HomeCatAdapterNew.Vi
 
     @Override
     public int getItemCount() {
-        return mData.size() > (mIndex + 1) * mPagerSize ? mPagerSize : (mData.size() - mIndex * mPagerSize);
+        return mData.size() ;
     }
 
 
@@ -70,8 +66,7 @@ public class HomeCatAdapterNew extends RecyclerView.Adapter<HomeCatAdapterNew.Vi
         private void setData(int position) {
             //重新确定position（因为拿到的是总的数据源，数据源是分页加载到每页的GridView上的，为了确保能正确的点对不同页上的item）
             //假设mPagerSize=8，假如点击的是第二页（即mIndex=1）上的第二个位置item(position=1),那么这个item的实际位置就是pos=9
-            final int pos = position + mIndex * mPagerSize;
-            final HomeCatBean bean = mData.get(pos);
+            final HomeCatBean bean = mData.get(position);
             tvName.setText(bean.getCatName());
             Glide.with(mContext).load(bean.getChannelIcon()).into(ivIcon);
             itemView.setOnClickListener(new View.OnClickListener() {

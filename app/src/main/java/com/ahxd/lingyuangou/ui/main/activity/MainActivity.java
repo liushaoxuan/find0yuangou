@@ -4,17 +4,12 @@ import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -25,9 +20,9 @@ import com.ahxd.lingyuangou.MaoApplication;
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseFragment;
 import com.ahxd.lingyuangou.constant.Constant;
+import com.ahxd.lingyuangou.listener.onRushToBuyListener;
 import com.ahxd.lingyuangou.permission.PermissionResultAdapter;
 import com.ahxd.lingyuangou.permission.PermissionUtil;
-import com.ahxd.lingyuangou.ui.home.activity.FoodShopDetailActivity;
 import com.ahxd.lingyuangou.ui.home.contract.IMainContract;
 import com.ahxd.lingyuangou.ui.home.presenter.MainPresenter;
 import com.ahxd.lingyuangou.ui.main.fragment.CartFragment;
@@ -38,7 +33,6 @@ import com.ahxd.lingyuangou.ui.mine.activity.LoginActivity;
 import com.ahxd.lingyuangou.utils.L;
 import com.ahxd.lingyuangou.utils.LocationUtils;
 import com.ahxd.lingyuangou.utils.SHA1Utils;
-import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.ahxd.lingyuangou.utils.UserUtils;
 import com.ahxd.lingyuangou.utils.VersionUtils;
 
@@ -54,7 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AppSettingsDialog;
 
-public class MainActivity extends AppCompatActivity  implements IMainContract.IMainView{
+public class MainActivity extends AppCompatActivity  implements IMainContract.IMainView,onRushToBuyListener {
     private static final int MSG_SET_ALIAS = 1001;
     @BindView(R.id.fm_container)
     FrameLayout fmContainer;
@@ -137,11 +131,13 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
     }
 
     private void initFragment() {
+        CartFragment cartFragment = new CartFragment();
         mFragmentList = new ArrayList<>();
         mFragmentList.add(new HomeFragment());
         mFragmentList.add(new NearFragment());
-        mFragmentList.add(new CartFragment());
+        mFragmentList.add(cartFragment);
         mFragmentList.add(new MineFragment());
+        cartFragment.setOnRushToBuyListener(this);
     }
 
     private void initLocation() {
@@ -292,4 +288,11 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
 
     }
 
+    /**
+     * 购物车模块 抢购回调
+     */
+    @Override
+    public void onRushToBuy() {
+        showFragment(0);
+    }
 }

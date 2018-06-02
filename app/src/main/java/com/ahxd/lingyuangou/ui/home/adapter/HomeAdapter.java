@@ -338,54 +338,59 @@ public class HomeAdapter extends RecyclerView.Adapter {
         if (mCatData == null || mCatData.isEmpty()) {
             return;
         }
-        int pageSize = 8;
-        int totalPage = (int) Math.ceil(mCatData.size() * 1.0 / pageSize);
-        List<RecyclerView> viewPagerList = new ArrayList<>();
-        for (int i = 0; i < totalPage; i++) {
-//            RecyclerGridView gridView = (RecyclerGridView) View.inflate(mContext, R.layout.layout_home_cat_viewpager, null);
-            RecyclerView recyclerView = (RecyclerView) View.inflate(mContext, R.layout.layout_home_sort_new, null);
-            FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(mContext);
-            layoutManager.setFlexDirection(FlexDirection.COLUMN_REVERSE);
-            layoutManager.setJustifyContent(JustifyContent.FLEX_END);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(new HomeCatAdapterNew(mContext, mCatData, i, pageSize));
-            viewPagerList.add(recyclerView);
-        }
-        holder.viewPager.requestFocus();
-        holder.viewPager.setAdapter(new HomeCatViewPagerAdapterNew(viewPagerList));
+//        int pageSize = 8;
+//        int totalPage = (int) Math.ceil(mCatData.size() * 1.0 / pageSize);
+//        List<RecyclerView> viewPagerList = new ArrayList<>();
+//        for (int i = 0; i < totalPage; i++) {
+////            RecyclerGridView gridView = (RecyclerGridView) View.inflate(mContext, R.layout.layout_home_cat_viewpager, null);
+//            RecyclerView recyclerView = (RecyclerView) View.inflate(mContext, R.layout.layout_home_sort_new, null);
+//            FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(mContext);
+//            layoutManager.setFlexDirection(FlexDirection.COLUMN_REVERSE);
+//            layoutManager.setJustifyContent(JustifyContent.FLEX_END);
+//            recyclerView.setLayoutManager(layoutManager);
+//            recyclerView.setAdapter(new HomeCatAdapterNew(mContext, mCatData, pageSize));
+//            viewPagerList.add(recyclerView);
+//            recyclerView.requestFocus();
+//        }
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(mContext);
+        layoutManager.setFlexDirection(FlexDirection.COLUMN_REVERSE);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_END);
+        holder.recyclerView.setLayoutManager(layoutManager);
+        holder.recyclerView.setAdapter(new HomeCatAdapterNew(mContext, mCatData));
+//        holder.viewPager.setAdapter(new HomeCatViewPagerAdapterNew(viewPagerList));
         //小圆点指示器
-        mIvPoints = new ImageView[totalPage];
-        holder.points.removeAllViews();
-        for (int i = 0; i < mIvPoints.length; i++) {
-            ImageView imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
-            if (i == 0) {
-                imageView.setBackgroundResource(R.mipmap.page__selected_indicator);
-            } else {
-                imageView.setBackgroundResource(R.mipmap.page__normal_indicator);
-            }
-            mIvPoints[i] = imageView;
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            layoutParams.leftMargin = 5;
-            layoutParams.rightMargin = 5;
-            holder.points.addView(imageView, layoutParams);
-        }
-        holder.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                setImageBackground(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        mIvPoints = new ImageView[totalPage];
+//        holder.points.removeAllViews();
+//        for (int i = 0; i < mIvPoints.length; i++) {
+//            ImageView imageView = new ImageView(mContext);
+//            imageView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
+//            if (i == 0) {
+//                imageView.setBackgroundResource(R.mipmap.page__selected_indicator);
+//            } else {
+//                imageView.setBackgroundResource(R.mipmap.page__normal_indicator);
+//            }
+//            mIvPoints[i] = imageView;
+//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            layoutParams.leftMargin = 5;
+//            layoutParams.rightMargin = 5;
+//            holder.points.addView(imageView, layoutParams);
+//        }
+//        holder.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                setImageBackground(position);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
     }
 
     /**
@@ -751,10 +756,12 @@ public class HomeAdapter extends RecyclerView.Adapter {
     // 分类
     public class SortViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.vp_container)
-        ViewPager viewPager;
+//        @BindView(R.id.vp_container)
+//        ViewPager viewPager;
         @BindView(R.id.vp_points)
         LinearLayout points;
+        @BindView(R.id.recyclerview_sort)
+        RecyclerView recyclerView;
 
         public SortViewHolder(View view) {
             super(view);

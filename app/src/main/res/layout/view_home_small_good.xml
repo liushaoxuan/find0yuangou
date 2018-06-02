@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:paddingTop="3dp"
-    android:paddingBottom="3dp"
-    android:paddingLeft="6dp"
-    android:paddingRight="6dp"
-    android:background="@drawable/draw_home_good_bg">
+    android:layout_height="110dp">
+    <!--android:background="@drawable/draw_home_good_bg">-->
 
     <TextView
         android:id="@+id/tv_home_small_good_name"
@@ -16,7 +12,9 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_16sp" />
+        android:singleLine="true"
+        android:layout_marginBottom="5dp"
+        android:textSize="@dimen/text_10sp" />
 
     <TextView
         android:id="@+id/tv_home_small_good_price"
@@ -28,15 +26,15 @@
         android:text="商品价格"
         android:visibility="gone"
         android:textColor="@color/color_price"
-        android:textSize="@dimen/text_14sp" />
+        android:textSize="@dimen/text_12sp" />
 
 
     <ImageView
         android:id="@+id/iv_home_small_good_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerInParent="true"
-        android:scaleType="fitXY"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
         android:layout_marginBottom="10dp"
         android:src="@mipmap/ic_launcher" />
 

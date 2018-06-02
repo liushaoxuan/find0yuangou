@@ -27,6 +27,9 @@ public class FoodShopBean implements Serializable {
     private String distance;
     private String scoreRate;
     private String saleCount;
+    private String orderNum ;
+    private String lng ;
+    private String lat ;
 
     public String getShopAddress() {
         return shopAddress;
@@ -90,5 +93,29 @@ public class FoodShopBean implements Serializable {
 
     public void setSaleCount(String saleCount) {
         this.saleCount = saleCount;
+    }
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
     }
 }

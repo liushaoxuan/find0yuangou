@@ -145,10 +145,10 @@ public class FoodShopListActivity extends BaseActivity implements IFoodContract.
         switch (mStartFrom) {
             case "label":// 从home的label进入
                 llShopListTabs.setVisibility(View.GONE);
-                mPresenter.getRecomShopList(mPage, null, mCatId, null);
+                mPresenter.getRecomShopList(mPage, "", mCatId, "");
                 break;
             case "sort":// 从home的分类进入
-                mPresenter.getFoodList(mPage, null,null, null, mCatId, null);
+                mPresenter.getFoodList(mPage, "","", "", mCatId, "");
                 break;
         }
     }

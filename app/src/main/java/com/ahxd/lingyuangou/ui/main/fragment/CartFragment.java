@@ -13,6 +13,7 @@ import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseFragment;
 import com.ahxd.lingyuangou.bean.CartBean;
 import com.ahxd.lingyuangou.listener.OnCartOperateListener;
+import com.ahxd.lingyuangou.listener.onRushToBuyListener;
 import com.ahxd.lingyuangou.ui.cart.activity.OnlinePayActivity;
 import com.ahxd.lingyuangou.ui.cart.adapter.CartListViewAdapter;
 import com.ahxd.lingyuangou.ui.cart.contract.ICartContract;
@@ -55,6 +56,8 @@ public class CartFragment extends BaseFragment implements ICartContract.ICartVie
     TextView tvCartGoodsCheck;
 //    @BindView(R.id.tv_cart_no_goods_tips)
 //    TextView tvCartNoGoodsTips;
+
+    private onRushToBuyListener listener;
 
     /**
      * 购物车无数据布局
@@ -187,7 +190,9 @@ public class CartFragment extends BaseFragment implements ICartContract.ICartVie
                 break;
                 //去抢购
             case R.id.tv_to_snap_up:
-                ToastUtils.showLong(getActivity(),"抢购时去哪啊");
+               if (listener!=null){
+                   listener.onRushToBuy();
+               }
                 break;
                 default:
                     break;
@@ -288,5 +293,13 @@ public class CartFragment extends BaseFragment implements ICartContract.ICartVie
         for (int i = 0; i < result.size(); i++) {
             elvCartGoodsList.expandGroup(i);
         }
+    }
+
+    /**
+     * 去抢购
+     * @param listener
+     */
+    public void setOnRushToBuyListener(onRushToBuyListener listener){
+        this.listener = listener;
     }
 }

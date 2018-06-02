@@ -145,4 +145,7 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.3.0'
 
     implementation 'com.google.android:flexbox:1.0.0'
+
+    compile 'com.alibaba:fastjson:1.2.47'
+    compile 'com.alibaba:fastjson:1.1.68.android'
 }

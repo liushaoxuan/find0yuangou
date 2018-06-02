@@ -1,5 +1,7 @@
 package com.ahxd.lingyuangou.ui.home.model;
 
+import android.util.Log;
+
 import com.ahxd.lingyuangou.bean.AccredBean;
 import com.ahxd.lingyuangou.bean.CartBean;
 import com.ahxd.lingyuangou.bean.CatBean;
@@ -13,11 +15,15 @@ import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.home.contract.IFoodContract;
 import com.ahxd.lingyuangou.utils.LocationUtils;
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -32,7 +38,8 @@ public class FoodModel implements IFoodContract.IFoodModel {
 
     @Override
     public void getCatsList(final IFoodCallback callback) {
-        Type type = new TypeToken<MaoResponse<List<CatBean>>>() {}.getType();
+        Type type = new TypeToken<MaoResponse<List<CatBean>>>() {
+        }.getType();
         OkGo.<MaoResponse<List<CatBean>>>post(HostUrl.URL_CAT_LIST)
                 .execute(new MaoJsonCallback<MaoResponse<List<CatBean>>>(type, callback) {
                     @Override
@@ -44,7 +51,8 @@ public class FoodModel implements IFoodContract.IFoodModel {
 
     @Override
     public void getAccredList(final IFoodCallback callback) {
-        Type type = new TypeToken<MaoResponse<List<AccredBean>>>() {}.getType();
+        Type type = new TypeToken<MaoResponse<List<AccredBean>>>() {
+        }.getType();
         OkGo.<MaoResponse<List<AccredBean>>>post(HostUrl.URL_ACCRED_LIST)
                 .execute(new MaoJsonCallback<MaoResponse<List<AccredBean>>>(type, callback) {
                     @Override
@@ -56,26 +64,52 @@ public class FoodModel implements IFoodContract.IFoodModel {
     }
 
     @Override
-    public void getFoodList(int page,String accredId, String areaId, String order, String catId, String keywords, final IFoodCallback callback) {
-        Type type = new TypeToken<MaoResponse<List<FoodShopBean>>>() {}.getType();
-        OkGo.<MaoResponse<List<FoodShopBean>>>post(HostUrl.URL_FOOD_LIST)
+    public void getFoodList(int page, String accredId, String areaId, String order, String catId, String keywords, final IFoodCallback callback) {
+        Type type = new TypeToken<MaoResponse<List<FoodShopBean>>>() {
+        }.getType();
+        OkGo.<String>post(HostUrl.URL_FOOD_LIST)
                 .params("page", page)
                 .params("accredId", accredId)
                 .params("areaId", LocationUtils.getInstance().getLocation())
                 .params("order", order)
                 .params("catId", catId)
                 .params("keywords", keywords)
-                .execute(new MaoJsonCallback<MaoResponse<List<FoodShopBean>>>(type, callback) {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Response<MaoResponse<List<FoodShopBean>>> response) {
-                        callback.onFoodList(response.body().data);
+                    public void onSuccess(Response<String> response) {
+                        try {
+                            JSONObject object = new JSONObject(response.body().toString());
+                            List<FoodShopBean> data = JSON.parseArray(object.optString("data"), FoodShopBean.class);
+                            callback.onFoodList(data);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
-                    public void onError(Response<MaoResponse<List<FoodShopBean>>> response) {
+                    public void onError(Response<String> response) {
                         super.onError(response);
+                        Log.e("", response.message());
                     }
                 });
+//        OkGo.<MaoResponse<List<FoodShopBean>>>post(HostUrl.URL_FOOD_LIST)
+//                .params("page", page)
+//                .params("accredId", accredId)
+//                .params("areaId", LocationUtils.getInstance().getLocation())
+//                .params("order", order)
+//                .params("catId", catId)
+//                .params("keywords", keywords)
+//                .execute(new MaoJsonCallback<MaoResponse<List<FoodShopBean>>>(type, callback) {
+//                    @Override
+//                    public void onSuccess(Response<MaoResponse<List<FoodShopBean>>> response) {
+//                        callback.onFoodList(response.body().data);
+//                    }
+//
+//                    @Override
+//                    public void onError(Response<MaoResponse<List<FoodShopBean>>> response) {
+//                        super.onError(response);
+//                    }
+//                });
     }
 
     @Override
@@ -134,7 +168,8 @@ public class FoodModel implements IFoodContract.IFoodModel {
 
     @Override
     public void getRecomShopList(int page, String areaId, String goodsCatId, String keywords, final IFoodCallback callback) {
-        Type type = new TypeToken<MaoResponse<List<FoodShopBean>>>() {}.getType();
+        Type type = new TypeToken<MaoResponse<List<FoodShopBean>>>() {
+        }.getType();
         OkGo.<MaoResponse<List<FoodShopBean>>>post(HostUrl.URL_RECOM_SHOP_LIST)
                 .params("page", page)
                 .params("areaId", LocationUtils.getInstance().getLocation())
