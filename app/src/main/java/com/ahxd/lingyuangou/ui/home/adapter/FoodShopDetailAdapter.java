@@ -203,12 +203,12 @@ public class FoodShopDetailAdapter extends RecyclerView.Adapter {
     private void bindFoodShopHeaderViewHolder(FoodShopHeaderViewHolder holder, int position) {
         mShopId = mShopInfo.optString("shopId");
         holder.tvShopDetailShopName.setText(mShopInfo.optString("shopName"));
-//        holder.tvShopDetailPrice.setText(String.format("返货币：%s", mShopInfo.optString("scoreRate")));
-        if (!mShopInfo.optString("scoreRate").equals("")){
-            holder.tvShopDetailPrice.setText(String.format("返货币:%s%%",
+//        holder.tvShopDetailPrice.setText(String.format("增加：%s", mShopInfo.optString("scoreRate")));
+        if (!mShopInfo.optString("scoreRate").equals("")) {
+            holder.tvShopDetailPrice.setText(String.format("增加:%s%%",
                     String.format(Locale.CHINA, "%.0f", Float.parseFloat(mShopInfo.optString("scoreRate")) * 100)));
         }
-      holder.tvShopDetailShopTips.setText(mShopInfo.optString("shopDesc"));
+        holder.tvShopDetailShopTips.setText(mShopInfo.optString("shopDesc"));
         holder.tvShopDetailShopAddress.setText(mShopInfo.optString("shopAddress"));
         Glide.with(mContext).load(mShopInfo.optString("shopImg")).into(holder.ivShopDetailLogo);
 
@@ -314,9 +314,9 @@ public class FoodShopDetailAdapter extends RecyclerView.Adapter {
         holder.tvHomeFoodItemDistance.setText(String.format("%skm", foodShopBean.getDistance()));
         holder.tvHomeFoodItemTips.setText(foodShopBean.getShopAddress());
         holder.tvHomeFoodItemSaleNum.setText(String.format("最近销量:%s", foodShopBean.getSaleCount()));
-//        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s", foodShopBean.getScoreRate()));
-        if (!foodShopBean.getScoreRate().equals("")){
-            holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s%%",
+//        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s", foodShopBean.getScoreRate()));
+        if (!foodShopBean.getScoreRate().equals("")) {
+            holder.tvHomeFoodItemPrice.setText(String.format("增加:%s%%",
                     String.format(Locale.CHINA, "%.0f", Float.parseFloat(foodShopBean.getScoreRate()) * 100)));
         }
 
@@ -365,7 +365,7 @@ public class FoodShopDetailAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick({R.id.iv_shop_detail_call,R.id.ll_address, R.id.tv_shop_detail_favorite, R.id.tv_shop_detail_add, R.id.ll_food_shop_go_recharge})
+        @OnClick({R.id.iv_shop_detail_call, R.id.ll_address, R.id.tv_shop_detail_favorite, R.id.tv_shop_detail_add, R.id.ll_food_shop_go_recharge, R.id.iv_daohang})
         public void onViewClicked(View view) {
             switch (view.getId()) {
                 case R.id.iv_shop_detail_call:
@@ -399,9 +399,16 @@ public class FoodShopDetailAdapter extends RecyclerView.Adapter {
 //                        ToastUtils.show(mContext,"请先安装高德app",1);
 //                    }
 
-                    if (naviListener!=null){
+//                    if (naviListener!=null){
+//                        naviListener.onNaviClickListener(mShopInfo);
+//                    }
+                    break;
+                case R.id.iv_daohang:
+                    if (naviListener != null) {
                         naviListener.onNaviClickListener(mShopInfo);
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -460,7 +467,7 @@ public class FoodShopDetailAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void setOnNaviListener(OnNaviListener naviListener){
+    public void setOnNaviListener(OnNaviListener naviListener) {
         this.naviListener = naviListener;
     }
 }

@@ -2,7 +2,6 @@ package com.ahxd.lingyuangou.ui.home.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ import com.ahxd.lingyuangou.bean.HomeFinanceBean;
 import com.ahxd.lingyuangou.bean.HomeFoodShopBean;
 import com.ahxd.lingyuangou.bean.HomeGiftBean;
 import com.ahxd.lingyuangou.bean.HomeGoodBean;
-import com.ahxd.lingyuangou.constant.Constant;
+import com.ahxd.lingyuangou.bean.HomeRecomendCarBean;
 import com.ahxd.lingyuangou.listener.OnItemClickListener;
 import com.ahxd.lingyuangou.ui.home.activity.ArticleListActivity;
 import com.ahxd.lingyuangou.ui.home.activity.ExchangeGiftActivity;
@@ -37,11 +36,11 @@ import com.ahxd.lingyuangou.ui.home.holder.EntertainmentsShopViewHolder;
 import com.ahxd.lingyuangou.ui.home.holder.FinanceViewHolder;
 import com.ahxd.lingyuangou.ui.home.holder.FoodsShopViewHolder;
 import com.ahxd.lingyuangou.ui.home.holder.HotelsShopViewHolder;
+import com.ahxd.lingyuangou.ui.home.holder.RecomendCarViewHolder;
 import com.ahxd.lingyuangou.utils.GlideImageLoader;
 import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.ahxd.lingyuangou.widget.HomeBigGoodView;
 import com.ahxd.lingyuangou.widget.HomeSmallGoodView;
-import com.ahxd.lingyuangou.widget.RecyclerGridView;
 import com.bumptech.glide.Glide;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -83,16 +82,30 @@ public class HomeAdapter extends RecyclerView.Adapter {
     private static final int HOME_TYPE_AD = 6;
     // 餐饮
     private static final int HOME_TYPE_FOOD = 7;
+    // 金融
+    private static final int HOME_TYPE_FINANCE = 8;
+    // 推荐商品
+    private static final int HOME_TYPE_GOOD = 9;
     // 推荐酒店
     private static final int HOME_TYPE_HOTEL = 10;
     // 推荐教育
     private static final int HOME_TYPE_EDUCATION = 11;
     // 推荐娱乐
     private static final int HOME_TYPE_AMUSEEMENT = 12;
-    // 金融
-    private static final int HOME_TYPE_FINANCE = 8;
-    // 推荐商品
-    private static final int HOME_TYPE_GOOD = 9;
+    //推荐汽车
+    private static final int HOME_TYPE_CAR = 13;
+    //推荐健康
+    private static final int HOME_TYPE_HEALTH = 14;
+    //推荐家居
+    private static final int HOME_TYPE_HOUSEHOLD= 15;
+
+    //推荐家政
+    private static final int HOME_TYPE_HOUSEKEPPING= 16;
+
+    //推荐商务
+    private static final int HOME_TYPE_BUSINESS= 17;
+
+
 
 
     private Context mContext;
@@ -113,7 +126,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     private List<HomeFinanceBean> mFinanceData = new ArrayList<>();
     private List<HomeGoodBean> mGoodsData = new ArrayList<>();
-
+    //汽车
+    private List<HomeRecomendCarBean> mCarsData = new ArrayList<>();
 
 
     public HomeAdapter(Context context) {
@@ -132,8 +146,6 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     public void setCatData(List<HomeCatBean> sorts) {
         this.mCatData = sorts;
-//        mCatData.add(new HomeCatBean("123456","商务","https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3502465005,4153501499&fm=200&gp=0.jpg"));
-//        mCatData.add(new HomeCatBean("1234567","家政","https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3502465005,4153501499&fm=200&gp=0.jpg"));
         notifyItemChanged(1);
     }
 
@@ -174,37 +186,56 @@ public class HomeAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void setCarsData(List<HomeRecomendCarBean> cars){
+        this.mCarsData = cars;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder holder;
         switch (viewType) {
+            //轮播图
             case HOME_TYPE_BANNER:
                 return new BannerViewHolder(mInflater.inflate(R.layout.layout_home_banner, parent, false));
+                //分类
             case HOME_TYPE_SORT:
                 return new SortViewHolder(mInflater.inflate(R.layout.layout_home_sort, parent, false));
+                //广告
             case HOME_TYPE_MESSAGE:
                 return new MessageViewHolder(mInflater.inflate(R.layout.layout_home_message, parent, false));
+                //这个暂时没有了
             case HOME_TYPE_THREE:
                 return new ThreeViewHolder(mInflater.inflate(R.layout.layout_home_three, parent, false));
+            // 热门礼品 内容
             case HOME_TYPE_GIFT:
                 return new GiftViewHolder(mInflater.inflate(R.layout.layout_home_gift, parent, false));
+                //这个是每个分类名和点击查看更多的栏目
             case HOME_TYPE_LABEL:
                 return new LabelViewHolder(mInflater.inflate(R.layout.layout_home_label, parent, false));
+            // 图片广告
             case HOME_TYPE_AD:
                 return new ADViewHolder(mInflater.inflate(R.layout.layout_home_ad, parent, false));
+            // 餐饮
             case HOME_TYPE_FOOD:
                 return new FoodsShopViewHolder(mInflater.inflate(R.layout.item_home_foods_shop, parent, false));
-
+            // 推荐酒店
             case HOME_TYPE_HOTEL:
                 return new HotelsShopViewHolder(mInflater.inflate(R.layout.item_home_foods_shop, parent, false));
+            // 推荐教育
             case HOME_TYPE_EDUCATION:
                 return new EducationsShopViewHolder(mInflater.inflate(R.layout.item_home_foods_shop, parent, false));
+            // 推荐娱乐
             case HOME_TYPE_AMUSEEMENT:
                 return new EntertainmentsShopViewHolder(mInflater.inflate(R.layout.item_home_foods_shop, parent, false));
-
+            // 金融
             case HOME_TYPE_FINANCE:
                 return new FinanceViewHolder(mInflater.inflate(R.layout.item_home_finance, parent, false));
+            // 推荐商品
             case HOME_TYPE_GOOD:
                 return new GoodsViewHolder(mInflater.inflate(R.layout.item_home_hot_good, parent, false));
+            // 推荐汽车
+            case HOME_TYPE_CAR:
+                return new RecomendCarViewHolder(mInflater.inflate(R.layout.item_home_foods_shop, parent, false));
             default:
                 return null;
         }
@@ -228,24 +259,27 @@ public class HomeAdapter extends RecyclerView.Adapter {
             bindADViewHolder((ADViewHolder) holder, position);
         } else if (holder instanceof FoodsShopViewHolder) {
             bindFoodShopViewHolder((FoodsShopViewHolder) holder, position);
-        }  else if (holder instanceof HotelsShopViewHolder) {
+        } else if (holder instanceof HotelsShopViewHolder) {
             bindHotelShopViewHolder((HotelsShopViewHolder) holder, position);
-        }  else if (holder instanceof EducationsShopViewHolder) {
+        } else if (holder instanceof EducationsShopViewHolder) {
             bindEducationShopViewHolder((EducationsShopViewHolder) holder, position);
-        }  else if (holder instanceof EntertainmentsShopViewHolder) {
+        } else if (holder instanceof EntertainmentsShopViewHolder) {
             bindEntertainmentShopViewHolder((EntertainmentsShopViewHolder) holder, position);
         } else if (holder instanceof FinanceViewHolder) {
             bindFinanceViewHolder((FinanceViewHolder) holder, position);
         } else if (holder instanceof GoodsViewHolder) {
             bindGoodViewHolder((GoodsViewHolder) holder, position);
+        }else if (holder instanceof RecomendCarViewHolder){
+            int pos = position - (13 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size());
+            ((RecomendCarViewHolder) holder).setData(mCarsData,pos);
         }
     }
 
     @Override
     public int getItemCount() {
 
-        return 13 + mFoodsData.size()+mHotelsData.size() +mEducationsData.size()
-                +mEntertainmentsData.size() + mFinanceData.size() + mGoodsData.size();
+        return 13 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size()
+                + mEntertainmentsData.size() + mFinanceData.size() + mGoodsData.size()+mCarsData.size();
     }
 
     @Override
@@ -259,10 +293,11 @@ public class HomeAdapter extends RecyclerView.Adapter {
         } else if (position == 3) {
             return HOME_TYPE_THREE;
         } else if (position == 4 || position == 7 || position == 8 + mFoodsData.size()
-                ||  position == (9 + mFoodsData.size()+mHotelsData.size())
-                ||position == (10 + mFoodsData.size() + mHotelsData.size()+mEducationsData.size())
-                || position == (11 + mFoodsData.size() + mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size())
-                || position ==(12 + mFoodsData.size() + mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size()+mFinanceData.size())) {
+                || position == (9 + mFoodsData.size() + mHotelsData.size())
+                || position == (10 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size())
+                || position == (11 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size())
+                || position == (12 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size())
+                || position == (13+mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size()+mCarsData.size())) {
             return HOME_TYPE_LABEL;
         } else if (position == 5) {
             return HOME_TYPE_GIFT;
@@ -272,13 +307,16 @@ public class HomeAdapter extends RecyclerView.Adapter {
             return HOME_TYPE_FOOD;
         } else if ((8 + mFoodsData.size()) < position && position <= ((8 + mFoodsData.size()) + mHotelsData.size())) {
             return HOME_TYPE_HOTEL;
-        }else if ((9 + mFoodsData.size() + mHotelsData.size()) < position && position <= (9 + mFoodsData.size() + mHotelsData.size()+mEducationsData.size())) {
+        } else if ((9 + mFoodsData.size() + mHotelsData.size()) < position && position <= (9 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size())) {
             return HOME_TYPE_EDUCATION;
-        }else if ((10 +(mFoodsData.size() + mHotelsData.size()+mEducationsData.size())) < position && position <= ((10 + mFoodsData.size()) + mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size())) {
+        } else if ((10 + (mFoodsData.size() + mHotelsData.size() + mEducationsData.size())) < position && position <= ((10 + mFoodsData.size()) + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size())) {
             return HOME_TYPE_AMUSEEMENT;
-        }else if ((11 + mFoodsData.size()+mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size()) < position && position <= ((11 + mFoodsData.size()) +mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size()+ mFinanceData.size())) {
+        } else if ((11 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size()) < position && position <= ((11 + mFoodsData.size()) + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size())) {
             return HOME_TYPE_FINANCE;
-        } else {
+        } else if (((12 + mFoodsData.size()) + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size())<position &&position<=((12 + mFoodsData.size()) + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size()+mCarsData.size())){
+            return HOME_TYPE_CAR;
+        }
+        else {
             return HOME_TYPE_GOOD;
         }
     }
@@ -306,6 +344,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                         case HOME_TYPE_EDUCATION:
                         case HOME_TYPE_AMUSEEMENT:
                         case HOME_TYPE_FINANCE:
+                        case HOME_TYPE_CAR:
                             return gridManager.getSpanCount();
                         case HOME_TYPE_GOOD:
                             return 3;
@@ -459,6 +498,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
     private void bindLabelViewHolder(LabelViewHolder holder, int position) {
         if (position == 4) {// 热门礼品
             holder.tvHomeLabelName.setText(R.string.string_home_hot_gift);
+            holder.tvHomeLabelName.setBackgroundResource(R.mipmap.icon_cat_01);
             holder.tvHomeLabelMore.setVisibility(View.INVISIBLE);
             holder.tvHomeLabelMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -470,12 +510,13 @@ public class HomeAdapter extends RecyclerView.Adapter {
         } else if (position == 7) {// 热门餐厅
             holder.tvHomeLabelName.setText(R.string.string_home_hot_foods);
             holder.tvHomeLabelMore.setVisibility(View.VISIBLE);
+            holder.tvHomeLabelName.setBackgroundResource(R.drawable.icon_cat_recomand_foods);
             holder.tvHomeLabelMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, FoodShopListActivity.class);
                     intent.putExtra("catId", "366");
-                    intent.putExtra("catName", "推荐餐饮");
+                    intent.putExtra("catName", "推荐美食");
                     intent.putExtra("start_from", "label");
                     mContext.startActivity(intent);
                 }
@@ -489,6 +530,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         else if (position == (8 + mFoodsData.size())) {// 推荐酒店
             holder.tvHomeLabelName.setText(R.string.string_home_hot_hotels);
             holder.tvHomeLabelMore.setVisibility(View.VISIBLE);
+            holder.tvHomeLabelName.setBackgroundResource(R.drawable.icon_cat_recomand_hotal);
             holder.tvHomeLabelMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -499,8 +541,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     mContext.startActivity(intent);
                 }
             });
-        } else if (position == (9 + mFoodsData.size()+mHotelsData.size())) {// 推荐教育
+        } else if (position == (9 + mFoodsData.size() + mHotelsData.size())) {// 推荐教育
             holder.tvHomeLabelName.setText(R.string.string_home_hot_educations);
+            holder.tvHomeLabelName.setBackgroundResource(R.mipmap.icon_cat_04);
             holder.tvHomeLabelMore.setVisibility(View.VISIBLE);
             holder.tvHomeLabelMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -512,8 +555,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     mContext.startActivity(intent);
                 }
             });
-        } else if (position == (10 + mFoodsData.size()+mHotelsData.size()+mEducationsData.size())) {// 推荐娱乐
+        } else if (position == (10 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size())) {// 推荐娱乐
             holder.tvHomeLabelName.setText(R.string.string_home_hot_amuseementds);
+            holder.tvHomeLabelName.setBackgroundResource(R.mipmap.icon_cat_05);
             holder.tvHomeLabelMore.setVisibility(View.VISIBLE);
             holder.tvHomeLabelMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -525,8 +569,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     mContext.startActivity(intent);
                 }
             });
-        } else if (position == (11 + mFoodsData.size()+mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size())) {// 推荐金融
+        } else if (position == (11 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size())) {// 推荐金融
             holder.tvHomeLabelName.setText(R.string.string_home_hot_finance);
+            holder.tvHomeLabelName.setBackgroundResource(R.mipmap.icon_cat_09);
             holder.tvHomeLabelMore.setVisibility(View.VISIBLE);
             holder.tvHomeLabelMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -538,8 +583,27 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     mContext.startActivity(intent);
                 }
             });
-        } else if (position == (12 + mFoodsData.size() + mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size()+ mFinanceData.size())) { // 推荐商品
+            //推荐汽车
+        } else if (position== (12 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size())){
+            holder.tvHomeLabelName.setText(R.string.string_home_recomend_car);
+            holder.tvHomeLabelName.setBackgroundResource(R.mipmap.icon_cat_07);
+            holder.tvHomeLabelMore.setVisibility(View.VISIBLE);
+            holder.tvHomeLabelMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, FoodShopListActivity.class);
+                    intent.putExtra("catId", "371");
+                    intent.putExtra("catName", "推荐汽车");
+                    intent.putExtra("start_from", "label");
+                    mContext.startActivity(intent);
+                }
+            });
+        }
+
+
+        else if (position == (13 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size()+mCarsData.size())) { // 推荐商品
             holder.tvHomeLabelName.setText(R.string.string_home_home_goods);
+            holder.tvHomeLabelName.setBackgroundResource(R.mipmap.icon_cat_10);
             holder.tvHomeLabelMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -561,9 +625,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             holder.goodSecond.setData(mGiftData.get(1));
             holder.goodThird.setData(mGiftData.get(2));
             holder.goodForth.setData(mGiftData.get(3));
-            holder.goodFifth.setData(mGiftData.get(4));
             holder.goodForth.setOnClickListener(mListener);
-            holder.goodFifth.setOnClickListener(mListener);
         } else if (mGiftData.size() == 3) {
             holder.llHomeGiftBottom.setVisibility(View.GONE);
             holder.goodFirst.setData(mGiftData.get(0));
@@ -601,8 +663,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
         holder.tvHomeFoodItemTips.setText(String.format("地址:%s", foodShopBean.getShopAddress()));
         holder.tvHomeFoodItemSaleNum.setText(String.format("销量:%s", foodShopBean.getSaleCount()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s", foodShopBean.getScoreRate()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s%%",
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s", foodShopBean.getScoreRate()));
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s%%",
                 String.format(Locale.CHINA, "%.0f", Float.parseFloat(foodShopBean.getScoreRate()) * 100)));
         Glide.with(mContext).load(foodShopBean.getShopImg()).into(holder.ivHomeFoodItemIcon);
         holder.setItemClickListener(new OnItemClickListener() {
@@ -628,8 +690,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
         holder.tvHomeFoodItemTips.setText(String.format("地址:%s", foodShopBean.getShopAddress()));
         holder.tvHomeFoodItemSaleNum.setText(String.format("销量:%s", foodShopBean.getSaleCount()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s", foodShopBean.getScoreRate()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s%%",
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s", foodShopBean.getScoreRate()));
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s%%",
                 String.format(Locale.CHINA, "%.0f", Float.parseFloat(foodShopBean.getScoreRate()) * 100)));
         Glide.with(mContext).load(foodShopBean.getShopImg()).into(holder.ivHomeFoodItemIcon);
         holder.setItemClickListener(new OnItemClickListener() {
@@ -644,7 +706,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
     }
 
     private void bindEducationShopViewHolder(EducationsShopViewHolder holder, int position) {
-        int pos = position - (10 + mFoodsData.size()+mHotelsData.size());
+        int pos = position - (10 + mFoodsData.size() + mHotelsData.size());
         final HomeFoodShopBean foodShopBean = mEducationsData.get(pos);
         holder.tvHomeFoodItemName.setText(foodShopBean.getShopName());
         if (Float.valueOf(foodShopBean.getDistance()) <= 0) {
@@ -655,8 +717,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
         holder.tvHomeFoodItemTips.setText(String.format("地址:%s", foodShopBean.getShopAddress()));
         holder.tvHomeFoodItemSaleNum.setText(String.format("销量:%s", foodShopBean.getSaleCount()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s", foodShopBean.getScoreRate()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s%%",
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s", foodShopBean.getScoreRate()));
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s%%",
                 String.format(Locale.CHINA, "%.0f", Float.parseFloat(foodShopBean.getScoreRate()) * 100)));
         Glide.with(mContext).load(foodShopBean.getShopImg()).into(holder.ivHomeFoodItemIcon);
         holder.setItemClickListener(new OnItemClickListener() {
@@ -671,7 +733,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
     }
 
     private void bindEntertainmentShopViewHolder(EntertainmentsShopViewHolder holder, int position) {
-        int pos = position - (11 + mFoodsData.size()+mHotelsData.size()+mEducationsData.size());
+        int pos = position - (11 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size());
         final HomeFoodShopBean foodShopBean = mEntertainmentsData.get(pos);
         holder.tvHomeFoodItemName.setText(foodShopBean.getShopName());
         if (Float.valueOf(foodShopBean.getDistance()) <= 0) {
@@ -682,8 +744,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
         holder.tvHomeFoodItemTips.setText(String.format("地址:%s", foodShopBean.getShopAddress()));
         holder.tvHomeFoodItemSaleNum.setText(String.format("销量:%s", foodShopBean.getSaleCount()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s", foodShopBean.getScoreRate()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s%%",
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s", foodShopBean.getScoreRate()));
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s%%",
                 String.format(Locale.CHINA, "%.0f", Float.parseFloat(foodShopBean.getScoreRate()) * 100)));
         Glide.with(mContext).load(foodShopBean.getShopImg()).into(holder.ivHomeFoodItemIcon);
         holder.setItemClickListener(new OnItemClickListener() {
@@ -698,13 +760,13 @@ public class HomeAdapter extends RecyclerView.Adapter {
     }
 
     private void bindFinanceViewHolder(FinanceViewHolder holder, int position) {
-        int pos = position - (12 + mFoodsData.size()+mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size());
+        int pos = position - (12 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size());
         final HomeFinanceBean financeBean = mFinanceData.get(pos);
         holder.tvHomeFinanceItemName.setText(financeBean.getShopName());
         holder.tvHomeFinanceItemTips.setText(String.format("%s", financeBean.getShopAddress()));
         holder.tvHomeFinanceItemSaleNum.setText(String.format("销量:%s", financeBean.getSaleCount()));
-        holder.tvHomeFinanceItemPrice.setText(String.format("返货币:%s", financeBean.getScoreRate()));
-        holder.tvHomeFinanceItemPrice.setText(String.format("返货币:%s%%",
+        holder.tvHomeFinanceItemPrice.setText(String.format("增加:%s", financeBean.getScoreRate()));
+        holder.tvHomeFinanceItemPrice.setText(String.format("增加:%s%%",
                 String.format(Locale.CHINA, "%.0f", Float.parseFloat(financeBean.getScoreRate()) * 100)));
         Glide.with(mContext).load(financeBean.getShopImg()).into(holder.ivHomeFinanceItemIcon);
         holder.setItemClickListener(new OnItemClickListener() {
@@ -720,12 +782,12 @@ public class HomeAdapter extends RecyclerView.Adapter {
     }
 
     private void bindGoodViewHolder(GoodsViewHolder holder, int position) {
-        int pos = position - (13 + mFoodsData.size() + mHotelsData.size()+mEducationsData.size()+mEntertainmentsData.size()+ mFinanceData.size());
+        int pos = position - (13 + mFoodsData.size() + mHotelsData.size() + mEducationsData.size() + mEntertainmentsData.size() + mFinanceData.size());
         HomeGoodBean goodBean = mGoodsData.get(pos);
         holder.tvHomeGoodsName.setText(goodBean.getGoodsName());
         holder.tvHomeGoodsTips.setText(goodBean.getGoodsTips());
         holder.tvHomeGoodsPrice.setText(String.format("￥%s", goodBean.getShopPrice()));
-        holder.tvHomeGoodsBackNum.setText(String.format("返货币:%s", goodBean.getReturnPrice()));
+        holder.tvHomeGoodsBackNum.setText(String.format("增加:%s", goodBean.getReturnPrice()));
         Glide.with(mContext).load(goodBean.getGoodsImg()).into(holder.ivHomeGoodsImage);
         holder.setGoodData(goodBean);
     }
@@ -756,7 +818,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
     // 分类
     public class SortViewHolder extends RecyclerView.ViewHolder {
 
-//        @BindView(R.id.vp_container)
+        //        @BindView(R.id.vp_container)
 //        ViewPager viewPager;
         @BindView(R.id.vp_points)
         LinearLayout points;
@@ -802,6 +864,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         public ThreeViewHolder(View view) {
             super(view);
+            view.getLayoutParams().height=0;
+            view.requestLayout();
             ButterKnife.bind(this, view);
         }
 
@@ -817,8 +881,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
 //                        Intent intent2 = new Intent(mContext, LoginActivity.class);
 //                        mContext.startActivity(intent2);
 //                    }else {
-                        Intent exchangeGiftIntent = new Intent(mContext, ExchangeGiftActivity.class);
-                        mContext.startActivity(exchangeGiftIntent);
+                    Intent exchangeGiftIntent = new Intent(mContext, ExchangeGiftActivity.class);
+                    mContext.startActivity(exchangeGiftIntent);
 //                    }
 
 //                    ToastUtils.showShort(mContext, "请耐心等待，功能正在建设中...");
@@ -828,8 +892,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
 //                        Intent intent2 = new Intent(mContext, LoginActivity.class);
 //                        mContext.startActivity(intent2);
 //                    }else {
-                        Intent gifyShopIntent = new Intent(mContext, GiftShopListActivity.class);
-                        mContext.startActivity(gifyShopIntent);
+                    Intent gifyShopIntent = new Intent(mContext, GiftShopListActivity.class);
+                    mContext.startActivity(gifyShopIntent);
 //                    }
 
 //                    ToastUtils.showShort(mContext, "请耐心等待，功能正在建设中...");
@@ -876,8 +940,6 @@ public class HomeAdapter extends RecyclerView.Adapter {
         HomeSmallGoodView goodThird;
         @BindView(R.id.good_forth)
         HomeSmallGoodView goodForth;
-        @BindView(R.id.good_fifth)
-        HomeSmallGoodView goodFifth;
         @BindView(R.id.ll_home_gift_bottom)
         LinearLayout llHomeGiftBottom;
 
@@ -890,18 +952,18 @@ public class HomeAdapter extends RecyclerView.Adapter {
     // 推荐商品
     public class GoodsViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv_home_goods_image)
-        ImageView ivHomeGoodsImage;
-        @BindView(R.id.iv_home_goods_type)
-        ImageView ivHomeGoodsType;
-        @BindView(R.id.tv_home_goods_name)
-        TextView tvHomeGoodsName;
-        @BindView(R.id.tv_home_goods_tips)
-        TextView tvHomeGoodsTips;
-        @BindView(R.id.tv_home_goods_price)
-        TextView tvHomeGoodsPrice;
-        @BindView(R.id.tv_home_goods_back_num)
-        TextView tvHomeGoodsBackNum;
+            @BindView(R.id.iv_home_goods_image)
+            ImageView ivHomeGoodsImage;
+            @BindView(R.id.iv_home_goods_type)
+            ImageView ivHomeGoodsType;
+            @BindView(R.id.tv_home_goods_name)
+            TextView tvHomeGoodsName;
+            @BindView(R.id.tv_home_goods_tips)
+            TextView tvHomeGoodsTips;
+            @BindView(R.id.tv_home_goods_price)
+            TextView tvHomeGoodsPrice;
+            @BindView(R.id.tv_home_goods_back_num)
+            TextView tvHomeGoodsBackNum;
 
         private HomeGoodBean mBean;
 
@@ -947,11 +1009,6 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 case R.id.good_forth:
                     intent.putExtra("goodsId", mGiftData.get(3).getGoodsId());
                     intent.putExtra("goodsName", mGiftData.get(3).getGoodsName());
-                    mContext.startActivity(intent);
-                    break;
-                case R.id.good_fifth:
-                    intent.putExtra("goodsId", mGiftData.get(4).getGoodsId());
-                    intent.putExtra("goodsName", mGiftData.get(4).getGoodsName());
                     mContext.startActivity(intent);
                     break;
             }

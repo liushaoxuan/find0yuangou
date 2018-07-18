@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LingYuanGou.iml" filepath="$PROJECT_DIR$/LingYuanGou.iml" />
+      <module fileurl="file://D:\sxliu\LingYuanGou\find0yuangou\LingYuanGou.iml" filepath="D:\sxliu\LingYuanGou\find0yuangou\LingYuanGou.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/find0yuangou.iml" filepath="$PROJECT_DIR$/find0yuangou.iml" />
     </modules>
   </component>
 </project>

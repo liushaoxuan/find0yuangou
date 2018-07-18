@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;

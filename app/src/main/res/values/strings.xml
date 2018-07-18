@@ -16,6 +16,7 @@
     <string name="string_home_hot_educations">推荐教育</string>
     <string name="string_home_hot_amuseementds">推荐娱乐</string>
     <string name="string_home_hot_finance">推荐金融</string>
+    <string name="string_home_recomend_car">推荐汽车</string>
     <string name="string_home_home_goods">推荐商品</string>
     <string name="string_search">搜索</string>
     <string name="string_food_list_tab_class">品类</string>
@@ -46,6 +47,11 @@
     <string name="string_mine_my_profile">我的资料</string>
     <string name="string_mine_my_location">我的地址</string>
     <string name="string_mine_market_center">营销人中心</string>
+    <string name="string_mine_purchase_qualificatio">购买资格</string>
+    <string name="string_mine_merchant_charging_card">商家充值卡</string>
+    <string name="string_mine_merchant_members">商家会员</string>
+    <string name="string_mine_business_report">商家报表</string>
+    <string name="string_mine_business_order">商家订单</string>
     <string name="string_mine_online_service">在线客服</string>
     <string name="string_mine_contact_us">联系我们</string>
     <string name="string_mine_shop_stay">商铺入驻</string>
@@ -182,7 +188,7 @@
     <string name="string_the_number_of">层数</string>
     <string name="string_consumption">消费</string>
     <string name="string_rebate">返利</string>
-    
+
     <!--sxliu-->
     <string name="string_car_no_data_text1">哎呀！购物车还是空空的</string>
     <string name="string_car_no_data_text2">赶紧点击去挑选商品吧</string>

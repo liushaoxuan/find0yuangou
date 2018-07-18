@@ -1,10 +1,12 @@
 package com.ahxd.lingyuangou.ui.home.presenter;
 
+import com.ahxd.lingyuangou.bean.BannerBean;
 import com.ahxd.lingyuangou.bean.HomeCatBean;
 import com.ahxd.lingyuangou.bean.HomeFinanceBean;
 import com.ahxd.lingyuangou.bean.HomeFoodShopBean;
 import com.ahxd.lingyuangou.bean.HomeGiftBean;
 import com.ahxd.lingyuangou.bean.HomeGoodBean;
+import com.ahxd.lingyuangou.bean.HomeRecomendCarBean;
 import com.ahxd.lingyuangou.ui.home.contract.IHomeContract;
 import com.ahxd.lingyuangou.ui.home.model.HomeModel;
 
@@ -30,7 +32,7 @@ public class HomePresenter implements IHomeContract.IHomePresenter {
     public void getHomeData() {
         mModel.getHomeData(new IHomeContract.IHomeModel.IHomeCallback(mView) {
             @Override
-            public void onBannerData(JSONArray banner) {
+            public void onBannerData(List<BannerBean> banner) {
                 mView.showBanner(banner);
             }
 
@@ -75,13 +77,38 @@ public class HomePresenter implements IHomeContract.IHomePresenter {
             }
 
             @Override
-            public void onFinanceData(List<HomeFinanceBean> finances) {
+            public void onFinanceData(List<HomeFoodShopBean> finances) {
                 mView.showFinances(finances);
             }
 
             @Override
             public void onGoodsData(List<HomeGoodBean> goods) {
                 mView.showGoods(goods);
+            }
+
+            @Override
+            public void onCarsData(List<HomeFoodShopBean> cars) {
+                mView.showCars(cars);
+            }
+
+            @Override
+            public void onHealthData(List<HomeFoodShopBean> healths) {
+                mView.showHealth(healths);
+            }
+
+            @Override
+            public void onCommerceData(List<HomeFoodShopBean> commerce) {
+                mView.showCommerceData(commerce);
+            }
+
+            @Override
+            public void onHousekeepingData(List<HomeFoodShopBean> housekeeping) {
+                mView.showHousekeeping(housekeeping);
+            }
+
+            @Override
+            public void onHomeData(List<HomeFoodShopBean> homes) {
+                mView.showHomes(homes);
             }
         });
     }

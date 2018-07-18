@@ -84,6 +84,10 @@ MobSDK {
 
             }
 
+            QQ {
+                appId "1107013290"
+                appSecret "3L6LEUEP47rOCSj2"
+            }
 
         }
     }
@@ -148,4 +152,11 @@ dependencies {
 
     compile 'com.alibaba:fastjson:1.2.47'
     compile 'com.alibaba:fastjson:1.1.68.android'
+
+    compile 'com.alibaba:fastjson:1.2.47'
+    compile 'com.alibaba:fastjson:1.1.68.android'
+
+    compile('com.alibaba.android:vlayout:1.2.8@aar') {
+        transitive = true
+    }
 }

@@ -6,7 +6,7 @@ import java.util.List;
  * Created by wpc on 2018/1/22.
  */
 
-public class ShopBean {
+public class ShopBean extends BaseBean{
     /**
      *  shopId	店铺ID	是	[string]	1	查看
      *	 shopName	名称	是	[string]	0元购自营总部	查看

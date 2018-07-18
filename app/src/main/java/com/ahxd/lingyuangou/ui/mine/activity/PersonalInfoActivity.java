@@ -10,12 +10,10 @@ import com.ahxd.lingyuangou.ui.mine.contract.IPersonalInfoContract;
 import com.ahxd.lingyuangou.ui.mine.presenter.PersonalInfoPresenter;
 import com.ahxd.lingyuangou.utils.GlideApp;
 import com.ahxd.lingyuangou.widget.CircleImageView;
-import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by Mao on 2018/1/13.

@@ -5,27 +5,23 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ahxd.lingyuangou.MaoApplication;
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
-import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.ui.home.activity.RechargeActivity;
 import com.ahxd.lingyuangou.ui.mine.contract.IWalletContract;
 import com.ahxd.lingyuangou.ui.mine.presenter.WalletPresenter;
-import com.ahxd.lingyuangou.utils.SPUtils;
 import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.ahxd.lingyuangou.widget.PicTextRightItem;
-import com.ahxd.lingyuangou.widget.UIAlertView;
 import com.ahxd.lingyuangou.widget.UIExchangeView;
 
 import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 /**
  * Created by wpc on 2018/1/16.
+ * 我的钱包
  */
 
 public class WalletActivity extends BaseActivity implements IWalletContract.IWalletView {
@@ -67,7 +63,8 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
     private WalletPresenter mPresenter;
     private JSONObject data;
     private JSONObject jifenData;
-    private int isRecharge=0;
+    private int isRecharge = 0;
+
     @Override
     protected void initView() {
         super.initView();
@@ -86,9 +83,9 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
         mPresenter.getWalletIntegral();
     }
 
-    @OnClick({R.id.tv_jifen_management,R.id.tv_cash_balance, R.id.tv_revenue_management, R.id.tv_recharge
-            ,R.id.ptr_balance_recharge_record,R.id.ptr_balance_consumption_record,
-            R.id.ptr_present_record,R.id.ptr_advertising_fee_record,R.id.ptr_marketing_revenue_record,
+    @OnClick({R.id.tv_jifen_management, R.id.tv_cash_balance, R.id.tv_revenue_management, R.id.tv_recharge
+            , R.id.ptr_balance_recharge_record, R.id.ptr_balance_consumption_record,
+            R.id.ptr_present_record, R.id.ptr_advertising_fee_record, R.id.ptr_marketing_revenue_record,
             R.id.ptr_jifen_record})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -99,13 +96,13 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
                 tvCashBalance.setTextColor(getResources().getColor(R.color.color_theme));
                 tvRevenueManagement.setTextColor(getResources().getColor(R.color.black));
                 tvJiFenManagement.setTextColor(getResources().getColor(R.color.black));
-                if (null!=data){
+                if (null != data) {
                     tvUserMoney.setText(data.optString("userMoney"));
                 }
 
                 tvCurrentBalance.setText(getResources().getString(R.string.string_current_balance));
                 tvRecharge.setText("充值");
-                isRecharge=0;
+                isRecharge = 0;
                 break;
             case R.id.tv_revenue_management:
                 llTabOne.setVisibility(View.GONE);
@@ -114,12 +111,12 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
                 tvCashBalance.setTextColor(getResources().getColor(R.color.black));
                 tvJiFenManagement.setTextColor(getResources().getColor(R.color.black));
                 tvRevenueManagement.setTextColor(getResources().getColor(R.color.color_theme));
-                if (null!=data){
+                if (null != data) {
                     tvUserMoney.setText(data.optString("userIncome"));
                 }
                 tvCurrentBalance.setText(getResources().getString(R.string.string_available_income));
                 tvRecharge.setText("提现");
-                isRecharge=1;
+                isRecharge = 1;
                 break;
             case R.id.tv_jifen_management:
                 llTabOne.setVisibility(View.GONE);
@@ -128,21 +125,21 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
                 tvCashBalance.setTextColor(getResources().getColor(R.color.black));
                 tvRevenueManagement.setTextColor(getResources().getColor(R.color.black));
                 tvJiFenManagement.setTextColor(getResources().getColor(R.color.color_theme));
-                if (null!=jifenData){
+                if (null != jifenData) {
                     tvUserMoney.setText(jifenData.optString("userScore"));
                 }
                 tvCurrentBalance.setText("可兑换积分");
                 tvRecharge.setText("兑换");
-                isRecharge=2;
+                isRecharge = 2;
                 break;
             case R.id.tv_recharge:
-                if (isRecharge==0){
+                if (isRecharge == 0) {
                     Intent intent = new Intent(this, RechargeActivity.class);
                     startActivity(intent);
-                }else if(isRecharge==1){
+                } else if (isRecharge == 1) {
                     Intent intent = new Intent(this, WithdrawalsActivity.class);
                     startActivity(intent);
-                }else if(isRecharge==2){
+                } else if (isRecharge == 2) {
                     showLoginOutDialog();
                 }
                 break;
@@ -183,7 +180,7 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
 
     @Override
     protected int getLayoutId() {
-        return  R.layout.activity_wallet;
+        return R.layout.activity_wallet;
     }
 
     @Override
@@ -195,10 +192,10 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
     @Override
     public void showWallet(JSONObject data) {
         if (null != data) {
-            this.data=data;
-            if (isRecharge==0){
+            this.data = data;
+            if (isRecharge == 0) {
                 tvUserMoney.setText(data.optString("userMoney"));
-            }else if(isRecharge==1){
+            } else if (isRecharge == 1) {
                 tvUserMoney.setText(data.optString("userIncome"));
             }
             tvUserRecommend.setText(data.optString("userRecommend"));
@@ -209,8 +206,8 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
     @Override
     public void showWalletIntegral(JSONObject data) {
         if (null != data) {
-            this.jifenData=data;
-            if (isRecharge==2){
+            this.jifenData = data;
+            if (isRecharge == 2) {
                 tvUserMoney.setText(data.optString("userScore"));
             }
         }
@@ -219,7 +216,7 @@ public class WalletActivity extends BaseActivity implements IWalletContract.IWal
     @Override
     public void showScoreToMoney(String data) {
         if (null != data) {
-            ToastUtils.show(this,data,1);
+            ToastUtils.show(this, data, 1);
             mPresenter.getWalletIntegral();
         }
     }

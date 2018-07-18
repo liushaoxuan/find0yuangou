@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
-import com.ahxd.lingyuangou.bean.OrderBean;
 import com.ahxd.lingyuangou.ui.mine.contract.IEvaluateContract;
 import com.ahxd.lingyuangou.ui.mine.presenter.EvaluatePresenter;
 import com.ahxd.lingyuangou.utils.GlideApp;

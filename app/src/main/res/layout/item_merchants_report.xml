@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/color_tab_normal" />
+        <TextView
+            android:id="@+id/tv_year"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            tools:text="年"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/color_tab_normal" />
+        <TextView
+            android:id="@+id/tv_month"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            tools:text="月"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/color_tab_normal" />
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            tools:text="消费金额"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/color_tab_normal" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_tab_normal" />
+</LinearLayout>

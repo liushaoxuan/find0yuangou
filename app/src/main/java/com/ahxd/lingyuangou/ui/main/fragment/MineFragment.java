@@ -3,8 +3,6 @@ package com.ahxd.lingyuangou.ui.main.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +12,25 @@ import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseFragment;
+import com.ahxd.lingyuangou.bean.UserInfoBean;
 import com.ahxd.lingyuangou.constant.Constant;
+import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.mine.activity.AddressListActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.ExtensionCenterActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.FavoriteActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.LoginActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.MarketingApplyActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.MarketingCenterActivity;
+import com.ahxd.lingyuangou.ui.mine.activity.MerchantsMemberActivity;
+import com.ahxd.lingyuangou.ui.mine.activity.MerchantsOrderActivity;
+import com.ahxd.lingyuangou.ui.mine.activity.MerchantsReportActivity;
+import com.ahxd.lingyuangou.ui.mine.activity.MerchantsTopUpActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.MessageListActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.MineContactActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.MyBusinessCardActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.OrderListActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.PersonalInfoActivity;
+import com.ahxd.lingyuangou.ui.mine.activity.PurchaseQualificatioActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.SettingActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.ShopStayActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.WalletActivity;
@@ -37,10 +42,16 @@ import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.ahxd.lingyuangou.utils.UserUtils;
 import com.ahxd.lingyuangou.widget.CircleImageView;
 import com.ahxd.lingyuangou.widget.PicTextRightItem;
-import com.ahxd.lingyuangou.widget.UIAlertView;
-import com.bumptech.glide.Glide;
+import com.alibaba.fastjson.JSON;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +64,7 @@ import butterknife.Unbinder;
 
 public class MineFragment extends BaseFragment implements IMineContract.IMineView {
 
+
     @BindView(R.id.iv_mine_setting)
     ImageView ivMineSetting;
     @BindView(R.id.iv_mine_message)
@@ -63,6 +75,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
     CircleImageView ivMinePersonHeader;
     @BindView(R.id.tv_mine_person_name)
     TextView tvMinePersonName;
+    @BindView(R.id.tv_mine_person_login)
+    TextView tvMinePersonLogin;
     @BindView(R.id.ll_mine_wallet)
     LinearLayout llMineWallet;
     @BindView(R.id.ll_mine_order)
@@ -85,19 +99,32 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
     PicTextRightItem ptrMineLocation;
     @BindView(R.id.ptr_mine_market_center)
     PicTextRightItem ptrMineMarketCenter;
+    @BindView(R.id.ptr_mine_purchase_qualificatio)
+    PicTextRightItem ptrMinePurchaseQualificatio;
+    @BindView(R.id.ptr_mine_merchant_charging_card)
+    PicTextRightItem ptrMineMerchantChargingCard;
+    @BindView(R.id.ptr_mine_merchant_members)
+    PicTextRightItem ptrMineMerchantMembers;
+    @BindView(R.id.ptr_mine_business_report)
+    PicTextRightItem ptrMineBusinessReport;
+    @BindView(R.id.ptr_mine_business_order)
+    PicTextRightItem ptrMineBusinessOrder;
     @BindView(R.id.ptr_mine_online_service)
     PicTextRightItem ptrMineOnlineService;
     @BindView(R.id.ptr_mine_contact_us)
     PicTextRightItem ptrMineContactUs;
     @BindView(R.id.ptr_mine_shop_stay)
     PicTextRightItem ptrMineShopStay;
-    @BindView(R.id.tv_mine_person_login)
-    TextView tvMinePersonLogin;
-
     private MinePresenter mPresenter;
     private int mApplyStatus = -9;
     private String mFailReason;
     JSONObject data;
+
+    /**
+     * 用户信息
+     */
+    UserInfoBean userInfoBean;
+
     @Override
     public void onResume() {
         super.onResume();
@@ -132,6 +159,7 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
 
     @Override
     protected void initData() {
+        getConfig();
         mPresenter = new MinePresenter(this);
 
 //        mPresenter.getMyProfile();
@@ -147,7 +175,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
 
     @Override
     public void showProfile(JSONObject data) {
-        this.data=data;
+        this.data = data;
+        userInfoBean = JSON.parseObject(data.toString(), UserInfoBean.class);
         if (!UserUtils.isLogin()) {
             tvMinePersonName.setVisibility(View.GONE);
             tvMinePersonLogin.setVisibility(View.VISIBLE);
@@ -155,11 +184,11 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             tvMinePersonName.setVisibility(View.VISIBLE);
             tvMinePersonLogin.setVisibility(View.GONE);
         }
-        if(null!=data.optString("messagesCount")){
+        if (null != data.optString("messagesCount")) {
             tvMessageNumber.setText(data.optString("messagesCount"));
-            if(data.optString("messagesCount").equals("0")){
+            if (data.optString("messagesCount").equals("0")) {
                 tvMessageNumber.setVisibility(View.GONE);
-            }else {
+            } else {
                 tvMessageNumber.setVisibility(View.VISIBLE);
             }
         }
@@ -210,8 +239,13 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             R.id.ll_mine_favorite, R.id.ll_mine_spread, R.id.ptr_mine_card, R.id.ptr_mine_profile,
             R.id.ptr_mine_location, R.id.ptr_mine_market_center, R.id.ptr_mine_online_service,
             R.id.ptr_mine_contact_us, R.id.ptr_mine_shop_stay, R.id.tv_mine_person_login,
-            R.id.iv_mine_person_header})
+            R.id.iv_mine_person_header,
+            R.id.ptr_mine_purchase_qualificatio, R.id.ptr_mine_merchant_charging_card, R.id.ptr_mine_merchant_members, R.id.ptr_mine_business_report, R.id.ptr_mine_business_order})
     public void onViewClicked(View view) {
+        if (!UserUtils.isLogin()) {
+            ToastUtils.showShort(getActivity(), "请先登录");
+            return;
+        }
         switch (view.getId()) {
             case R.id.iv_mine_setting:
                 Intent settingIntent = new Intent(mContext, SettingActivity.class);
@@ -219,10 +253,10 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
                 break;
             case R.id.iv_mine_message:
                 Intent messageIntent = new Intent(mContext, MessageListActivity.class);
-                if(null!=data.optString("messagesCount")){
-                    if(data.optString("messagesCount").equals("0")){
-                    }else {
-                        messageIntent.putExtra("setMessage","no");
+                if (null != data.optString("messagesCount")) {
+                    if (data.optString("messagesCount").equals("0")) {
+                    } else {
+                        messageIntent.putExtra("setMessage", "no");
                     }
                 }
                 startActivity(messageIntent);
@@ -260,15 +294,20 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
                 startActivity(addressIntent);
                 break;
             case R.id.ptr_mine_market_center:
-                if (this.data.optString("isMarketing").equals("0")){
-                    //申请入驻营销
-                    Intent marketingIntent = new Intent(mContext, MarketingApplyActivity.class);
-                    startActivity(marketingIntent);
-                }else {
-                    //直接进入营销中心
-                    Intent marketingIntent = new Intent(mContext, MarketingCenterActivity.class);
-                    startActivity(marketingIntent);
+                if (this.data != null) {
+                    if (this.data.optString("isMarketing").equals("0")) {
+                        //申请入驻营销
+                        Intent marketingIntent = new Intent(mContext, MarketingApplyActivity.class);
+                        startActivity(marketingIntent);
+                    } else {
+                        //直接进入营销中心
+                        Intent marketingIntent = new Intent(mContext, MarketingCenterActivity.class);
+                        startActivity(marketingIntent);
+                    }
+                } else {
+                    //TODO  这里应该是要到登陆页面
                 }
+
 
                 break;
             case R.id.ptr_mine_online_service:
@@ -301,6 +340,73 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
                 Intent loginIntent = new Intent(mContext, LoginActivity.class);
                 startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                 break;
+
+            //购买资格
+            case R.id.ptr_mine_purchase_qualificatio:
+                Intent purchaseQualificatioIntent = new Intent(mContext, PurchaseQualificatioActivity.class);
+                purchaseQualificatioIntent.putExtra("userInfoBean", userInfoBean);
+                startActivityForResult(purchaseQualificatioIntent, Constant.REQ_PURCHASEQUALIFICATIO);
+                break;
+
+            //商家充值卡
+            case R.id.ptr_mine_merchant_charging_card:
+                Intent toUpIntent = new Intent(mContext, MerchantsTopUpActivity.class);
+                toUpIntent.putExtra("userInfoBean", userInfoBean);
+                startActivityForResult(toUpIntent, Constant.REQ_PURCHASEQUALIFICATIO);
+                break;
+
+            //商家会员
+            case R.id.ptr_mine_merchant_members:
+                Intent memberIntent = new Intent(mContext, MerchantsMemberActivity.class);
+                memberIntent.putExtra("userInfoBean", (Serializable) userInfoBean);
+                startActivityForResult(memberIntent, Constant.REQ_PURCHASEQUALIFICATIO);
+                break;
+
+            //商家报表
+            case R.id.ptr_mine_business_report:
+                Intent reportIntent = new Intent(mContext, MerchantsReportActivity.class);
+                reportIntent.putExtra("userInfoBean", userInfoBean);
+                startActivityForResult(reportIntent, Constant.REQ_PURCHASEQUALIFICATIO);
+
+                break;
+
+            //商家订单
+            case R.id.ptr_mine_business_order:
+                Intent MerchantsorderIntent = new Intent(mContext, MerchantsOrderActivity.class);
+                MerchantsorderIntent.putExtra("userInfoBean", userInfoBean);
+                startActivityForResult(MerchantsorderIntent, Constant.REQ_PURCHASEQUALIFICATIO);
+                break;
         }
     }
+
+    /**
+     * 获取系统配置
+     */
+    private void getConfig() {
+        HttpParams params = new HttpParams();
+        params.put("token", (String) SPUtils.get(getActivity(), Constant.KEY_TOKEN, ""));
+        OkGo.<String>get(HostUrl.URL_CONFIG)
+                .params(params)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        String body = response.body();
+                        try {
+                            JSONObject obj = new JSONObject(body);
+                            int statu = obj.optJSONObject("data").optInt("fieldValue");
+                            //启用新模块
+                            if (statu == 1) {
+                                ptrMinePurchaseQualificatio.setVisibility(View.VISIBLE);
+                                ptrMineMerchantChargingCard.setVisibility(View.VISIBLE);
+                                ptrMineMerchantMembers.setVisibility(View.VISIBLE);
+                                ptrMineBusinessReport.setVisibility(View.VISIBLE);
+                                ptrMineBusinessOrder.setVisibility(View.VISIBLE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
 }

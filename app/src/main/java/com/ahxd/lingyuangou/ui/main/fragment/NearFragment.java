@@ -54,7 +54,7 @@ public class NearFragment extends BaseFragment implements INearContract.INearVie
     @BindView(R.id.rv_near_list)
     RecyclerView rvNearList;
     @BindView(R.id.srl_near)
-    SmartRefreshLayout srlNear;
+    public SmartRefreshLayout srlNear;
     @BindView(R.id.iv_search_del)
     ImageView ivSearchDel;
     @BindView(R.id.ltv_one)

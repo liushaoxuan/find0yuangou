@@ -48,7 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AppSettingsDialog;
 
-public class MainActivity extends AppCompatActivity  implements IMainContract.IMainView,onRushToBuyListener {
+public class MainActivity extends AppCompatActivity implements IMainContract.IMainView, onRushToBuyListener {
     private static final int MSG_SET_ALIAS = 1001;
     @BindView(R.id.fm_container)
     FrameLayout fmContainer;
@@ -65,10 +65,11 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
 
     private Fragment mCurrentFragment;
     private List<BaseFragment> mFragmentList;
+    private NearFragment nearFragment;
     private int mOldPosition; // 点击购物车前，选中的position；
     MainPresenter mPresenter;
     ProgressDialog aboutDialog;
-    private AlphaAnimation mHideAnimation= null;
+    private AlphaAnimation mHideAnimation = null;
 
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -85,17 +86,18 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
 
         ;
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String sha1 = SHA1Utils.sHA1(this);
-        Log.e("*******************",sha1);
+        Log.e("*******************", sha1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initLocation();
         initFragment();
         rbHome.setChecked(true);
-        mPresenter =new MainPresenter(this);
+        mPresenter = new MainPresenter(this);
         aboutDialog = new ProgressDialog(this);
         aboutDialog.setCancelable(false);
         aboutDialog.setCanceledOnTouchOutside(false);
@@ -110,12 +112,12 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
         if (null != getIntent().getStringExtra("type")) {
             if (getIntent().getStringExtra("type").equals("cart")) {
                 rbCart.setChecked(true);
-                CartFragment.isGift=0;
+                CartFragment.isGift = 0;
                 switchFragment(mCurrentFragment, mFragmentList.get(2));
-            }else if(getIntent().getStringExtra("type").equals("giftcart")){
+            } else if (getIntent().getStringExtra("type").equals("giftcart")) {
 
                 rbCart.setChecked(true);
-                CartFragment.isGift=1;
+                CartFragment.isGift = 1;
                 switchFragment(mCurrentFragment, mFragmentList.get(2));
             }
         }
@@ -132,9 +134,10 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
 
     private void initFragment() {
         CartFragment cartFragment = new CartFragment();
+        nearFragment = new NearFragment();
         mFragmentList = new ArrayList<>();
         mFragmentList.add(new HomeFragment());
-        mFragmentList.add(new NearFragment());
+        mFragmentList.add(nearFragment);
         mFragmentList.add(cartFragment);
         mFragmentList.add(new MineFragment());
         cartFragment.setOnRushToBuyListener(this);
@@ -251,10 +254,10 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
 
     @Override
     public void showApk(JSONObject data) {
-        if(null!=data){
+        if (null != data) {
 //            String a=VersionUtils.getVersionName(this)+"."+VersionUtils.getVersionCode(this);
-            if (!(VersionUtils.getVersionName(this)+"."+VersionUtils.getVersionCode(this)).equals(data.optString("version"))){
-                if (MaoApplication.ISDOWN){
+            if (!(VersionUtils.getVersionName(this) + "." + VersionUtils.getVersionCode(this)).equals(data.optString("version"))) {
+                if (MaoApplication.ISDOWN) {
                     VersionUtils.aboutEasyReport(this, data.optString("download"), aboutDialog, handler);
                 }
             }
@@ -295,5 +298,21 @@ public class MainActivity extends AppCompatActivity  implements IMainContract.IM
     public void onRushToBuy() {
         rbHome.setChecked(true);
         showFragment(0);
+    }
+
+    /**
+     * 更换地址后重新加载附近数据
+     */
+    public void reloadNear() {
+        if (nearFragment.srlNear != null) {
+            nearFragment.srlNear.autoRefresh();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int position = intent.getIntExtra("position", 0);
+        showFragment(position);
     }
 }

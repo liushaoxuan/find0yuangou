@@ -93,7 +93,7 @@ public class FoodShopGoodViewHolder extends RecyclerView.ViewHolder {
             tvHomeFoodItemSaleDelete.setVisibility(View.GONE);
             tvHomeShopGoodItemName.setText(((ShopGoodBean) bean).getGoodsName());
             tvHomeFoodItemTips.setText(((ShopGoodBean) bean).getGoodsTips());
-            tvHomeFoodItemReturnPrice.setText(String.format("返货币:%s", ((ShopGoodBean) bean).getReturnPrice()));
+            tvHomeFoodItemReturnPrice.setText(String.format("增加:%s", ((ShopGoodBean) bean).getReturnPrice()));
             tvHomeShopItemGoodOldPrice.setText(String.format("￥%s", ((ShopGoodBean) bean).getMarketPrice()));
             tvHomeShopItemGoodNowPrice.setText(String.format("￥%s", ((ShopGoodBean) bean).getShopPrice()));
             tvHomeShopItemGoodOldPrice.getPaint().setAntiAlias(true);
@@ -104,7 +104,7 @@ public class FoodShopGoodViewHolder extends RecyclerView.ViewHolder {
             tvHomeShopGoodItemName.setText(((FavoriteGoodBean) bean).getGoodsName());
             tvHomeFoodItemTips.setVisibility(View.INVISIBLE);
 //            tvHomeFoodItemTips.setText(((FavoriteGoodBean) bean).getGoodsTips());
-            tvHomeFoodItemReturnPrice.setText(String.format("返货币:%s", ((FavoriteGoodBean) bean).getReturnPrice()));
+            tvHomeFoodItemReturnPrice.setText(String.format("增加:%s", ((FavoriteGoodBean) bean).getReturnPrice()));
             tvHomeShopItemGoodOldPrice.setVisibility(View.GONE);
             tvHomeFoodItemSaleDelete.setVisibility(View.VISIBLE);
             tvHomeFoodItemSaleDelete.setOnClickListener(new View.OnClickListener() {

@@ -10,10 +10,8 @@ import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.bean.MarketingBean;
-import com.ahxd.lingyuangou.bean.RecordBean;
 import com.ahxd.lingyuangou.constant.HostUrl;
-import com.ahxd.lingyuangou.utils.GlideApp;
-import com.ahxd.lingyuangou.utils.GlideImageLoader;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -81,7 +79,7 @@ public class MarketingRevenueRecordListAdapter extends RecyclerView.Adapter {
                 tvShopname.setText(bean.getShopName());
                 tvDataremarks.setText(bean.getDataRemarks());
                 tvMoney.setText("+"+bean.getNumber());
-                GlideApp.with(mContext).load(HostUrl.HOST+bean.getShopImg()).into(tvshopImg);
+                Glide.with(mContext).load(HostUrl.HOST+bean.getShopImg()).into(tvshopImg);
             }
         }
     }

@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.bean.MarketingBean;
-import com.ahxd.lingyuangou.bean.MyMemberBean;
-import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.listener.OnMarketingListener;
 import com.ahxd.lingyuangou.utils.GlideApp;
 

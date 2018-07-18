@@ -3,38 +3,28 @@ package com.ahxd.lingyuangou.ui.mine.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
-import com.ahxd.lingyuangou.bean.MarketingBean;
 import com.ahxd.lingyuangou.bean.ShopManagemntDetailBean;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
-import com.ahxd.lingyuangou.ui.home.activity.RechargeActivity;
 import com.ahxd.lingyuangou.ui.mine.adapter.ShopManagementDetailListAdapter;
 import com.ahxd.lingyuangou.ui.mine.contract.IShopManagemntDetailContract;
-import com.ahxd.lingyuangou.ui.mine.contract.IWalletContract;
 import com.ahxd.lingyuangou.ui.mine.presenter.ShopManagemntDetailPresenter;
-import com.ahxd.lingyuangou.ui.mine.presenter.WalletPresenter;
-import com.ahxd.lingyuangou.utils.GlideApp;
-import com.ahxd.lingyuangou.widget.PicTextRightItem;
 import com.ahxd.lingyuangou.widget.RecyclerViewDivider;
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by wpc on 2018/1/16.
@@ -123,7 +113,7 @@ public class ShopManagemntDetailActivity extends BaseActivity implements IShopMa
             int a=this.mPage;
             tvBody.setText(this.bean.getIncome()+"元");
             tvDetailTitle.setText(this.bean.getShopName());
-            GlideApp.with(this).load(HostUrl.HOST+bean.getShopImg()).into(imLogo);
+            Glide.with(this).load(HostUrl.HOST+bean.getShopImg()).into(imLogo);
             srlListContainer.finishRefresh();
             srlListContainer.finishLoadmore();
             if (null != bean.getLog()) {

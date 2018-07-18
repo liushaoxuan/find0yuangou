@@ -2,10 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@color/white"
-    android:padding="10dp">
+    android:orientation="vertical">
 
+    <include
+        android:id="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/layout_home_label"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:orientation="horizontal">
     <ImageView
         android:id="@+id/iv_home_food_item_icon"
         android:layout_width="@dimen/image_shop_list_item"
@@ -97,5 +108,5 @@
             android:textSize="@dimen/text_15sp" />
 
     </RelativeLayout>
-
+    </LinearLayout>
 </LinearLayout>

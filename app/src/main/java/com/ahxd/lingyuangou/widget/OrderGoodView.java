@@ -2,7 +2,6 @@ package com.ahxd.lingyuangou.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,11 +9,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
-import com.ahxd.lingyuangou.base.ModelCallback;
 import com.ahxd.lingyuangou.bean.OrderBean;
 import com.ahxd.lingyuangou.ui.home.activity.GoodDetailActivity;
-import com.ahxd.lingyuangou.ui.mine.activity.OrderDetailActivity;
-import com.ahxd.lingyuangou.utils.GlideApp;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
@@ -64,7 +61,7 @@ public class OrderGoodView extends RelativeLayout {
             tvOrderGoodSaleNum.setText(String.format("数量:%s", bean.getGoodsNum()));
 //            tvOrderGoodOldPrice.getPaint().setAntiAlias(true);
 //            tvOrderGoodOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-            GlideApp.with(mContext).load(bean.getGoodsImg()).into(ivOrderGoodIcon);
+            Glide.with(mContext).load(bean.getGoodsImg()).into(ivOrderGoodIcon);
         }
     }
 
@@ -82,7 +79,7 @@ public class OrderGoodView extends RelativeLayout {
             tvOrderGoodSaleNum.setText(String.format("数量:%s", data.optString("goodsNum")));
 //            tvOrderGoodOldPrice.getPaint().setAntiAlias(true);
 //            tvOrderGoodOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-            GlideApp.with(mContext).load(data.optString("goodsImg")).into(ivOrderGoodIcon);
+            Glide.with(mContext).load(data.optString("goodsImg")).into(ivOrderGoodIcon);
             setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

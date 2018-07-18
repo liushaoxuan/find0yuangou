@@ -49,6 +49,13 @@ public class Constant {
     // 支付
     public static final int REQ_PAY = 0x2005;
 
+    // 购买资格
+    public static final  int REQ_PURCHASEQUALIFICATIO = 0x2005;
+
+    public static final int PAY_TYPE_WALLET = 0x4001;
+    public static final int PAY_TYPE_WX = 2;
+    public static final int PAY_TYPE_ALIPAY = 3;
+
     /**
      * 数据库
      */
@@ -58,4 +65,9 @@ public class Constant {
     public static final String TABLE_SEARCH_HISTORY = "search_history";
     // 数据库版本
     public static final int DATABASE_VERSION = 1;
+
+    /**
+     * 标记
+     */
+    public static final String SP_WEIXIN_PAY = "sp_weixin_pay";
 }

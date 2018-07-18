@@ -65,7 +65,7 @@ public class ShopGoodsViewHolder extends RecyclerView.ViewHolder {
 //        if (bean instanceof ShopGoodBean) {
             tvHomeShopGoodItemName.setText(( bean).getGoodsName());
 //            tvHomeFoodItemTips.setText(( bean).getGoodsTips());
-            tvHomeFoodItemReturnPrice.setText(String.format("返货币:%s", (bean).getReturnPrice()));
+            tvHomeFoodItemReturnPrice.setText(String.format("增加:%s", (bean).getReturnPrice()));
             tvHomeShopItemGoodOldPrice.setText(String.format("￥%s", (bean).getMarketPrice()));
             tvHomeShopItemGoodNowPrice.setText(String.format("￥%s", (bean).getShopPrice()));
             tvHomeShopItemGoodOldPrice.getPaint().setAntiAlias(true);
@@ -76,7 +76,7 @@ public class ShopGoodsViewHolder extends RecyclerView.ViewHolder {
 //            tvHomeShopGoodItemName.setText(((FavoriteGoodBean) bean).getGoodsName());
 //            tvHomeFoodItemTips.setVisibility(View.INVISIBLE);
 ////            tvHomeFoodItemTips.setText(((FavoriteGoodBean) bean).getGoodsTips());
-//            tvHomeFoodItemReturnPrice.setText(String.format("返货币:%s", ((FavoriteGoodBean) bean).getReturnPrice()));
+//            tvHomeFoodItemReturnPrice.setText(String.format("增加:%s", ((FavoriteGoodBean) bean).getReturnPrice()));
 //            tvHomeShopItemGoodOldPrice.setVisibility(View.GONE);
 ////            tvHomeShopItemGoodOldPrice.setText(String.format("￥%s", ((FavoriteGoodBean) bean).getMarketPrice()));
 //            tvHomeShopItemGoodNowPrice.setText(String.format("￥%s", ((FavoriteGoodBean) bean).getShopPrice()));

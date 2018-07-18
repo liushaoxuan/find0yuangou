@@ -394,9 +394,7 @@ public class ExchangeGiftAdapter extends RecyclerView.Adapter {
             holder.goodSecond.setData(mGiftData.get(1));
             holder.goodThird.setData(mGiftData.get(2));
             holder.goodForth.setData(mGiftData.get(3));
-            holder.goodFifth.setData(mGiftData.get(4));
             holder.goodForth.setOnClickListener(mListener);
-            holder.goodFifth.setOnClickListener(mListener);
         } else if (mGiftData.size() == 3) {
             holder.llHomeGiftBottom.setVisibility(View.GONE);
             holder.goodFirst.setData(mGiftData.get(0));
@@ -434,8 +432,8 @@ public class ExchangeGiftAdapter extends RecyclerView.Adapter {
         }
         holder.tvHomeFoodItemTips.setText(String.format("地址:%s", foodShopBean.getShopAddress()));
         holder.tvHomeFoodItemSaleNum.setText(String.format("销量:%s", foodShopBean.getSaleCount()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s", foodShopBean.getScoreRate()));
-        holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s%%",
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s", foodShopBean.getScoreRate()));
+        holder.tvHomeFoodItemPrice.setText(String.format("增加:%s%%",
                 String.format(Locale.CHINA, "%.0f", Float.parseFloat(foodShopBean.getScoreRate()) * 100)));
         Glide.with(mContext).load(foodShopBean.getShopImg()).into(holder.ivHomeFoodItemIcon);
         holder.setItemClickListener(new OnItemClickListener() {
@@ -455,8 +453,8 @@ public class ExchangeGiftAdapter extends RecyclerView.Adapter {
         holder.tvHomeFinanceItemName.setText(financeBean.getShopName());
         holder.tvHomeFinanceItemTips.setText(String.format("%s", financeBean.getShopAddress()));
         holder.tvHomeFinanceItemSaleNum.setText(String.format("销量:%s", financeBean.getSaleCount()));
-        holder.tvHomeFinanceItemPrice.setText(String.format("返货币:%s", financeBean.getScoreRate()));
-        holder.tvHomeFinanceItemPrice.setText(String.format("返货币:%s%%",
+        holder.tvHomeFinanceItemPrice.setText(String.format("增加:%s", financeBean.getScoreRate()));
+        holder.tvHomeFinanceItemPrice.setText(String.format("增加:%s%%",
                 String.format(Locale.CHINA, "%.0f", Float.parseFloat(financeBean.getScoreRate()) * 100)));
         Glide.with(mContext).load(financeBean.getShopImg()).into(holder.ivHomeFinanceItemIcon);
         holder.setItemClickListener(new OnItemClickListener() {
@@ -476,7 +474,7 @@ public class ExchangeGiftAdapter extends RecyclerView.Adapter {
         holder.tvHomeGoodsName.setText(goodBean.getGoodsName());
         holder.tvHomeGoodsTips.setText(goodBean.getGoodsTips());
         holder.tvHomeGoodsPrice.setText(String.format("￥%s", goodBean.getShopPrice()));
-        holder.tvHomeGoodsBackNum.setText(String.format("返货币:%s", goodBean.getReturnPrice()));
+        holder.tvHomeGoodsBackNum.setText(String.format("增加:%s", goodBean.getReturnPrice()));
         Glide.with(mContext).load(goodBean.getGoodsImg()).into(holder.ivHomeGoodsImage);
         holder.setGoodData(goodBean);
     }
@@ -609,8 +607,6 @@ public class ExchangeGiftAdapter extends RecyclerView.Adapter {
         HomeSmallGoodView goodThird;
         @BindView(R.id.good_forth)
         HomeSmallGoodView goodForth;
-        @BindView(R.id.good_fifth)
-        HomeSmallGoodView goodFifth;
         @BindView(R.id.ll_home_gift_bottom)
         LinearLayout llHomeGiftBottom;
 
@@ -682,11 +678,7 @@ public class ExchangeGiftAdapter extends RecyclerView.Adapter {
                     intent.putExtra("goodsName", mGiftData.get(3).getGoodsName());
                     mContext.startActivity(intent);
                     break;
-                case R.id.good_fifth:
-                    intent.putExtra("goodsId", mGiftData.get(4).getGoodsId());
-                    intent.putExtra("goodsName", mGiftData.get(4).getGoodsName());
-                    mContext.startActivity(intent);
-                    break;
+
             }
         }
     };

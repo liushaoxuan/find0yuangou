@@ -19,6 +19,7 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 
 /**
  * Created by wpc on 2018/1/17.
+ * 推广中心
  */
 
 public class ExtensionCenterActivity extends BaseActivity implements IExtensionCenterContract.IExtensionCenterView{

@@ -77,7 +77,7 @@ public class FoodShopListAdapter extends RecyclerView.Adapter {
             holder.tvHomeFoodItemSaleDelete.setVisibility(View.GONE);
             holder.tvHomeFoodItemTips.setText(foodShopBean.getShopAddress());
             holder.tvHomeFoodItemSaleNum.setText(String.format("销量:%s", foodShopBean.getSaleCount()));
-            holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s%%",
+            holder.tvHomeFoodItemPrice.setText(String.format("增加:%s%%",
                     String.format(Locale.CHINA, "%.0f", Float.parseFloat(foodShopBean.getScoreRate()) * 100)));
             Glide.with(mContext).load(foodShopBean.getShopImg()).into(holder.ivHomeFoodItemIcon);
             holder.setItemClickListener(new OnItemClickListener() {
@@ -106,7 +106,7 @@ public class FoodShopListAdapter extends RecyclerView.Adapter {
             });
 
 //            holder.tvHomeFoodItemSaleNum.setText(String.format("销量:%s", favoriteShopBean.getSaleCount()));
-            holder.tvHomeFoodItemPrice.setText(String.format("返货币:%s%%",
+            holder.tvHomeFoodItemPrice.setText(String.format("增加:%s%%",
                     String.format(Locale.CHINA, "%.0f", Float.parseFloat(favoriteShopBean.getScoreRate()) * 100)));
             Glide.with(mContext).load(favoriteShopBean.getShopImg()).into(holder.ivHomeFoodItemIcon);
             holder.setItemClickListener(new OnItemClickListener() {

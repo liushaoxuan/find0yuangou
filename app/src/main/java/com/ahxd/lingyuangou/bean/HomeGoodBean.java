@@ -2,7 +2,7 @@ package com.ahxd.lingyuangou.bean;
 
 /**
  * Created by Administrator on 2017/12/28.
- * 首页推荐商品bean
+ * 首页热门商品bean
  */
 
 public class HomeGoodBean {

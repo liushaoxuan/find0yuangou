@@ -2,11 +2,13 @@ package com.ahxd.lingyuangou.ui.home.contract;
 
 import com.ahxd.lingyuangou.base.BaseView;
 import com.ahxd.lingyuangou.base.ModelCallback;
+import com.ahxd.lingyuangou.bean.BannerBean;
 import com.ahxd.lingyuangou.bean.HomeCatBean;
 import com.ahxd.lingyuangou.bean.HomeFinanceBean;
 import com.ahxd.lingyuangou.bean.HomeFoodShopBean;
 import com.ahxd.lingyuangou.bean.HomeGiftBean;
 import com.ahxd.lingyuangou.bean.HomeGoodBean;
+import com.ahxd.lingyuangou.bean.HomeRecomendCarBean;
 
 import org.json.JSONArray;
 
@@ -18,62 +20,107 @@ import java.util.List;
 
 public interface IHomeContract {
 
-    public interface IHomeView extends BaseView {
-        public void showBanner(JSONArray banner);
+    interface IHomeView extends BaseView {
+        void showBanner(List<BannerBean> banner);
 
-        public void showCats(List<HomeCatBean> cats);
+        void showCats(List<HomeCatBean> cats);
 
-        public void showArticles(JSONArray articles);
+        void showArticles(JSONArray articles);
 
-        public void showGifts(List<HomeGiftBean> gifts);
+        void showGifts(List<HomeGiftBean> gifts);
 
-        public void showAds(JSONArray ads);
+        void showAds(JSONArray ads);
 
-        public void showFoods(List<HomeFoodShopBean> foods);
+        void showFoods(List<HomeFoodShopBean> foods);
 
-        public void showHotels(List<HomeFoodShopBean> foods);
-        public void showEducations(List<HomeFoodShopBean> foods);
-        public void showEntertainments(List<HomeFoodShopBean> foods);
+        void showHotels(List<HomeFoodShopBean> foods);
 
-        public void showFinances(List<HomeFinanceBean> finances);
+        void showEducations(List<HomeFoodShopBean> foods);
 
-        public void showGoods(List<HomeGoodBean> goods);
+        void showEntertainments(List<HomeFoodShopBean> foods);
+
+        void showFinances(List<HomeFoodShopBean> finances);
+
+        void showGoods(List<HomeGoodBean> goods);
+
+        //设置推荐汽车
+        void showCars(List<HomeFoodShopBean> goods);
+
+        //设置推荐健康
+        void showHealth(List<HomeFoodShopBean> healths);
+
+        //推荐商务
+        void showCommerceData(List<HomeFoodShopBean> commerce);
+
+        //推荐家政
+        void showHousekeeping(List<HomeFoodShopBean> housekeeping);
+
+        //推荐家居
+        void showHomes(List<HomeFoodShopBean> homes);
     }
 
-    public interface IHomePresenter {
+    interface IHomePresenter {
         // 获取Home数据
-        public void getHomeData();
+        void getHomeData();
     }
 
-    public interface IHomeModel {
+    interface IHomeModel {
         // 获取Home数据
-        public void getHomeData(IHomeCallback callback);
+        void getHomeData(IHomeCallback callback);
 
-        public abstract class IHomeCallback extends ModelCallback {
+        abstract class IHomeCallback extends ModelCallback {
 
             public IHomeCallback(BaseView view) {
                 super(view);
             }
 
-            public void onBannerData(JSONArray banner) {}
+            public void onBannerData(List<BannerBean> banner) {
+            }
 
-            public void onCatData(List<HomeCatBean> cats) {}
+            public void onCatData(List<HomeCatBean> cats) {
+            }
 
-            public void onArticleData(JSONArray articles) {}
+            public void onArticleData(JSONArray articles) {
+            }
 
-            public void onGiftData(List<HomeGiftBean> gifts) {}
+            public void onGiftData(List<HomeGiftBean> gifts) {
+            }
 
-            public void onAdData(JSONArray ads) {}
+            public void onAdData(JSONArray ads) {
+            }
 
-            public void onFoodData(List<HomeFoodShopBean> foods) {}
+            public void onFoodData(List<HomeFoodShopBean> foods) {
+            }
 
-            public void onHotelsData(List<HomeFoodShopBean> hotels) {}
-            public void onEducationData(List<HomeFoodShopBean> educations) {}
-            public void onEntertainmentData(List<HomeFoodShopBean> entertainments) {}
+            public void onHotelsData(List<HomeFoodShopBean> hotels) {
+            }
 
-            public void onFinanceData(List<HomeFinanceBean> finances) {}
+            public void onEducationData(List<HomeFoodShopBean> educations) {
+            }
 
-            public void onGoodsData(List<HomeGoodBean> goods) {}
+            public void onEntertainmentData(List<HomeFoodShopBean> entertainments) {
+            }
+
+            public void onFinanceData(List<HomeFoodShopBean> finances) {
+            }
+
+            public void onGoodsData(List<HomeGoodBean> goods) {
+            }
+
+            public void onHealthData(List<HomeFoodShopBean> healths) {
+            }
+
+            public void onCarsData(List<HomeFoodShopBean> cars) {
+            }
+
+            public void onCommerceData(List<HomeFoodShopBean> commerce) {
+            }
+
+            public void onHousekeepingData(List<HomeFoodShopBean> housekeeping) {
+            }
+
+            public void onHomeData(List<HomeFoodShopBean> homes) {
+            }
         }
 
     }

@@ -5,17 +5,10 @@ package com.ahxd.lingyuangou.bean;
  * 首页热门餐饮店铺bean
  */
 
-public class HomeFoodShopBean {
-
-//    {
-//            "shopId": 1,
-//            "shopName": "0\u5143\u8d2d\u81ea\u8425\u603b\u90e8",
-//            "shopImg": "http:\/\/m.findlyg.com\/upload\/shops\/2017-11\/5a127ac32fa97.png",
-//            "distance": "1.2",
-//            "scoreRate": "10.00",
-//            "saleCount": 0
-//    }
-
+public class HomeFoodShopBean extends BaseBean {
+    private String orderNum;
+    private String lng;
+    private String lat;
     private String shopId;
     private String shopName;
     private String shopImg;
@@ -23,6 +16,30 @@ public class HomeFoodShopBean {
     private String scoreRate;
     private String saleCount;
     private String shopAddress;
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
 
     public String getShopId() {
         return shopId;

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <ImageView
+        android:id="@+id/iv_user_img"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_app_start"
+        android:layout_marginRight="5dp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="曹操"
+                android:textSize="@dimen/text_14sp"
+                android:textColor="@color/color_cart_total_bg"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="返利: "
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textSize="@dimen/text_14sp"
+                android:textColor="@color/color_cart_total_bg"/>
+            <TextView
+                android:id="@+id/tv_rebate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=" 20000元"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textSize="@dimen/text_14sp"
+                android:textColor="@color/color_cart_total_bg"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="积分: "
+                android:textSize="@dimen/text_14sp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/color_cart_total_bg"/>
+            <TextView
+                android:id="@+id/tv_integral"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="20000"
+                android:textSize="@dimen/text_14sp"
+                android:textColor="@color/color_cart_total_bg"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="bottom">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合伙人/商家"
+                android:textSize="@dimen/text_14sp"
+                android:textColor="@color/color_cart_total_bg"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID:"
+                android:textSize="@dimen/text_14sp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/color_cart_total_bg"/>
+            <TextView
+                android:id="@+id/tv_ids"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10010000"
+                android:textSize="@dimen/text_14sp"
+                android:textColor="@color/color_cart_total_bg"/>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

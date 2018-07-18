@@ -10,6 +10,9 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 
 /**
  * Created by Mao Zhendong on 2018/1/19.
@@ -22,6 +25,7 @@ public class LocationUtils {
     private AMapLocationClientOption mLocationOptions = null;
 
     private OnLocationChangeListener mListener;
+    private AMapLocation mLocation;
 
     public interface OnLocationChangeListener {
         public void onLocationSuccess(String city, String longitude, String latitude);
@@ -158,6 +162,7 @@ public class LocationUtils {
             if (null != location) {
                 //errCode等于0代表定位成功，其他的为定位失败，具体的可以参照官网定位错误码说明
                 if (location.getErrorCode() == 0) {
+                    mLocation = location;
                     RxBus.getInstance().post(location);
                     ToastUtils.showShort(MaoApplication.getInstance(), "定位成功!");
                     SPUtils.put(MaoApplication.getInstance(), Constant.KEY_CITY, location.getCity().isEmpty()?"定位中":location.getCity());
@@ -187,4 +192,58 @@ public class LocationUtils {
             }
         }
     };
+
+    /**
+     * 设置搜索信息
+     */
+    public  void setSearch(String keyWord) {
+        /**
+         * POI查询对象
+         */
+        PoiSearch poiSearch;
+        /**
+         * Poi查询信息对象
+         */
+        PoiSearch.Query query;
+        query = new PoiSearch.Query(keyWord, "", "");
+        //keyWord表示搜索字符串，
+        //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
+        //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
+        query.setPageSize(10);// 设置每页最多返回多少条poiitem
+        query.setPageNum(1);//设置查询页码
+        //构造 PoiSearch 对象，并设置监听。
+        poiSearch = new PoiSearch(MaoApplication.getInstance(), query);
+        poiSearch.setOnPoiSearchListener(new PoiSearch.OnPoiSearchListener() {
+            @Override
+            public void onPoiSearched(PoiResult poiResult, int i) {
+                if (poiResult==null||poiResult.getPois().size()==0){
+                    ToastUtils.showShort(MaoApplication.getInstance(),"没有找到结果");
+                }else {
+                    LatLonPoint point =  poiResult.getPois().get(0).getLatLonPoint();
+                    SPUtils.put(MaoApplication.getInstance(), Constant.KEY_LOCATION, point.getLongitude() + "," + point.getLatitude() + "");
+                }
+
+            }
+
+            @Override
+            public void onPoiItemSearched(PoiItem poiItem, int i) {
+
+            }
+        });
+        //调用 PoiSearch 的 searchPOIAsyn() 方法发送请求。
+        poiSearch.searchPOIAsyn();
+    }
+
+    /**
+     *
+     */
+
+    public void setCurrentLocation(String keyWord){
+        if (mLocation!=null){
+            SPUtils.put(MaoApplication.getInstance(), Constant.KEY_LOCATION, mLocation.getLongitude() + "," + mLocation.getLatitude() + "");
+        }else {
+            setSearch(keyWord);
+        }
+
+    }
 }

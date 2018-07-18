@@ -1,26 +1,17 @@
 package com.ahxd.lingyuangou.ui.mine.activity;
 
-import android.content.Intent;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
-import com.ahxd.lingyuangou.listener.OnMarketingListener;
-import com.ahxd.lingyuangou.ui.home.activity.RechargeActivity;
 import com.ahxd.lingyuangou.ui.mine.contract.IMyMarketingCodeContract;
-import com.ahxd.lingyuangou.ui.mine.contract.IWalletContract;
 import com.ahxd.lingyuangou.ui.mine.presenter.MyMarketingCodePresenter;
-import com.ahxd.lingyuangou.ui.mine.presenter.WalletPresenter;
 import com.ahxd.lingyuangou.utils.GlideApp;
 import com.ahxd.lingyuangou.widget.CircleImageView;
-import com.ahxd.lingyuangou.widget.PicTextRightItem;
 
 import org.json.JSONObject;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by wpc on 2018/1/16.

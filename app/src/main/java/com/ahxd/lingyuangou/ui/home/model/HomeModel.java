@@ -1,15 +1,19 @@
 package com.ahxd.lingyuangou.ui.home.model;
 
+import com.ahxd.lingyuangou.bean.BannerBean;
 import com.ahxd.lingyuangou.bean.HomeCatBean;
 import com.ahxd.lingyuangou.bean.HomeFinanceBean;
 import com.ahxd.lingyuangou.bean.HomeFoodShopBean;
 import com.ahxd.lingyuangou.bean.HomeGiftBean;
 import com.ahxd.lingyuangou.bean.HomeGoodBean;
+import com.ahxd.lingyuangou.bean.HomeRecomendCarBean;
 import com.ahxd.lingyuangou.callback.MaoStringCallback;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.home.contract.IHomeContract;
 import com.ahxd.lingyuangou.utils.LocationUtils;
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 
 import org.json.JSONArray;
@@ -26,6 +30,8 @@ public class HomeModel implements IHomeContract.IHomeModel {
 
     @Override
     public void getHomeData(final IHomeCallback callback) {
+        String  areaid =  LocationUtils.getInstance().getLocation();
+        areaid.isEmpty();
         OkGo.<String>post(HostUrl.URL_HOME)
                 .params("areaId", LocationUtils.getInstance().getLocation())
                 .execute(new MaoStringCallback(callback) {
@@ -34,22 +40,13 @@ public class HomeModel implements IHomeContract.IHomeModel {
                         JSONObject data = root.optJSONObject(Constant.RESP_DATA);
 
                         JSONArray banner = data.optJSONArray("banner");
-                        callback.onBannerData(banner);
+                        callback.onBannerData(JSON.parseArray(banner.toString(),BannerBean.class));
 
                         JSONArray cats = data.optJSONArray("cats");
                         callback.onCatData(getCatsData(cats));
 
-                        JSONArray articles = data.optJSONArray("articles");
-                        callback.onArticleData(articles);
-
-                        JSONArray gifts = data.optJSONArray("gifts");
-                        callback.onGiftData(getGiftsData(gifts));
-
                         JSONArray ads = data.optJSONArray("ads");
                         callback.onAdData(ads);
-
-                        JSONArray foods = data.optJSONArray("foods");
-                        callback.onFoodData(getFoodsData(foods));
 
                         JSONArray hotels = data.optJSONArray("hotel");
                         callback.onHotelsData(getFoodsData(hotels));
@@ -60,11 +57,37 @@ public class HomeModel implements IHomeContract.IHomeModel {
                         JSONArray entertainments = data.optJSONArray("entertainment");
                         callback.onEntertainmentData(getFoodsData(entertainments));
 
+                        JSONArray foods = data.optJSONArray("foods");
+                        callback.onFoodData(getFoodsData(foods));
+
                         JSONArray finances = data.optJSONArray("finances");
                         callback.onFinanceData(getFinanceData(finances));
 
                         JSONArray goods = data.optJSONArray("goods");
                         callback.onGoodsData(getGoodsData(goods));
+
+                        JSONArray articles = data.optJSONArray("articles");
+                        callback.onArticleData(articles);
+
+                        JSONArray gifts = data.optJSONArray("gifts");
+                        callback.onGiftData(getGiftsData(gifts));
+
+                        //商务
+                        JSONArray commerce = data.optJSONArray("commerce");
+                        callback.onCommerceData(JSON.parseArray(commerce.toString(),HomeFoodShopBean.class));
+                        //家政
+                        JSONArray housekeeping = data.optJSONArray("housekeeping");
+                        callback.onHousekeepingData(JSON.parseArray(housekeeping.toString(),HomeFoodShopBean.class));
+
+                        JSONArray healths = data.optJSONArray("health");
+                        callback.onHealthData(JSON.parseArray(healths.toString(),HomeFoodShopBean.class));
+
+                        JSONArray cars = data.optJSONArray("car");
+                        callback.onCarsData(JSON.parseArray(cars.toString(),HomeFoodShopBean.class));
+
+                        //家居
+                        JSONArray home = data.optJSONArray("home");
+                        callback.onHomeData(JSON.parseArray(home.toString(),HomeFoodShopBean.class));
                     }
                 });
     }
@@ -117,11 +140,11 @@ public class HomeModel implements IHomeContract.IHomeModel {
 
     }
 
-    private List<HomeFinanceBean> getFinanceData(JSONArray finances) {
-        List<HomeFinanceBean> financeBeanList = new ArrayList<>();
-        HomeFinanceBean homeFinanceBean;
+    private List<HomeFoodShopBean> getFinanceData(JSONArray finances) {
+        List<HomeFoodShopBean> financeBeanList = new ArrayList<>();
+        HomeFoodShopBean homeFinanceBean;
         for (int i = 0; i < finances.length(); i++) {
-            homeFinanceBean = new HomeFinanceBean();
+            homeFinanceBean = new HomeFoodShopBean();
             homeFinanceBean.setShopId(finances.optJSONObject(i).optString("shopId"));
             homeFinanceBean.setShopName(finances.optJSONObject(i).optString("shopName"));
             homeFinanceBean.setShopImg(finances.optJSONObject(i).optString("shopImg"));

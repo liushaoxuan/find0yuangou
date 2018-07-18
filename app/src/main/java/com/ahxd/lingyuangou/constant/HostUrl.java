@@ -8,11 +8,18 @@ package com.ahxd.lingyuangou.constant;
 public class HostUrl {
 
 //    public static final String HOST = "http://m.findlyg.com/index.php/";
+    //测试环境
     public static final String HOST = "http://apptest.findlyg.com/";
+    //线上环境
 //    public static final String HOST = "http://m.findlyg.com/";
 
     // Home页数据获取
     public static final String URL_HOME = HOST + "api/index/index";
+
+    /**
+     * 获取系统配置接口
+     */
+    public static String URL_CONFIG = HOST + "api/shopping/geyconfig";
 
     /**
      * 首页搜索
@@ -288,5 +295,60 @@ public class HostUrl {
 
 //    获取版本号及下载地址
     public static final String URL_PLATE_CHECKVERSION = HOST + "api/plate/checkVersion";
+
+    /**
+     * 个人中心
+     */
+
+    // 获取某个商家下所有的会员
+    public static final String URL_UCERNTER_GETSHOPMEMBERLIST = HOST + "api/Shopping/"+"getShopMemberList";
+
+    //某个商家的报表
+    public static final String URL_UCERNTER_SHOPCONSUMERREPORT = HOST + "api/Shopping/"+"shopConsumerReport";
+
+    //某个商家的订单
+    public static final String URL_UCERNTER_SHOPCONSUMERORDER = HOST + "api/Shopping/"+"shopConsumerOrder";
+
+    /**
+     *  获取商家和卡信息 购买资格
+     */
+    public static final String URL_UCERNTER_PURCHASE_QUALIFICATION = HOST + "api/Shopping/"+"buycardhtml_zige";
+
+    /**
+     *  购买商家卡页 获取商家信息
+     */
+    public static final String URL_UCERNTER_BUSINESS_INFORMATION = HOST + "api/Shopping/"+"buycardhtml_sj";
+
+    /**
+     * 购买商家卡页 获取某商家的所有卡信息
+     */
+    public static final String URL_UCERNTER_BUSINESS_INFORMATION_CARDS = HOST + "api/Shopping/"+"buycardhtml_sjcard";
+
+    /**
+     * 购买资格  购买商家卡 选择卡后的接口
+     */
+    public static final String URL_UCERNTER_BUYQUALIFICATIONDISPLAY = HOST + "api/Shopping/"+"buyQualificationDisplay";
+    /**
+     * 购买卡明细
+     */
+    public static final String URL_UCERNTER_BUYCARDDETAIL = HOST + "api/Shopping/"+"buycarddetail";
+    /**
+     * 购买商家卡准备之前
+     */
+    public static final String URL_UCERNTER_BUYQUALIFICATIONREADY = HOST + "api/Shopping/"+"buyQualificationReady";
+
+    /**
+     * 购买资格前的准备
+     */
+    public static final String URL_UCERNTER_BUYUSERCARDREADY = HOST + "api/Shopping/"+"buyUserCardReady";
+    /**
+     * 购买资格卡完成
+     */
+    public static final String URL_UCERNTER_BUYQUALIFICATIONCOMPLETE = HOST + "api/Shopping/"+"buyQualificationComplete";
+
+    /**
+     * 获取购买商家卡的支付信息
+     */
+    public static final String URL_UCERNTER_PAYPARAMETER = HOST + "api/pay/payparameter";
 
 }

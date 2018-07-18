@@ -5,14 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
-import com.ahxd.lingyuangou.bean.MarketingBean;
 import com.ahxd.lingyuangou.bean.ShopManagemntDetailBean;
-import com.ahxd.lingyuangou.listener.OnMarketingListener;
-import com.ahxd.lingyuangou.utils.GlideApp;
 
 import java.util.List;
 
