@@ -11,13 +11,14 @@ import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
 import com.ahxd.lingyuangou.bean.BuyCardDetailBean;
 import com.ahxd.lingyuangou.bean.UserInfoBean;
+import com.ahxd.lingyuangou.callback.MyStringCallBack;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.mine.adapter.BuyCardDetailAdapter;
 import com.ahxd.lingyuangou.utils.SPUtils;
+import com.ahxd.lingyuangou.utils.SmothScrollUtil;
 import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 购买卡明细
@@ -63,8 +63,9 @@ public class BuyCardDetailActivity extends BaseActivity {
         list = new ArrayList<>();
         adapter = new BuyCardDetailAdapter(this, list);
         rvCardList.setLayoutManager(new LinearLayoutManager(this));
+        SmothScrollUtil.ScrollSmooth_LinearLayout(this, rvCardList);
         rvCardList.setAdapter(adapter);
-        if (userInfoBean!=null){
+        if (userInfoBean != null) {
             充值明细();
         }
     }
@@ -87,27 +88,27 @@ public class BuyCardDetailActivity extends BaseActivity {
     /**
      * 获取充值明细
      */
-    private void 充值明细(){
+    private void 充值明细() {
         HttpParams params = new HttpParams();
         params.put("token", (String) SPUtils.get(this, Constant.KEY_TOKEN, ""));
         params.put("userid", userInfoBean.getUserId());
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUYCARDDETAIL)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
                             String body = response.body();
                             JSONObject obj = new JSONObject(body);
-                            List<BuyCardDetailBean> temp = JSON.parseArray(obj.optString("data").toString(),BuyCardDetailBean.class);
-                            if (temp!=null){
+                            List<BuyCardDetailBean> temp = JSON.parseArray(obj.optString("data").toString(), BuyCardDetailBean.class);
+                            if (temp != null) {
                                 list.clear();
                                 list.addAll(temp);
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e(TAG,e.getMessage());
+                            Log.e(TAG, e.getMessage());
                         }
                     }
                 });

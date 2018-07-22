@@ -12,8 +12,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,10 +27,11 @@ import com.ahxd.lingyuangou.bean.FanliBean;
 import com.ahxd.lingyuangou.bean.PurchaseQualificationBean;
 import com.ahxd.lingyuangou.bean.UserInfoBean;
 import com.ahxd.lingyuangou.bean.payReadyBean;
+import com.ahxd.lingyuangou.callback.MyStringCallBack;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.listener.OnChangeItemClickListener;
-import com.ahxd.lingyuangou.ui.cart.activity.PayResultActivity;
+import com.ahxd.lingyuangou.ui.main.activity.MainActivity;
 import com.ahxd.lingyuangou.ui.mine.adapter.PurchaseQualificatioCardAdapter;
 import com.ahxd.lingyuangou.utils.GlideApp;
 import com.ahxd.lingyuangou.utils.L;
@@ -37,8 +40,7 @@ import com.ahxd.lingyuangou.utils.SPUtils;
 import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.OkGo; 
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -51,7 +53,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -75,8 +76,6 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
     TextView tvRebate;
     @BindView(R.id.tv_integral)
     TextView tvIntegral;
-    @BindView(R.id.tv_ids)
-    TextView tvIds;
     @BindView(R.id.btn_details)
     Button btnDetails;
     @BindView(R.id.tv_merchant)
@@ -85,6 +84,8 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
     RecyclerView rvCards;
     @BindView(R.id.btn_pay)
     Button btnPay;
+    @BindView(R.id.cb_fanli)
+    RadioButton cbFanli;
     @BindView(R.id.tv_rest_money)
     TextView tvRestMoney;
     @BindView(R.id.tv_userd_money)
@@ -143,6 +144,17 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
      */
     private int isuseadfee = 0;
 
+    /**
+     * 商家卡
+     */
+    private BusinessCardBean businessCardBean;
+    /**
+     * 返利
+     */
+    private FanliBean fanliBean;
+
+    private boolean payflag = false;
+
     @Override
     protected void initListener() {
 
@@ -163,11 +175,42 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         if (userInfoBean != null) {
             获取商家和卡信息();
             GlideApp.with(this).load(userInfoBean.getUserPhoto()).into(ivUserImg);
-            tvIds.setText(userInfoBean.getUserId() + "");
             tvName.setText(userInfoBean.getUserName());
             tvRebate.setText(userInfoBean.getUserIncome() + "元");
             tvIntegral.setText(userInfoBean.getUserScore());
         }
+
+        cbFanli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                //选择了商家卡 并且选择了支付方式
+                if (payflag) {
+                    btnBuy.setEnabled(true);
+                    btnBuy.setSelected(true);
+                }
+                //未选择支付方式
+                else {
+                    //选中
+                    if (checked) {
+                        ///购卡金额大于可用余额
+                        if (businessCardBean != null && businessCardBean.getNeedCash() > fanliBean.getFreeUserincomebalance()) {
+                            btnBuy.setEnabled(false);
+                            btnBuy.setSelected(false);
+                        }
+                        ///购卡金额西小于等于可用余额
+                        else {
+                            btnBuy.setEnabled(true);
+                            btnBuy.setSelected(true);
+                        }
+                    }
+                    //未选中
+                    else {
+                        btnBuy.setEnabled(false);
+                        btnBuy.setSelected(false);
+                    }
+                }
+            }
+        });
     }
 
 
@@ -188,6 +231,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                 购买商家卡之前的准备();
                 break;
             case R.id.rb_online_pay_weixin:
+                payflag = true;
                 if (!membercardId.isEmpty()) {
                     btnBuy.setEnabled(true);
                     btnBuy.setSelected(true);
@@ -198,6 +242,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                 rbOnlinePayZhifubao.setSelected(false);
                 break;
             case R.id.rb_online_pay_zhifubao:
+                payflag = true;
                 if (!membercardId.isEmpty()) {
                     btnBuy.setEnabled(true);
                     btnBuy.setSelected(true);
@@ -229,7 +274,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         params.put("shopid", userInfoBean.getUserId());
         OkGo.<String>get(HostUrl.URL_UCERNTER_PURCHASE_QUALIFICATION)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
@@ -257,11 +302,16 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         for (BusinessCardBean item : list) {
             item.setIsselected(false);
         }
-        membercardId = qualificationBean.getCards().get(position).getMemberCardid();
-        list.get(position).setIsselected(true);
-        adapter.notifyItemChanged(position);
-        adapter.notifyItemChanged(lastPosition);
-        获取卡信息(qualificationBean.getCards().get(position).getMemberCardid());
+        if (!membercardId.equals(qualificationBean.getCards().get(position).getMemberCardid())) {
+            businessCardBean = qualificationBean.getCards().get(position);
+            membercardId = qualificationBean.getCards().get(position).getMemberCardid();
+            list.get(position).setIsselected(true);
+            adapter.notifyItemChanged(position);
+            adapter.notifyItemChanged(lastPosition);
+            获取卡信息(qualificationBean.getCards().get(position).getMemberCardid());
+            cbFanli.setChecked(false);
+        }
+
     }
 
     /**
@@ -275,7 +325,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         params.put("membercardid", membercardid);
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUYQUALIFICATIONDISPLAY)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
@@ -283,10 +333,10 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                             JSONObject obj = new JSONObject(body);
                             List<FanliBean> tempList = JSON.parseArray(obj.optString("data").toString(), FanliBean.class);
                             if (tempList != null && tempList.size() > 0) {
-                                FanliBean bean = tempList.get(0);
+                                fanliBean = tempList.get(0);
                                 llChoseCard.setVisibility(View.VISIBLE);
-                                tvRestMoney.setText(bean.getBQDuserincome() + "元");
-                                tvUserdMoney.setText(bean.getFreeUserincomebalance() + "元");
+                                tvRestMoney.setText(fanliBean.getBQDuserincome() + "元");
+                                tvUserdMoney.setText(fanliBean.getFreeUserincomebalance() + "元");
                             } else {
                                 llChoseCard.setVisibility(View.GONE);
                                 ToastUtils.showShort(PurchaseQualificatioActivity.this, obj.optString("msg").toString());
@@ -309,7 +359,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         params.put("membercardid", membercardId);
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUYQUALIFICATIONREADY)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
@@ -345,13 +395,17 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         params.put("userid", userInfoBean.getUserId());
         params.put("cardorderid", cardorderid);
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUYQUALIFICATIONCOMPLETE)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
                             String body = response.body();
                             JSONObject obj = new JSONObject(body);
                             ToastUtils.showShort(PurchaseQualificatioActivity.this, obj.optString("msg").toString());
+                            Intent intent = new Intent(PurchaseQualificatioActivity.this, MainActivity.class);
+                            intent.putExtra("position", 3);
+                            startActivity(intent);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -371,7 +425,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         params.put("token", (String) SPUtils.get(this, Constant.KEY_TOKEN, ""));
         OkGo.<String>get(HostUrl.URL_UCERNTER_PAYPARAMETER)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
@@ -443,8 +497,8 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         ToastUtils.showShort(PurchaseQualificatioActivity.this, "支付成功");
-                        Intent intent = new Intent(PurchaseQualificatioActivity.this, PayResultActivity.class);
-                        intent.putExtra("type", "");
+                        Intent intent = new Intent(PurchaseQualificatioActivity.this, MainActivity.class);
+                        intent.putExtra("position", 3);
                         startActivity(intent);
                         finish();
                     } else if (TextUtils.equals(resultStatus, "6001")) {

@@ -345,6 +345,10 @@ public class HostUrl {
      * 购买资格卡完成
      */
     public static final String URL_UCERNTER_BUYQUALIFICATIONCOMPLETE = HOST + "api/Shopping/"+"buyQualificationComplete";
+    /**
+     * 购买商家卡完成
+     */
+    public static final String URL_UCERNTER_BUYUSERCARDCOMPLETE = HOST + "api/Shopping/"+"buyUserCardComplete";
 
     /**
      * 获取购买商家卡的支付信息

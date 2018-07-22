@@ -25,42 +25,29 @@
                 android:layout_height="wrap_content"
                 android:text="曹操"
                 android:textSize="@dimen/text_14sp"
-                android:textColor="@color/color_cart_total_bg"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="返利: "
                 android:layout_weight="1"
-                android:gravity="right"
-                android:textSize="@dimen/text_14sp"
                 android:textColor="@color/color_cart_total_bg"/>
-            <TextView
-                android:id="@+id/tv_rebate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text=" 20000元"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textSize="@dimen/text_14sp"
-                android:textColor="@color/color_cart_total_bg"/>
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="返利: "
+                    android:gravity="right"
+                    android:textSize="@dimen/text_14sp"
+                    android:textColor="@color/color_cart_total_bg"/>
+                <TextView
+                    android:id="@+id/tv_rebate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 20000元"
+                    android:gravity="right"
+                    android:textSize="@dimen/text_14sp"
+                    android:textColor="@color/color_cart_total_bg"/>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="积分: "
-                android:textSize="@dimen/text_14sp"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/color_cart_total_bg"/>
-            <TextView
-                android:id="@+id/tv_integral"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="20000"
-                android:textSize="@dimen/text_14sp"
-                android:textColor="@color/color_cart_total_bg"/>
         </LinearLayout>
 
         <LinearLayout
@@ -73,23 +60,30 @@
                 android:layout_height="wrap_content"
                 android:text="合伙人/商家"
                 android:textSize="@dimen/text_14sp"
+                android:layout_weight="1"
                 android:textColor="@color/color_cart_total_bg"/>
+
+
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID:"
+                android:text="积分:  "
                 android:textSize="@dimen/text_14sp"
-                android:layout_marginLeft="20dp"
                 android:textColor="@color/color_cart_total_bg"/>
             <TextView
-                android:id="@+id/tv_ids"
+                android:id="@+id/tv_integral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10010000"
+                android:text="20000"
                 android:textSize="@dimen/text_14sp"
                 android:textColor="@color/color_cart_total_bg"/>
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

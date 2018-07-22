@@ -2,6 +2,7 @@ package com.ahxd.lingyuangou.ui.home.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -22,6 +23,7 @@ import com.ahxd.lingyuangou.ui.mine.activity.EvaluateActivity;
 import com.ahxd.lingyuangou.ui.mine.activity.LoginActivity;
 import com.ahxd.lingyuangou.utils.L;
 import com.ahxd.lingyuangou.utils.SPUtils;
+import com.ahxd.lingyuangou.utils.ShareUtil;
 import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.ahxd.lingyuangou.widget.AdsPopupWindow;
 import com.alibaba.fastjson.JSON;
@@ -282,5 +284,9 @@ public class GoodDetailActivity extends BaseActivity implements IGoodDetailContr
                 });
     }
 
+
+    public void tvShare(View view){
+        ShareUtil.Share(this);
+    }
 
 }

@@ -314,5 +314,6 @@ public class MainActivity extends AppCompatActivity implements IMainContract.IMa
         super.onNewIntent(intent);
         int position = intent.getIntExtra("position", 0);
         showFragment(position);
+        ((RadioButton)rgContainer.getChildAt(position)).setChecked(true);
     }
 }

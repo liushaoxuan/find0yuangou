@@ -18,35 +18,45 @@
 
             <include layout="@layout/layout_mine_title" />
 
-            <com.ahxd.lingyuangou.widget.CircleImageView
-                android:id="@+id/iv_mine_person_header"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@mipmap/ic_mine_person_header_normal"
-                app:civ_border_color="@color/white"
-                app:civ_border_overlay="true"
-                app:civ_border_width="2dp" />
-
-            <TextView
-                android:id="@+id/tv_mine_person_name"
+            <LinearLayout
+                android:id="@+id/ll_ucercenter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:text="@string/string_unknown"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_16sp" />
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="vertical">
+                <com.ahxd.lingyuangou.widget.CircleImageView
+                    android:id="@+id/iv_mine_person_header"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/ic_mine_person_header_normal"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_overlay="true"
+                    app:civ_border_width="2dp" />
 
-            <TextView
-                android:id="@+id/tv_mine_person_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:text="@string/string_mine_login"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_16sp" />
+                <TextView
+                    android:id="@+id/tv_mine_person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/string_unknown"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_mine_person_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/string_mine_login"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_16sp" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

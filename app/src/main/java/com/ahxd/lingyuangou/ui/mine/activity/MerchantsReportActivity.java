@@ -11,6 +11,7 @@ import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
 import com.ahxd.lingyuangou.bean.ConsumerReportBean;
 import com.ahxd.lingyuangou.bean.UserInfoBean;
+import com.ahxd.lingyuangou.callback.MyStringCallBack;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.mine.adapter.MerchantsReportAdapter;
@@ -18,7 +19,6 @@ import com.ahxd.lingyuangou.utils.GlideApp;
 import com.ahxd.lingyuangou.utils.SPUtils;
 import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
@@ -52,14 +52,8 @@ public class MerchantsReportActivity extends BaseActivity {
     TextView tvRebate;
     @BindView(R.id.tv_integral)
     TextView tvIntegral;
-    @BindView(R.id.tv_ids)
-    TextView tvIds;
     @BindView(R.id.rv_report)
     RecyclerView rvReport;
-    @BindView(R.id.tv_member_total_cost)
-    TextView tvMemberTotalCost;
-    @BindView(R.id.tv_member_cart_amount)
-    TextView tvMemberCartAmount;
     /**
      * 用户数据
      */
@@ -76,14 +70,13 @@ public class MerchantsReportActivity extends BaseActivity {
     @Override
     protected void initData() {
         datas = new ArrayList<>();
-        setToolBarTitle("商家报表");
+        setToolBarTitle("我的报表");
         initExtras();
         adapter = new MerchantsReportAdapter(this, datas);
         rvReport.setLayoutManager(new LinearLayoutManager(this));
         rvReport.setAdapter(adapter);
         if (userInfoBean != null) {
             GlideApp.with(this).load(userInfoBean.getUserPhoto()).into(ivUserImg);
-            tvIds.setText(userInfoBean.getUserId() + "");
             tvName.setText(userInfoBean.getUserName());
             tvRebate.setText(userInfoBean.getUserIncome() + "元");
             tvIntegral.setText(userInfoBean.getUserScore());
@@ -115,7 +108,7 @@ public class MerchantsReportActivity extends BaseActivity {
         params.put("shopid", userInfoBean.getUserId());
         OkGo.<String>post(HostUrl.URL_UCERNTER_SHOPCONSUMERREPORT)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
@@ -147,8 +140,12 @@ public class MerchantsReportActivity extends BaseActivity {
         for (ConsumerReportBean item : datas) {
             total = total + item.getTotalMoney();
         }
-
-        tvMemberTotalCost.setText(total + "");
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

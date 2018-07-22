@@ -20,6 +20,7 @@ import com.ahxd.lingyuangou.ui.home.adapter.FoodShopDetailAdapter;
 import com.ahxd.lingyuangou.ui.home.contract.IFoodShopDetailContract;
 import com.ahxd.lingyuangou.ui.home.presenter.FoodShopDetailPresenter;
 import com.ahxd.lingyuangou.ui.navigation.CheckPermissionsActivity;
+import com.ahxd.lingyuangou.utils.ShareUtil;
 import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.ahxd.lingyuangou.widget.AdsPopupWindow;
 import com.ahxd.lingyuangou.widget.RecyclerViewDivider;
@@ -244,5 +245,9 @@ public class FoodShopDetailActivity extends CheckPermissionsActivity implements 
         LatLng parama = new LatLng(Double.parseDouble(mShopInfo.optString("lat")), Double.parseDouble(mShopInfo.optString("lng")));
         AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), new AmapNaviParams(null, null, new Poi(mShopInfo.optString("shopName"), parama, ""), AmapNaviType.DRIVER), FoodShopDetailActivity.this);
 
+    }
+
+    public void tvShare(View view){
+        ShareUtil.Share(this);
     }
 }

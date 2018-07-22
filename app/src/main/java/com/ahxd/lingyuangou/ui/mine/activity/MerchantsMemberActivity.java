@@ -11,6 +11,7 @@ import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
 import com.ahxd.lingyuangou.bean.MerchantsMemberBean;
 import com.ahxd.lingyuangou.bean.UserInfoBean;
+import com.ahxd.lingyuangou.callback.MyStringCallBack;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.mine.adapter.MerchantsMemberAdapter;
@@ -19,7 +20,6 @@ import com.ahxd.lingyuangou.utils.SPUtils;
 import com.ahxd.lingyuangou.utils.SmothScrollUtil;
 import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
@@ -50,8 +50,6 @@ public class MerchantsMemberActivity extends BaseActivity {
     TextView tvRebate;
     @BindView(R.id.tv_integral)
     TextView tvIntegral;
-    @BindView(R.id.tv_ids)
-    TextView tvIds;
     @BindView(R.id.rv_member_recyclerview)
     RecyclerView rvMemberRecyclerview;
     @BindView(R.id.tv_member_total_cost)
@@ -82,7 +80,6 @@ public class MerchantsMemberActivity extends BaseActivity {
         initExtras();
         if (userInfoBean!=null){
             GlideApp.with(this).load(userInfoBean.getUserPhoto()).into(ivUserImg);
-            tvIds.setText(userInfoBean.getUserId()+"");
             tvName.setText(userInfoBean.getUserName());
             tvRebate.setText(userInfoBean.getUserIncome()+"元");
             tvIntegral.setText(userInfoBean.getUserScore());
@@ -116,7 +113,7 @@ public class MerchantsMemberActivity extends BaseActivity {
         params.put("shopid",userInfoBean.getUserId());
         OkGo.<String>post(HostUrl.URL_UCERNTER_GETSHOPMEMBERLIST)
                 .params(params)
-                .execute(new StringCallback(){
+                .execute(new MyStringCallBack(this){
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {

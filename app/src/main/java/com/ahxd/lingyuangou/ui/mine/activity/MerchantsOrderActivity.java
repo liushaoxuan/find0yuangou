@@ -11,16 +11,15 @@ import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
-import com.ahxd.lingyuangou.bean.ConsumerReportBean;
 import com.ahxd.lingyuangou.bean.UserInfoBean;
 import com.ahxd.lingyuangou.bean.shopConsumerOrderBean;
+import com.ahxd.lingyuangou.callback.MyStringCallBack;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.mine.adapter.MerchantsOrderAdapter;
 import com.ahxd.lingyuangou.utils.SPUtils;
 import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
@@ -54,8 +53,6 @@ public class MerchantsOrderActivity extends BaseActivity implements RadioGroup.O
     TextView tvRebate;
     @BindView(R.id.tv_integral)
     TextView tvIntegral;
-    @BindView(R.id.tv_ids)
-    TextView tvIds;
     @BindView(R.id.rp)
     RadioGroup radioGroup;
     @BindView(R.id.rb_today)
@@ -99,12 +96,13 @@ public class MerchantsOrderActivity extends BaseActivity implements RadioGroup.O
         adapter = new MerchantsOrderAdapter(this,datas);
         rvMemberRecyclerview.setAdapter(adapter);
         if (userInfoBean != null) {
-            tvIds.setText(userInfoBean.getUserId()+"");
             tvName.setText(userInfoBean.getUserName());
             tvRebate.setText(userInfoBean.getUserIncome()+"元");
             tvIntegral.setText(userInfoBean.getUserScore());
             getOrders();
         }
+
+        rbToday.setChecked(true);
     }
 
     @Override
@@ -132,7 +130,7 @@ public class MerchantsOrderActivity extends BaseActivity implements RadioGroup.O
         params.put("displaytype", inDisplayType);
         OkGo.<String>post(HostUrl.URL_UCERNTER_SHOPCONSUMERORDER)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {

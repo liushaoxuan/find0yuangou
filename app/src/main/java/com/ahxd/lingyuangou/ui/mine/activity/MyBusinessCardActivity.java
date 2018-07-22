@@ -1,6 +1,7 @@
 package com.ahxd.lingyuangou.ui.mine.activity;
 
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.ahxd.lingyuangou.ui.mine.contract.IMyBusinessCardContract;
 import com.ahxd.lingyuangou.ui.mine.presenter.MyBusinessCardPresenter;
 import com.ahxd.lingyuangou.utils.DeviceUtils;
 import com.ahxd.lingyuangou.utils.GlideApp;
+import com.ahxd.lingyuangou.utils.ShareUtil;
 import com.ahxd.lingyuangou.widget.CircleImageView;
 import com.ahxd.lingyuangou.zxing.encoding.EncodingHandler;
 import com.google.zxing.WriterException;
@@ -81,5 +83,9 @@ public class MyBusinessCardActivity extends BaseActivity implements IMyBusinessC
             }
 
         }
+    }
+
+    public void tvShare(View view){
+        ShareUtil.Share(this);
     }
 }

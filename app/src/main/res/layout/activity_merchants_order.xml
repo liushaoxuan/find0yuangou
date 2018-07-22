@@ -24,7 +24,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:background="@drawable/bg_rb_times"
-            android:textColor="@color/text_color_normal"
+            android:textColor="@color/color_times_selector"
             android:text="当天"/>
         <RadioButton
             android:id="@+id/rb_yestoday"
@@ -36,7 +36,7 @@
             android:paddingRight="10dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/bg_rb_times"
-            android:textColor="@color/text_color_normal"
+            android:textColor="@color/color_times_selector"
             android:text="昨天"/>
 
         <RadioButton
@@ -49,7 +49,7 @@
             android:paddingRight="10dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/bg_rb_times"
-            android:textColor="@color/text_color_normal"
+            android:textColor="@color/color_times_selector"
             android:text="全部"/>
     </RadioGroup>
     <include

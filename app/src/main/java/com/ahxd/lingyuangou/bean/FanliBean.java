@@ -24,11 +24,11 @@ public class FanliBean extends BaseBean {
     /**
      * 可使用余额
      */
-    private String freeUserincomebalance;
+    private double freeUserincomebalance;
 
     private int outReturnVal;
 
-    public void setFreeUserincomebalance(String freeUserincomebalance) {
+    public void setFreeUserincomebalance(double freeUserincomebalance) {
         this.freeUserincomebalance = freeUserincomebalance;
     }
 
@@ -44,7 +44,7 @@ public class FanliBean extends BaseBean {
         this.BQDneedCash = BQDneedCash;
     }
 
-    public String getFreeUserincomebalance() {
+    public double getFreeUserincomebalance() {
         return freeUserincomebalance;
     }
 

@@ -22,7 +22,7 @@
             android:id="@+id/tv_cardName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:gravity="center"
             android:text="卡名称" />
 
@@ -35,7 +35,7 @@
             android:id="@+id/tv_buy_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:gravity="center"
             android:text="购买时间" />
 

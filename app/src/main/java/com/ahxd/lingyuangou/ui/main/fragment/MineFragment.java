@@ -2,10 +2,8 @@ package com.ahxd.lingyuangou.ui.main.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +11,7 @@ import android.widget.TextView;
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseFragment;
 import com.ahxd.lingyuangou.bean.UserInfoBean;
+import com.ahxd.lingyuangou.callback.MyStringCallBack;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.mine.activity.AddressListActivity;
@@ -56,7 +55,6 @@ import java.io.Serializable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/12/25.
@@ -238,20 +236,23 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
     @OnClick({R.id.iv_mine_setting, R.id.iv_mine_message, R.id.ll_mine_wallet, R.id.ll_mine_order,
             R.id.ll_mine_favorite, R.id.ll_mine_spread, R.id.ptr_mine_card, R.id.ptr_mine_profile,
             R.id.ptr_mine_location, R.id.ptr_mine_market_center, R.id.ptr_mine_online_service,
-            R.id.ptr_mine_contact_us, R.id.ptr_mine_shop_stay, R.id.tv_mine_person_login,
-            R.id.iv_mine_person_header,
-            R.id.ptr_mine_purchase_qualificatio, R.id.ptr_mine_merchant_charging_card, R.id.ptr_mine_merchant_members, R.id.ptr_mine_business_report, R.id.ptr_mine_business_order})
+            R.id.ptr_mine_contact_us, R.id.ptr_mine_shop_stay, R.id.ll_ucercenter,
+            R.id.ptr_mine_purchase_qualificatio, R.id.ptr_mine_merchant_charging_card,
+            R.id.ptr_mine_merchant_members, R.id.ptr_mine_business_report, R.id.ptr_mine_business_order})
     public void onViewClicked(View view) {
-        if (!UserUtils.isLogin()) {
-            ToastUtils.showShort(getActivity(), "请先登录");
-            return;
-        }
+
         switch (view.getId()) {
+            //设置
             case R.id.iv_mine_setting:
                 Intent settingIntent = new Intent(mContext, SettingActivity.class);
                 startActivity(settingIntent);
                 break;
+            //消息记录
             case R.id.iv_mine_message:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent messageIntent = new Intent(mContext, MessageListActivity.class);
                 if (null != data.optString("messagesCount")) {
                     if (data.optString("messagesCount").equals("0")) {
@@ -261,39 +262,82 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
                 }
                 startActivity(messageIntent);
                 break;
-            case R.id.iv_mine_person_header:
-//                Intent personalIntent = new Intent(mContext, PersonalInfoActivity.class);
-//                startActivity(personalIntent);
+            //用户头像昵称
+            case R.id.ll_ucercenter:
+                if (!UserUtils.isLogin()) {
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
+                }
                 break;
+            //我的钱包
             case R.id.ll_mine_wallet:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent walletIntent = new Intent(mContext, WalletActivity.class);
                 startActivity(walletIntent);
                 break;
+            //我的订单
             case R.id.ll_mine_order:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent orderIntent = new Intent(mContext, OrderListActivity.class);
                 startActivity(orderIntent);
                 break;
+            //我的收藏
             case R.id.ll_mine_favorite:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent favoriteIntent = new Intent(mContext, FavoriteActivity.class);
                 startActivity(favoriteIntent);
                 break;
+            //推广中心
             case R.id.ll_mine_spread:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent spreadIntent = new Intent(mContext, ExtensionCenterActivity.class);
                 startActivity(spreadIntent);
                 break;
+            //我的名片
             case R.id.ptr_mine_card:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent businessCardIntent = new Intent(mContext, MyBusinessCardActivity.class);
                 startActivity(businessCardIntent);
                 break;
+            //我的资料
             case R.id.ptr_mine_profile:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent personalIntent = new Intent(mContext, PersonalInfoActivity.class);
                 startActivity(personalIntent);
                 break;
+            //我的地址
             case R.id.ptr_mine_location:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent addressIntent = new Intent(mContext, AddressListActivity.class);
                 startActivity(addressIntent);
                 break;
+            //营销人中心
             case R.id.ptr_mine_market_center:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 if (this.data != null) {
                     if (this.data.optString("isMarketing").equals("0")) {
                         //申请入驻营销
@@ -310,16 +354,22 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
 
 
                 break;
+            //在线客服
             case R.id.ptr_mine_online_service:
                 mPresenter.getCustomService();
                 break;
+            //联系我们
             case R.id.ptr_mine_contact_us:
-
                 Intent mineContactIntent = new Intent(mContext, MineContactActivity.class);
                 startActivity(mineContactIntent);
 
                 break;
+            //商店入驻
             case R.id.ptr_mine_shop_stay:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 switch (mApplyStatus) {
                     case -9:
                         Intent shopStayIntent = new Intent(mContext, ShopStayActivity.class);
@@ -336,13 +386,13 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
                         break;
                 }
                 break;
-            case R.id.tv_mine_person_login:
-                Intent loginIntent = new Intent(mContext, LoginActivity.class);
-                startActivityForResult(loginIntent, Constant.REQ_LOGIN);
-                break;
 
             //购买资格
             case R.id.ptr_mine_purchase_qualificatio:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent purchaseQualificatioIntent = new Intent(mContext, PurchaseQualificatioActivity.class);
                 purchaseQualificatioIntent.putExtra("userInfoBean", userInfoBean);
                 startActivityForResult(purchaseQualificatioIntent, Constant.REQ_PURCHASEQUALIFICATIO);
@@ -350,6 +400,10 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
 
             //商家充值卡
             case R.id.ptr_mine_merchant_charging_card:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent toUpIntent = new Intent(mContext, MerchantsTopUpActivity.class);
                 toUpIntent.putExtra("userInfoBean", userInfoBean);
                 startActivityForResult(toUpIntent, Constant.REQ_PURCHASEQUALIFICATIO);
@@ -357,6 +411,10 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
 
             //商家会员
             case R.id.ptr_mine_merchant_members:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent memberIntent = new Intent(mContext, MerchantsMemberActivity.class);
                 memberIntent.putExtra("userInfoBean", (Serializable) userInfoBean);
                 startActivityForResult(memberIntent, Constant.REQ_PURCHASEQUALIFICATIO);
@@ -364,6 +422,10 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
 
             //商家报表
             case R.id.ptr_mine_business_report:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent reportIntent = new Intent(mContext, MerchantsReportActivity.class);
                 reportIntent.putExtra("userInfoBean", userInfoBean);
                 startActivityForResult(reportIntent, Constant.REQ_PURCHASEQUALIFICATIO);
@@ -372,6 +434,10 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
 
             //商家订单
             case R.id.ptr_mine_business_order:
+                if (!UserUtils.isLogin()) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
+                    return;
+                }
                 Intent MerchantsorderIntent = new Intent(mContext, MerchantsOrderActivity.class);
                 MerchantsorderIntent.putExtra("userInfoBean", userInfoBean);
                 startActivityForResult(MerchantsorderIntent, Constant.REQ_PURCHASEQUALIFICATIO);
@@ -387,7 +453,7 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
         params.put("token", (String) SPUtils.get(getActivity(), Constant.KEY_TOKEN, ""));
         OkGo.<String>get(HostUrl.URL_CONFIG)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(getActivity()) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         String body = response.body();

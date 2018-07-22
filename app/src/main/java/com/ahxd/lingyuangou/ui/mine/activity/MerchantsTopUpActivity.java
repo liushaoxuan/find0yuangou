@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,11 +30,11 @@ import com.ahxd.lingyuangou.bean.FanliBean;
 import com.ahxd.lingyuangou.bean.ShopBean;
 import com.ahxd.lingyuangou.bean.UserInfoBean;
 import com.ahxd.lingyuangou.bean.payReadyBean;
+import com.ahxd.lingyuangou.callback.MyStringCallBack;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.listener.OnChangeItemClickListener;
-import com.ahxd.lingyuangou.ui.cart.activity.OnlinePayActivity;
-import com.ahxd.lingyuangou.ui.cart.activity.PayResultActivity;
+import com.ahxd.lingyuangou.ui.main.activity.MainActivity;
 import com.ahxd.lingyuangou.ui.mine.adapter.PurchaseQualificatioCardAdapter;
 import com.ahxd.lingyuangou.ui.mine.adapter.SpinnerAdapter;
 import com.ahxd.lingyuangou.utils.GlideApp;
@@ -43,12 +45,10 @@ import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,7 +57,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -80,16 +79,12 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
     TextView tvRebate;
     @BindView(R.id.tv_integral)
     TextView tvIntegral;
-    @BindView(R.id.tv_ids)
-    TextView tvIds;
     @BindView(R.id.btn_details)
     Button btnDetails;
     @BindView(R.id.sp_report_merchants)
     Spinner spReportMerchants;
     @BindView(R.id.rv_cards)
     RecyclerView rvCards;
-    @BindView(R.id.btn_report_pay)
-    Button btnReportPay;
     @BindView(R.id.tv_report_rest_money)
     TextView tvReportRestMoney;
     @BindView(R.id.tv_report_userd_money)
@@ -120,6 +115,10 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
     LinearLayout llGiftGone;
     @BindView(R.id.btn_report_top_up)
     TextView btnReportTopUp;
+    @BindView(R.id.ll_shengyu)
+    RelativeLayout llShengyu;
+    @BindView(R.id.cb_fanli)
+    RadioButton rbFanli;
 
 
     private PurchaseQualificatioCardAdapter adapter;
@@ -151,9 +150,21 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
     private String membercardId = "";
 
     /**
-     * 是否使用返利  1使用 0使用
+     * 商家卡
+     */
+    private BusinessCardBean businessCardBean;
+
+    /**
+     * 返利
+     */
+    private FanliBean fanliBean;
+
+    /**
+     * 是否使用返利  1使用 0不使用
      */
     private int isuseadfee = 0;
+
+    private boolean payflag = false;
 
     @Override
     protected void initListener() {
@@ -167,9 +178,41 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         sponerList = new ArrayList<>();
         setToolBarTitle("商家充值卡");
         cardList = new ArrayList<>();
+        llShengyu.setVisibility(View.GONE);
         adapter = new PurchaseQualificatioCardAdapter(this, cardList);
         rvCards.setLayoutManager(new LinearLayoutManager(this));
         adapter.setOnClickListener(this);
+        rbFanli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                //选择了商家卡 并且选择了支付方式
+                if (ischeckedCard() && payflag) {
+                    btnReportTopUp.setEnabled(true);
+                    btnReportTopUp.setSelected(true);
+                }
+                //未选择支付方式
+                else if (!payflag) {
+                    //选中
+                    if (checked) {
+                        ///购卡金额大于可用余额
+                        if (businessCardBean != null && businessCardBean.getNeedCash() > fanliBean.getFreeUserincomebalance()) {
+                            btnReportTopUp.setEnabled(false);
+                            btnReportTopUp.setSelected(false);
+                        }
+                        ///购卡金额西小于等于可用余额
+                        else {
+                            btnReportTopUp.setEnabled(true);
+                            btnReportTopUp.setSelected(true);
+                        }
+                    }
+                    //未选中
+                    else {
+                        btnReportTopUp.setEnabled(false);
+                        btnReportTopUp.setSelected(false);
+                    }
+                }
+            }
+        });
         rvCards.setAdapter(adapter);
 
         spinnerAdapter = new SpinnerAdapter(this, sponerList);
@@ -179,6 +222,9 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 shopId = shopList.get(i).getShopId();
                 获取商家名下所有卡信息();
+                btnReportTopUp.setSelected(false);
+                btnReportTopUp.setEnabled(false);
+                llReport.setVisibility(View.GONE);
             }
 
             @Override
@@ -191,7 +237,6 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         if (userInfoBean != null) {
             获取商家列表信息();
             GlideApp.with(this).load(userInfoBean.getUserPhoto()).into(ivUserImg);
-            tvIds.setText(userInfoBean.getUserId() + "");
             tvName.setText(userInfoBean.getUserName());
             tvRebate.setText(userInfoBean.getUserIncome() + "元");
             tvIntegral.setText(userInfoBean.getUserScore());
@@ -203,7 +248,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         return R.layout.activity_merchants_top_up;
     }
 
-    @OnClick({R.id.btn_details, R.id.btn_report_pay, R.id.btn_report_top_up,R.id.rb_online_pay_weixin,R.id.rb_online_pay_zhifubao,R.id.rb_online_pay_wallet})
+    @OnClick({R.id.btn_details, R.id.btn_report_top_up, R.id.rb_online_pay_weixin, R.id.rb_online_pay_zhifubao, R.id.rb_online_pay_wallet})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_details:
@@ -211,13 +256,12 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                 intent.putExtra("userInfoBean", userInfoBean);
                 startActivity(intent);
                 break;
-            case R.id.btn_report_pay:
-                break;
             case R.id.btn_report_top_up:
                 购买商家卡之前的准备();
                 break;
             case R.id.rb_online_pay_weixin:
-                if (!membercardId.isEmpty()){
+                payflag = true;
+                if (ischeckedCard()) {
                     btnReportTopUp.setEnabled(true);
                     btnReportTopUp.setSelected(true);
                 }
@@ -227,7 +271,8 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                 rbOnlinePayZhifubao.setSelected(false);
                 break;
             case R.id.rb_online_pay_zhifubao:
-                if (!membercardId.isEmpty()){
+                payflag = true;
+                if (ischeckedCard()) {
                     btnReportTopUp.setEnabled(true);
                     btnReportTopUp.setSelected(true);
                 }
@@ -258,7 +303,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         params.put("shopid", shopId);
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUSINESS_INFORMATION_CARDS)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
@@ -288,7 +333,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         params.put("shopid", userInfoBean.getUserId());
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUSINESS_INFORMATION)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
@@ -307,8 +352,8 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                                 spReportMerchants.setSelection(0);
                                 spinnerAdapter.notifyDataSetChanged();
                                 获取商家名下所有卡信息();
-                            }else {
-                                ToastUtils.showShort(MerchantsTopUpActivity.this,obj.optString("msg").toString());
+                            } else {
+                                ToastUtils.showShort(MerchantsTopUpActivity.this, obj.optString("msg").toString());
                             }
 
                         } catch (JSONException e) {
@@ -324,11 +369,21 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         for (BusinessCardBean item : cardList) {
             item.setIsselected(false);
         }
-        membercardId = cardList.get(position).getMemberCardid();
-        cardList.get(position).setIsselected(true);
-        adapter.notifyItemChanged(position);
-        adapter.notifyItemChanged(lastPosition);
-        获取卡信息();
+        if (!membercardId.equals(cardList.get(position).getMemberCardid())) {
+            rbFanli.setChecked(false);
+            isuseadfee = 0;
+            membercardId = cardList.get(position).getMemberCardid();
+            businessCardBean = cardList.get(position);
+            cardList.get(position).setIsselected(true);
+            adapter.notifyItemChanged(position);
+            adapter.notifyItemChanged(lastPosition);
+            获取卡信息();
+            if (payflag) {
+                btnReportTopUp.setEnabled(true);
+                btnReportTopUp.setSelected(true);
+            }
+        }
+
     }
 
     /**
@@ -342,25 +397,25 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         params.put("membercardid", membercardId);
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUYQUALIFICATIONDISPLAY)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
                             String body = response.body();
                             JSONObject obj = new JSONObject(body);
                             List<FanliBean> tempList = JSON.parseArray(obj.optString("data").toString(), FanliBean.class);
-                            if (tempList!=null&&tempList.size()>0){
-                                FanliBean bean = tempList.get(0);
+                            if (tempList != null && tempList.size() > 0) {
+                                fanliBean = tempList.get(0);
                                 llReport.setVisibility(View.VISIBLE);
-                                tvReportRestMoney.setText(bean.getBQDuserincome() + "元");
-                                tvReportUserdMoney.setText(bean.getFreeUserincomebalance() + "元");
+                                tvReportRestMoney.setText(fanliBean.getBQDuserincome() + "元");
+                                tvReportUserdMoney.setText(fanliBean.getFreeUserincomebalance() + "元");
                             } else {
                                 llReport.setVisibility(View.GONE);
-                                ToastUtils.showShort(MerchantsTopUpActivity.this,obj.optString("msg").toString());
+                                ToastUtils.showShort(MerchantsTopUpActivity.this, obj.optString("msg").toString());
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Log.e(TAG,e.getMessage());
+                            Log.e(TAG, e.getMessage());
                         }
                     }
                 });
@@ -369,7 +424,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
     /**
      * 购买商家卡准备之前
      */
-    private void 购买商家卡之前的准备(){
+    private void 购买商家卡之前的准备() {
         HttpParams params = new HttpParams();
         params.put("token", (String) SPUtils.get(this, Constant.KEY_TOKEN, ""));
         params.put("userid", userInfoBean.getUserId());
@@ -377,24 +432,24 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         params.put("membercardid", membercardId);
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUYUSERCARDREADY)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
                             String body = response.body();
                             JSONObject obj = new JSONObject(body);
-                            payReadyBean readyBean = JSON.parseObject(obj.optString("data").toString(),payReadyBean.class);
-                            if (readyBean!=null){
+                            payReadyBean readyBean = JSON.parseObject(obj.optString("data").toString(), payReadyBean.class);
+                            if (readyBean != null) {
                                 //如果大于0，调用 api/pay/payparameter
-                                if (readyBean.getBMCneedCash()>0){
+                                if (readyBean.getBMCneedCash() > 0) {
                                     获取支付信息(readyBean);
                                 }
                                 //等于0调用buyQualificationComplete完成订单
-                                else if (readyBean.getBMCneedCash()==0){
-//                                    购买商家卡完成(readyBean.getBMCrechargeOrderid());
+                                else if (readyBean.getBMCneedCash() == 0) {
+                                    购买商家卡完成(readyBean.getBMCrechargeOrderid());
                                 }
-                            }else {
-                                ToastUtils.showShort(MerchantsTopUpActivity.this,obj.optString("msg").toString());
+                            } else {
+                                ToastUtils.showShort(MerchantsTopUpActivity.this, obj.optString("msg").toString());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -403,32 +458,58 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                 });
     }
 
+    /**
+     *
+     */
+    private void 购买商家卡完成(String cardorderid) {
+        HttpParams params = new HttpParams();
+        params.put("token", (String) SPUtils.get(this, Constant.KEY_TOKEN, ""));
+        params.put("userid", userInfoBean.getUserId());
+        params.put("cardorderid", cardorderid);
+        OkGo.<String>get(HostUrl.URL_UCERNTER_BUYUSERCARDCOMPLETE)
+                .execute(new MyStringCallBack(this) {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        try {
+                            String body = response.body();
+                            JSONObject obj = new JSONObject(body);
+                            ToastUtils.showShort(MerchantsTopUpActivity.this, obj.optString("msg").toString());
+                            Intent intent = new Intent(MerchantsTopUpActivity.this, MainActivity.class);
+                            intent.putExtra("position", 3);
+                            startActivity(intent);
+                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
 
     /**
      * 获取支付信息
      */
-    private void 获取支付信息(payReadyBean readyBean){
+    private void 获取支付信息(payReadyBean readyBean) {
         HttpParams params = new HttpParams();
-        params.put("paytype",payType);
+        params.put("paytype", payType);
         params.put("paycash", readyBean.getBMCneedCash());
 //        params.put("paycash", 0.01);  这是调试的时候设置的最少的钱支付
         params.put("payorder", readyBean.getBMCrechargeOrderid());
         params.put("token", (String) SPUtils.get(this, Constant.KEY_TOKEN, ""));
         OkGo.<String>get(HostUrl.URL_UCERNTER_PAYPARAMETER)
                 .params(params)
-                .execute(new StringCallback() {
+                .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
                             String body = response.body();
                             JSONObject obj = new JSONObject(body);
                             //微信支付
-                            if (payType==Constant.PAY_TYPE_WX){
+                            if (payType == Constant.PAY_TYPE_WX) {
                                 showWeixinPay(obj.optJSONObject("data"));
                             }
                             //支付宝支付
-                            else if (payType==Constant.PAY_TYPE_ALIPAY){
+                            else if (payType == Constant.PAY_TYPE_ALIPAY) {
                                 showZhifubaoPay(obj.optString("data"));
                             }
                         } catch (JSONException e) {
@@ -450,7 +531,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
             req.packageValue = data.optString("package");
             req.sign = data.optString("sign");
             ((MaoApplication) getApplication()).getWXApi().sendReq(req);
-            SPUtils.put(this,Constant.SP_WEIXIN_PAY,true);
+            SPUtils.put(this, Constant.SP_WEIXIN_PAY, true);
         }
     }
 
@@ -488,8 +569,8 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         ToastUtils.showShort(MerchantsTopUpActivity.this, "支付成功");
-                        Intent intent = new Intent(MerchantsTopUpActivity.this, PayResultActivity.class);
-                        intent.putExtra("type","");
+                        Intent intent = new Intent(MerchantsTopUpActivity.this, MainActivity.class);
+                        intent.putExtra("position", 3);
                         startActivity(intent);
                         finish();
                     } else if (TextUtils.equals(resultStatus, "6001")) {
@@ -505,4 +586,16 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
             }
         }
     };
+
+    /**
+     * 检查是否选择了商家卡
+     */
+    private boolean ischeckedCard() {
+        for (BusinessCardBean bean : cardList) {
+            if (bean.isIsselected()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
