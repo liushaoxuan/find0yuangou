@@ -47,6 +47,11 @@ public class OfflinePayPresenter implements IOfflinePayContract.IOfflinePayPrese
             public void onWalletPay(String msg) {
                 mView.showWalletPay(msg);
             }
+
+            @Override
+            public void onSjk(String msg) {
+                mView.showSjk(msg);
+            }
         });
     }
 }

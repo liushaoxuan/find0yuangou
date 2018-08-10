@@ -186,6 +186,12 @@ public class OnlinePayActivity extends BaseActivity implements IOnlinePayContrac
 
                         break;
                     case "good": // 商品详情（立即购买）
+                        btnOnlinePayAddAddress.setVisibility(View.GONE);
+                        llOnlinePayAddressContainer.setVisibility(View.VISIBLE);
+//                        tvOnlinePayReceiver.setText(String.format("收件人：%s", bean.getUserName()));
+//                        tvOnlinePayPhone.setText(bean.getUserPhone());
+//                        tvOnlinePayAddress.setText(bean.getUserAddress());
+//                        mAddressId = bean.getAddressId();
                         mAddressId = bean.getAddressId();
                         mPresenter.chooseAddressRefresh(mGoodsId, mSpecIds, mBuyNum, mAddressId);
                         break;
@@ -388,8 +394,8 @@ public class OnlinePayActivity extends BaseActivity implements IOnlinePayContrac
 
     private void showAddress(JSONObject address) {
         if (address == null || TextUtils.isEmpty(address.toString())) {
-            btnOnlinePayAddAddress.setVisibility(View.VISIBLE);
-            llOnlinePayAddressContainer.setVisibility(View.GONE);
+            btnOnlinePayAddAddress.setVisibility(View.GONE);
+            llOnlinePayAddressContainer.setVisibility(View.VISIBLE);
             mAddressId = null;
         } else {
             btnOnlinePayAddAddress.setVisibility(View.GONE);

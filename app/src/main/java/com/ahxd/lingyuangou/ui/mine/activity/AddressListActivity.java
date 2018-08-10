@@ -2,6 +2,7 @@ package com.ahxd.lingyuangou.ui.mine.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -10,6 +11,7 @@ import com.ahxd.lingyuangou.base.BaseActivity;
 import com.ahxd.lingyuangou.bean.AddressBean;
 import com.ahxd.lingyuangou.constant.Constant;
 import com.ahxd.lingyuangou.listener.OnEditAddressListener;
+import com.ahxd.lingyuangou.ui.cart.activity.OnlinePayActivity;
 import com.ahxd.lingyuangou.ui.mine.adapter.AddressListAdapter;
 import com.ahxd.lingyuangou.ui.mine.contract.IAddressContract;
 import com.ahxd.lingyuangou.ui.mine.presenter.AddressListPresenter;
@@ -34,6 +36,8 @@ public class AddressListActivity extends BaseActivity implements IAddressContrac
     private AddressListAdapter mAdapter;
     private AddressListPresenter mPresenter;
     private String mStartFrom;
+    private List<AddressBean> list;
+    private AddressBean bean;
 
     @Override
     protected void initView() {
@@ -41,6 +45,24 @@ public class AddressListActivity extends BaseActivity implements IAddressContrac
         setToolBarTitle("我的地址");
         mAdapter = new AddressListAdapter(this, this);
         lvMineAddressList.setAdapter(mAdapter);
+        lvMineAddressList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                bean = list.get(position);
+                for (int i = 0; i < list.size(); i++) {
+                    if (i == position) {
+                        if (bean.getIsDefault() == 1) {
+                            bean.setIsDefault(0);
+                        } else {
+                            bean.setIsDefault(1);
+                        }
+                    } else {
+                        list.get(i).setIsDefault(0);
+                    }
+                }
+                mPresenter.setDefaultAddress(bean.getAddressId());
+            }
+        });
     }
 
     @Override
@@ -79,6 +101,7 @@ public class AddressListActivity extends BaseActivity implements IAddressContrac
     @Override
     public void showAddressList(List<AddressBean> list) {
         mAdapter.setData(list);
+        this.list = list;
     }
 
     @Override
@@ -90,12 +113,14 @@ public class AddressListActivity extends BaseActivity implements IAddressContrac
     @Override
     public void showDefaultAddress(String msg) {
         ToastUtils.showShort(this, msg);
-        mAdapter.notifyDataSetChanged();
-        if (mStartFrom != null && "online_pay".equals(mStartFrom)) {
-            Intent intent = new Intent();
-            intent.putExtra("addressBean", mAdapter.getData());
-            setResult(RESULT_OK, intent);
-            finish();
+        if ("设置成功".equals(msg)) {
+            mAdapter.notifyDataSetChanged();
+            if (mStartFrom != null && "online_pay".equals(mStartFrom)) {
+                Intent intent = new Intent();
+                intent.putExtra("addressBean", bean);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
         }
     }
 
@@ -127,4 +152,6 @@ public class AddressListActivity extends BaseActivity implements IAddressContrac
             mPresenter.getAddressList();
         }
     }
+
+
 }

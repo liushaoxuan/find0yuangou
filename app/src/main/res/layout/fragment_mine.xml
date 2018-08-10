@@ -324,70 +324,76 @@
                 android:layout_height="1px"
                 android:background="@color/color_bg" />
 
-            <!--购买资格-->
-            <com.ahxd.lingyuangou.widget.PicTextRightItem
-                android:visibility="gone"
-                android:id="@+id/ptr_mine_purchase_qualificatio"
+            <LinearLayout
+                android:id="@+id/ll_new_module"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:image="@mipmap/ic_revenue_record"
-                app:label="@string/string_mine_purchase_qualificatio" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_bg" />
+                android:orientation="vertical">
 
-            <!--商家充值卡-->
-            <com.ahxd.lingyuangou.widget.PicTextRightItem
-                android:visibility="gone"
-                android:id="@+id/ptr_mine_merchant_charging_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:image="@mipmap/ic_revenue_record"
-                app:label="@string/string_mine_merchant_charging_card" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_bg" />
+                <!--购买资格-->
+                <com.ahxd.lingyuangou.widget.PicTextRightItem
+                    android:id="@+id/ptr_mine_purchase_qualificatio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:image="@mipmap/ic_revenue_record"
+                    app:label="@string/string_mine_purchase_qualificatio" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_bg" />
 
-            <!--商家会员-->
-            <com.ahxd.lingyuangou.widget.PicTextRightItem
-                android:visibility="gone"
-                android:id="@+id/ptr_mine_merchant_members"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:image="@mipmap/ic_team"
-                app:label="@string/string_mine_merchant_members" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_bg" />
-            <!--商家报表-->
-            <com.ahxd.lingyuangou.widget.PicTextRightItem
-                android:visibility="gone"
-                android:id="@+id/ptr_mine_business_report"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:image="@mipmap/ic_mine_item_shop_stay"
-                app:label="@string/string_mine_business_report" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_bg" />
+                <!--商家充值卡-->
+                <com.ahxd.lingyuangou.widget.PicTextRightItem
+                    android:id="@+id/ptr_mine_merchant_charging_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:image="@mipmap/ic_revenue_record"
+                    app:label="@string/string_mine_merchant_charging_card" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_bg" />
 
-            <!--商家订单-->
-            <com.ahxd.lingyuangou.widget.PicTextRightItem
+                <!--商家会员-->
+                <com.ahxd.lingyuangou.widget.PicTextRightItem
+                    android:visibility="gone"
+                    android:id="@+id/ptr_mine_merchant_members"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:image="@mipmap/ic_team"
+                    app:label="@string/string_mine_merchant_members" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_bg" />
+                <!--商家报表-->
+                <com.ahxd.lingyuangou.widget.PicTextRightItem
+                    android:visibility="gone"
+                    android:id="@+id/ptr_mine_business_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:image="@mipmap/ic_mine_item_shop_stay"
+                    app:label="@string/string_mine_business_report" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_bg" />
 
-                android:id="@+id/ptr_mine_business_order"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:image="@mipmap/ic_mine_item_location"
-                android:visibility="gone"
-                app:label="@string/string_mine_business_order" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_bg" />
+                <!--商家订单-->
+                <com.ahxd.lingyuangou.widget.PicTextRightItem
+
+                    android:id="@+id/ptr_mine_business_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:image="@mipmap/ic_mine_item_location"
+                    android:visibility="gone"
+                    app:label="@string/string_mine_business_order" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_bg" />
+            </LinearLayout>
+
             <com.ahxd.lingyuangou.widget.PicTextRightItem
 
                 android:id="@+id/ptr_mine_online_service"

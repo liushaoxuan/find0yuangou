@@ -70,4 +70,9 @@ public class Constant {
      * 标记
      */
     public static final String SP_WEIXIN_PAY = "sp_weixin_pay";
+
+    /**
+     * 用户信息
+     */
+    public static final String SP_USERINFO = "sp_userinfo";
 }

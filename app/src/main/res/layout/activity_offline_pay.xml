@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,14 +8,14 @@
     <include layout="@layout/layout_tool_bar" />
 
     <ScrollView
-        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,10 +121,10 @@
                 android:paddingTop="8dp">
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -135,19 +136,19 @@
 
                     <TextView
                         android:id="@+id/tv_offline_pay_ad_money"
-                        android:textSize="@dimen/text_14sp"
-                        android:textColor="@color/color_theme"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/color_theme"
+                        android:textSize="@dimen/text_14sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -159,11 +160,11 @@
 
                     <TextView
                         android:id="@+id/tv_offline_pay_coin"
-                        android:textSize="@dimen/text_14sp"
-                        android:textColor="@color/color_theme"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/color_theme"
+                        android:textSize="@dimen/text_14sp" />
 
                 </LinearLayout>
 
@@ -300,13 +301,81 @@
                     android:textSize="@dimen/text_15sp" />
 
                 <TextView
-                    android:layout_toRightOf="@id/tv_offline_pay_wallet_name"
                     android:id="@+id/tv_offline_pay_wallet_money"
-                    android:layout_marginLeft="10dp"
-                    android:layout_centerVertical="true"
-                    android:textSize="@dimen/text_14sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/tv_offline_pay_wallet_name"
+                    android:textSize="@dimen/text_14sp" />
+
+            </RelativeLayout>
+
+            <!--商家卡支付-->
+
+
+            <RelativeLayout
+                android:id="@+id/rl_shangjiaka"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_bg" />
+
+                <ImageView
+                    android:id="@+id/rb_offline_pay_sjk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@drawable/draw_cart_group_rb_bg" />
+
+                <FrameLayout
+                    android:id="@+id/iv_offline_pay_sjk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:src="@mipmap/ic_orange_red" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="商"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_offline_pay_sjk_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_offline_pay_sjk"
+                    android:text="商家卡支付"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_15sp" />
+
+                <TextView
+                    android:id="@+id/tv_offline_pay_sjk_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/tv_offline_pay_sjk_name"
+                    android:textSize="@dimen/text_14sp" />
 
             </RelativeLayout>
 
@@ -314,12 +383,13 @@
                 android:id="@+id/btn_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/draw_ads_pop_window_button_bg"
                 android:text="@string/string_confirm_pay"
                 android:textColor="@color/white"
+                android:layout_marginBottom="40dp"
                 android:textSize="@dimen/text_16sp" />
 
         </LinearLayout>

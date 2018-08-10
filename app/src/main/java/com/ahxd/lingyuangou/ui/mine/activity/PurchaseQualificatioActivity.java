@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,7 +41,7 @@ import com.ahxd.lingyuangou.utils.SPUtils;
 import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
-import com.lzy.okgo.OkGo; 
+import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -85,7 +86,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
     @BindView(R.id.btn_pay)
     Button btnPay;
     @BindView(R.id.cb_fanli)
-    RadioButton cbFanli;
+    CheckBox cbFanli;
     @BindView(R.id.tv_rest_money)
     TextView tvRestMoney;
     @BindView(R.id.tv_userd_money)
@@ -183,6 +184,12 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         cbFanli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+
+                if (checked) {
+                    isuseadfee = 1;
+                } else {
+                    isuseadfee = 0;
+                }
                 //选择了商家卡 并且选择了支付方式
                 if (payflag) {
                     btnBuy.setEnabled(true);
@@ -211,6 +218,8 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                 }
             }
         });
+        choseWeixinPay();
+
     }
 
 
@@ -231,15 +240,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                 购买商家卡之前的准备();
                 break;
             case R.id.rb_online_pay_weixin:
-                payflag = true;
-                if (!membercardId.isEmpty()) {
-                    btnBuy.setEnabled(true);
-                    btnBuy.setSelected(true);
-                }
-                payType = Constant.PAY_TYPE_WX;
-                rbOnlinePayWallet.setSelected(false);
-                rbOnlinePayWeixin.setSelected(true);
-                rbOnlinePayZhifubao.setSelected(false);
+                choseWeixinPay();
                 break;
             case R.id.rb_online_pay_zhifubao:
                 payflag = true;
@@ -253,6 +254,21 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                 rbOnlinePayZhifubao.setSelected(true);
                 break;
         }
+    }
+
+    /**
+     * 选中微信支付
+     */
+    private void choseWeixinPay() {
+        payflag = true;
+        if (!membercardId.isEmpty()) {
+            btnBuy.setEnabled(true);
+            btnBuy.setSelected(true);
+        }
+        payType = Constant.PAY_TYPE_WX;
+        rbOnlinePayWallet.setSelected(false);
+        rbOnlinePayWeixin.setSelected(true);
+        rbOnlinePayZhifubao.setSelected(false);
     }
 
     /**
@@ -284,10 +300,14 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                             if (qualificationBean != null && qualificationBean.getCards() != null) {
                                 list.clear();
                                 list.addAll(qualificationBean.getCards());
-                                adapter.notifyDataSetChanged();
                                 if (qualificationBean.getShops() != null) {
                                     tvMerchant.setText(qualificationBean.getShops().getShopName());
                                 }
+                                if (list.size()>0){
+                                    list.get(0).setIsselected(true);
+                                    获取卡信息(qualificationBean.getCards().get(0).getMemberCardid());
+                                }
+                                adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -310,6 +330,11 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
             adapter.notifyItemChanged(lastPosition);
             获取卡信息(qualificationBean.getCards().get(position).getMemberCardid());
             cbFanli.setChecked(false);
+        }
+
+        if (payflag){
+            btnBuy.setEnabled(true);
+            btnBuy.setSelected(true);
         }
 
     }
@@ -337,6 +362,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                                 llChoseCard.setVisibility(View.VISIBLE);
                                 tvRestMoney.setText(fanliBean.getBQDuserincome() + "元");
                                 tvUserdMoney.setText(fanliBean.getFreeUserincomebalance() + "元");
+                                cbFanli.setChecked(true);
                             } else {
                                 llChoseCard.setVisibility(View.GONE);
                                 ToastUtils.showShort(PurchaseQualificatioActivity.this, obj.optString("msg").toString());
@@ -395,6 +421,7 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
         params.put("userid", userInfoBean.getUserId());
         params.put("cardorderid", cardorderid);
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUYQUALIFICATIONCOMPLETE)
+                .params(params)
                 .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -402,9 +429,9 @@ public class PurchaseQualificatioActivity extends BaseActivity implements OnChan
                             String body = response.body();
                             JSONObject obj = new JSONObject(body);
                             ToastUtils.showShort(PurchaseQualificatioActivity.this, obj.optString("msg").toString());
-                            Intent intent = new Intent(PurchaseQualificatioActivity.this, MainActivity.class);
-                            intent.putExtra("position", 3);
-                            startActivity(intent);
+//                            Intent intent = new Intent(PurchaseQualificatioActivity.this, MainActivity.class);
+//                            intent.putExtra("position", 3);
+//                            startActivity(intent);
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -100,25 +100,25 @@ public class AddressListAdapter extends BaseAdapter {
             }
         });
 
-        holder.tvMineAddressCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    for (int i = 0; i < mData.size(); i++) {
-                        if (i == position) {
-                            if (bean.getIsDefault() == 1) {
-                                bean.setIsDefault(0);
-                            } else {
-                                bean.setIsDefault(1);
-                            }
-                        } else {
-                            mData.get(i).setIsDefault(0);
-                        }
-                    }
-                    mListener.onSetDefault(bean);
-                }
-            }
-        });
+//        holder.tvMineAddressCheck.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (null != mListener) {
+//                    for (int i = 0; i < mData.size(); i++) {
+//                        if (i == position) {
+//                            if (bean.getIsDefault() == 1) {
+//                                bean.setIsDefault(0);
+//                            } else {
+//                                bean.setIsDefault(1);
+//                            }
+//                        } else {
+//                            mData.get(i).setIsDefault(0);
+//                        }
+//                    }
+//                    mListener.onSetDefault(bean);
+//                }
+//            }
+//        });
 
         holder.tvMineAddressDelete.setOnClickListener(new View.OnClickListener() {
             @Override

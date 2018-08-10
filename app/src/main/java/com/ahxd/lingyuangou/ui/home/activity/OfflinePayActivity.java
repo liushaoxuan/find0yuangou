@@ -6,16 +6,21 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ahxd.lingyuangou.MaoApplication;
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.base.BaseActivity;
+import com.ahxd.lingyuangou.bean.PayBusinessCardBean;
+import com.ahxd.lingyuangou.bean.UserInfoBean;
 import com.ahxd.lingyuangou.constant.Constant;
+import com.ahxd.lingyuangou.constant.HostUrl;
 import com.ahxd.lingyuangou.ui.home.contract.IOfflinePayContract;
 import com.ahxd.lingyuangou.ui.home.presenter.OfflinePayPresenter;
 import com.ahxd.lingyuangou.utils.L;
@@ -23,12 +28,20 @@ import com.ahxd.lingyuangou.utils.PayResult;
 import com.ahxd.lingyuangou.utils.SPUtils;
 import com.ahxd.lingyuangou.utils.ToastUtils;
 import com.ahxd.lingyuangou.utils.UserUtils;
+import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
 import com.bumptech.glide.Glide;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -67,15 +80,26 @@ public class OfflinePayActivity extends BaseActivity implements IOfflinePayContr
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
     private OfflinePayPresenter mPresenter;
+    @BindView(R.id.rl_shangjiaka)
+    RelativeLayout rlShangjiaka;
+    @BindView(R.id.rb_offline_pay_sjk)
+    ImageView rbOfflinePaySjk;
+    @BindView(R.id.tv_offline_pay_sjk_money)
+    TextView paySjk;
 
     private String mShopId;
     private float mAdRate;
     private float mMoneyRate;
     private int mPayType = 1; //1余额2微信3支付宝
+    private UserInfoBean userInfoBean;
+
+    private PayBusinessCardBean payBusinessCardBean;
 
     @Override
     protected void initView() {
         super.initView();
+        String data = (String) SPUtils.get(this, Constant.SP_USERINFO, "");
+        userInfoBean = JSON.parseObject(data.toString(), UserInfoBean.class);
         setToolBarTitle("优惠买单");
         rbOfflinePayWallet.setSelected(true);
     }
@@ -114,6 +138,7 @@ public class OfflinePayActivity extends BaseActivity implements IOfflinePayContr
         mShopId = getIntent().getStringExtra("shopId");
         mPresenter = new OfflinePayPresenter(this);
         mPresenter.getOfflinePayDetail(UserUtils.getToken(), mShopId);
+        getShopCard();
     }
 
     @Override
@@ -181,6 +206,12 @@ public class OfflinePayActivity extends BaseActivity implements IOfflinePayContr
         finish();
     }
 
+    @Override
+    public void showSjk(String msg) {
+        ToastUtils.showShort(this, msg);
+        finish();
+    }
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -210,28 +241,54 @@ public class OfflinePayActivity extends BaseActivity implements IOfflinePayContr
         }
     };
 
-    @OnClick({R.id.rb_recharge_weixin, R.id.rb_recharge_zhifubao, R.id.rb_offline_pay_wallet, R.id.btn_confirm})
+    @OnClick({R.id.rb_recharge_weixin, R.id.rb_recharge_zhifubao, R.id.rb_offline_pay_wallet, R.id.rb_offline_pay_sjk, R.id.btn_confirm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            //微信支付
             case R.id.rb_recharge_weixin:
                 mPayType = 2;
                 rbOfflinePayWallet.setSelected(false);
                 rbRechargeWeixin.setSelected(true);
                 rbRechargeZhifubao.setSelected(false);
+                rbOfflinePaySjk.setSelected(false);
                 break;
+            //支付宝支付
             case R.id.rb_recharge_zhifubao:
                 mPayType = 3;
                 rbOfflinePayWallet.setSelected(false);
                 rbRechargeWeixin.setSelected(false);
                 rbRechargeZhifubao.setSelected(true);
+                rbOfflinePaySjk.setSelected(false);
                 break;
+            //余额支付
             case R.id.rb_offline_pay_wallet:
                 mPayType = 1;
                 rbOfflinePayWallet.setSelected(true);
                 rbRechargeWeixin.setSelected(false);
                 rbRechargeZhifubao.setSelected(false);
+                rbOfflinePaySjk.setSelected(false);
+                break;
+            //商家卡支付
+            case R.id.rb_offline_pay_sjk:
+                mPayType = 4;
+                rbOfflinePaySjk.setSelected(true);
+                rbOfflinePayWallet.setSelected(false);
+                rbRechargeWeixin.setSelected(false);
+                rbRechargeZhifubao.setSelected(false);
                 break;
             case R.id.btn_confirm:
+                if (mPayType == 4) {
+                    String money = etMoney.getText().toString().trim();
+                    if (money.isEmpty()){
+                        ToastUtils.showShort(this, "请输入金额");
+                        break;
+                    }
+                    double paymoney = Double.parseDouble(money);
+                    if (paymoney > payBusinessCardBean.getUserCardBalance()) {
+                        ToastUtils.showShort(this, "卡上余额不足");
+                        break;
+                    }
+                }
                 if (validate()) {
                     mPresenter.payOfflineOrder((String) SPUtils.get(this, Constant.KEY_TOKEN, ""),
                             mShopId, mPayType, etMoney.getText().toString().trim());
@@ -247,5 +304,41 @@ public class OfflinePayActivity extends BaseActivity implements IOfflinePayContr
         } else {
             return true;
         }
+    }
+
+    /**
+     * 获取结算页面的会员商家卡信息
+     */
+    private void getShopCard() {
+        HttpParams params = new HttpParams();
+        if (userInfoBean==null){
+            userInfoBean = new UserInfoBean();
+        }
+        int userid = userInfoBean.getUserId();
+        params.put("token", (String) SPUtils.get(this, Constant.KEY_TOKEN, ""));
+        params.put("userid", userid);
+        params.put("shopid", mShopId);
+        OkGo.<String>get(HostUrl.URL_GETUSERSJCARD)
+                .params(params)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        String body = response.body();
+                        try {
+                            JSONObject obj = new JSONObject(body);
+                            List<PayBusinessCardBean> array = JSON.parseArray(obj.optString("data"), PayBusinessCardBean.class);
+                            if (array!=null && array.size() > 0) {
+                                payBusinessCardBean = array.get(0);
+                                paySjk.setText("(" + payBusinessCardBean.getUserCardBalance() + ")");
+                                rlShangjiaka.setVisibility(View.VISIBLE);
+                            } else {
+                                rlShangjiaka.setVisibility(View.GONE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getSimpleName(), e.getMessage());
+                        }
+                    }
+                });
     }
 }

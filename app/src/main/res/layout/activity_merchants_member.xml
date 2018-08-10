@@ -8,23 +8,17 @@
 
     <include layout="@layout/layout_tool_bar" />
 
-    <android.support.v4.widget.NestedScrollView
+    <include layout="@layout/layout_merchants" />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/color_tab_normal" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-
-            <include layout="@layout/layout_merchants" />
-
-            <include
-                layout="@layout/layout_member_order"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp" />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

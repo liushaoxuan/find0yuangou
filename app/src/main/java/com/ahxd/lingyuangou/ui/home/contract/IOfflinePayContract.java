@@ -19,6 +19,7 @@ public interface IOfflinePayContract {
         public void showZhifubaoPay(String data);
 
         public void showWalletPay(String msg);
+        void showSjk(String msg);
     }
 
     public interface IOfflinePayPresenter {
@@ -47,6 +48,8 @@ public interface IOfflinePayContract {
             public void onZhifubaoPay(String data) {}
 
             public void onWalletPay(String msg) {}
+
+            public void onSjk(String msg){}
         }
     }
 

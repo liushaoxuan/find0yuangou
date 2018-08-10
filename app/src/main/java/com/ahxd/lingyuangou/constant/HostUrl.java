@@ -355,4 +355,9 @@ public class HostUrl {
      */
     public static final String URL_UCERNTER_PAYPARAMETER = HOST + "api/pay/payparameter";
 
+    /**
+     * 获取结算页面的会员商家卡信息
+     */
+    public static final String URL_GETUSERSJCARD = HOST + "api/shopping/getusersjcard";
+
 }

@@ -43,7 +43,6 @@ import com.ahxd.lingyuangou.widget.CircleImageView;
 import com.ahxd.lingyuangou.widget.PicTextRightItem;
 import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
@@ -113,6 +112,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
     PicTextRightItem ptrMineContactUs;
     @BindView(R.id.ptr_mine_shop_stay)
     PicTextRightItem ptrMineShopStay;
+    @BindView(R.id.ll_new_module)
+    LinearLayout newModule;
     private MinePresenter mPresenter;
     private int mApplyStatus = -9;
     private String mFailReason;
@@ -157,7 +158,6 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
 
     @Override
     protected void initData() {
-        getConfig();
         mPresenter = new MinePresenter(this);
 
 //        mPresenter.getMyProfile();
@@ -174,6 +174,7 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
     @Override
     public void showProfile(JSONObject data) {
         this.data = data;
+        SPUtils.put(getActivity(),Constant.SP_USERINFO,data);
         userInfoBean = JSON.parseObject(data.toString(), UserInfoBean.class);
         if (!UserUtils.isLogin()) {
             tvMinePersonName.setVisibility(View.GONE);
@@ -218,6 +219,7 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
                 .placeholder(R.mipmap.ic_mine_person_header_normal)
                 .error(R.mipmap.ic_mine_person_header_normal)
                 .into(ivMinePersonHeader);
+        getConfig();
     }
 
     @Override
@@ -250,7 +252,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //消息记录
             case R.id.iv_mine_message:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent messageIntent = new Intent(mContext, MessageListActivity.class);
@@ -272,7 +275,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //我的钱包
             case R.id.ll_mine_wallet:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent walletIntent = new Intent(mContext, WalletActivity.class);
@@ -281,7 +285,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //我的订单
             case R.id.ll_mine_order:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent orderIntent = new Intent(mContext, OrderListActivity.class);
@@ -290,7 +295,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //我的收藏
             case R.id.ll_mine_favorite:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent favoriteIntent = new Intent(mContext, FavoriteActivity.class);
@@ -299,7 +305,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //推广中心
             case R.id.ll_mine_spread:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent spreadIntent = new Intent(mContext, ExtensionCenterActivity.class);
@@ -308,7 +315,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //我的名片
             case R.id.ptr_mine_card:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent businessCardIntent = new Intent(mContext, MyBusinessCardActivity.class);
@@ -317,7 +325,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //我的资料
             case R.id.ptr_mine_profile:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent personalIntent = new Intent(mContext, PersonalInfoActivity.class);
@@ -326,7 +335,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //我的地址
             case R.id.ptr_mine_location:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent addressIntent = new Intent(mContext, AddressListActivity.class);
@@ -335,7 +345,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //营销人中心
             case R.id.ptr_mine_market_center:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 if (this.data != null) {
@@ -367,7 +378,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //商店入驻
             case R.id.ptr_mine_shop_stay:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 switch (mApplyStatus) {
@@ -390,7 +402,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //购买资格
             case R.id.ptr_mine_purchase_qualificatio:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent purchaseQualificatioIntent = new Intent(mContext, PurchaseQualificatioActivity.class);
@@ -401,7 +414,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //商家充值卡
             case R.id.ptr_mine_merchant_charging_card:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent toUpIntent = new Intent(mContext, MerchantsTopUpActivity.class);
@@ -412,7 +426,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //商家会员
             case R.id.ptr_mine_merchant_members:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent memberIntent = new Intent(mContext, MerchantsMemberActivity.class);
@@ -423,7 +438,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //商家报表
             case R.id.ptr_mine_business_report:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent reportIntent = new Intent(mContext, MerchantsReportActivity.class);
@@ -435,7 +451,8 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
             //商家订单
             case R.id.ptr_mine_business_order:
                 if (!UserUtils.isLogin()) {
-                    ToastUtils.showShort(getActivity(), "请先登录");
+                    Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(loginIntent, Constant.REQ_LOGIN);
                     return;
                 }
                 Intent MerchantsorderIntent = new Intent(mContext, MerchantsOrderActivity.class);
@@ -462,11 +479,14 @@ public class MineFragment extends BaseFragment implements IMineContract.IMineVie
                             int statu = obj.optJSONObject("data").optInt("fieldValue");
                             //启用新模块
                             if (statu == 1) {
-                                ptrMinePurchaseQualificatio.setVisibility(View.VISIBLE);
-                                ptrMineMerchantChargingCard.setVisibility(View.VISIBLE);
-                                ptrMineMerchantMembers.setVisibility(View.VISIBLE);
-                                ptrMineBusinessReport.setVisibility(View.VISIBLE);
-                                ptrMineBusinessOrder.setVisibility(View.VISIBLE);
+                                newModule.setVisibility(View.VISIBLE);
+                                if (userInfoBean.getIsMarketing()==1){
+                                    ptrMineMerchantMembers.setVisibility(View.VISIBLE);
+                                    ptrMineBusinessReport.setVisibility(View.VISIBLE);
+                                    ptrMineBusinessOrder.setVisibility(View.VISIBLE);
+                                }
+                            }else {
+                                newModule.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

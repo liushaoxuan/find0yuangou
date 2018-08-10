@@ -1,83 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp">
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="@color/color_tab_normal" />
-    <TextView
-        android:id="@+id/tv_position"
+        android:layout_height="wrap_content">
+        <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        tools:text="序号"/>
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="@color/color_tab_normal"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
 
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="@color/color_tab_normal"/>
+        <TextView
+            android:id="@+id/tv_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            tools:text="姓名:" />
 
-    <TextView
-        android:id="@+id/tv_userPhone"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:gravity="center"
-        tools:text="手机号" />
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="@color/color_tab_normal"/>
+        <TextView
+            android:id="@+id/tv_userPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            tools:text="手机号:" />
 
-    <TextView
-        android:id="@+id/tv_userName"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center"
-        tools:text="姓名"/>
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="@color/color_tab_normal"/>
-
-    <TextView
-        android:id="@+id/tv_consumption_amount"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center"
-        tools:text="消费金额"/>
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="@color/color_tab_normal"/>
-
-    <TextView
-        android:id="@+id/tv_cart_amount"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center"
-        tools:text="卡金额"/>
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="@color/color_tab_normal"/>
     </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/tv_consumption_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                tools:text="消费金额" />
+
+            <TextView
+                android:id="@+id/tv_cart_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                tools:text="卡金额" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
     <View
         android:layout_width="wrap_content"
         android:layout_height="1px"
-        android:background="@color/color_tab_normal"/>
+        android:layout_marginTop="10dp"
+        android:background="@color/color_tab_normal" />
 </LinearLayout>

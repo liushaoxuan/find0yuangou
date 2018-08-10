@@ -49,6 +49,9 @@ public class OfflinePayModel implements IOfflinePayContract.IOfflinePayModel {
                             case 3:
                                 callback.onZhifubaoPay(root.optString(Constant.RESP_DATA));
                                 break;
+                            case 4:
+                                callback.onSjk(root.optString(Constant.RESP_MSG));
+                                break;
                         }
                     }
                 });

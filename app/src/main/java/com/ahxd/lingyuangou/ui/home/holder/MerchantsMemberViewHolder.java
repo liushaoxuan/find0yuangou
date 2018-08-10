@@ -17,8 +17,6 @@ import butterknife.BindView;
  */
 
 public class MerchantsMemberViewHolder extends mBaseViewHolder<MerchantsMemberBean> {
-    @BindView(R.id.tv_position)
-    TextView tvPosition;
     @BindView(R.id.tv_userPhone)
     TextView tvUserPhone;
     @BindView(R.id.tv_userName)
@@ -35,11 +33,10 @@ public class MerchantsMemberViewHolder extends mBaseViewHolder<MerchantsMemberBe
     @Override
     public void setData(List<MerchantsMemberBean> data, int position) {
         MerchantsMemberBean item = data.get(position);
-        tvPosition.setText((position + 1) + "");
-        tvUserName.setText(item.getUsername());
-        tvUserPhone.setText(item.getPhone());
-        tvConsumptionAmount.setText(item.getTotalMoney() + "");
-        tvCartAmount.setText(item.getUserCardMoney() + "");
+        tvUserName.setText("姓名:" + item.getUsername());
+        tvUserPhone.setText("手机号:" + item.getPhone());
+        tvConsumptionAmount.setText("消费金额:" + item.getTotalMoney() + "");
+        tvCartAmount.setText("卡金额:" + item.getUserCardMoney() + "");
 
 
     }

@@ -109,4 +109,9 @@
     </style>
     <!--编辑个人资料Content-->
 
+    <!--cb style-->
+
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/cb_selector</item>
+    </style>
 </resources>

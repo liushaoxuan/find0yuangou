@@ -30,11 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 商家会员
  */
 public class MerchantsMemberActivity extends BaseActivity {
+
 
     @BindView(R.id.tv_right)
     TextView tvRight;
@@ -50,13 +52,8 @@ public class MerchantsMemberActivity extends BaseActivity {
     TextView tvRebate;
     @BindView(R.id.tv_integral)
     TextView tvIntegral;
-    @BindView(R.id.rv_member_recyclerview)
-    RecyclerView rvMemberRecyclerview;
-    @BindView(R.id.tv_member_total_cost)
-    TextView tvMemberTotalCost;
-    @BindView(R.id.tv_member_cart_amount)
-    TextView tvMemberCartAmount;
-
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerview;
     private List<MerchantsMemberBean> datas;
     private MerchantsMemberAdapter adapter;
 
@@ -73,15 +70,14 @@ public class MerchantsMemberActivity extends BaseActivity {
     protected void initData() {
         datas = new ArrayList<>();
         setToolBarTitle("商家会员");
-        adapter = new MerchantsMemberAdapter(this,datas);
-        rvMemberRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        SmothScrollUtil.ScrollSmooth_LinearLayout(this,rvMemberRecyclerview);
-        rvMemberRecyclerview.setAdapter(adapter);
+        adapter = new MerchantsMemberAdapter(this, datas);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.setAdapter(adapter);
         initExtras();
-        if (userInfoBean!=null){
+        if (userInfoBean != null) {
             GlideApp.with(this).load(userInfoBean.getUserPhoto()).into(ivUserImg);
             tvName.setText(userInfoBean.getUserName());
-            tvRebate.setText(userInfoBean.getUserIncome()+"元");
+            tvRebate.setText(userInfoBean.getUserIncome() + "元");
             tvIntegral.setText(userInfoBean.getUserScore());
             获取商家会员();
         }
@@ -97,9 +93,9 @@ public class MerchantsMemberActivity extends BaseActivity {
     /**
      * 获取个人中心带过来的用户数据
      */
-    private void initExtras(){
+    private void initExtras() {
         Bundle extras = getIntent().getExtras();
-        if (extras!=null){
+        if (extras != null) {
             userInfoBean = (UserInfoBean) extras.get("userInfoBean");
         }
     }
@@ -107,24 +103,29 @@ public class MerchantsMemberActivity extends BaseActivity {
     /**
      * 获取商家名下所有会员
      */
-    private void 获取商家会员(){
+    private void 获取商家会员() {
         HttpParams params = new HttpParams();
         params.put("token", (String) SPUtils.get(this, Constant.KEY_TOKEN, ""));
-        params.put("shopid",userInfoBean.getUserId());
-        OkGo.<String>post(HostUrl.URL_UCERNTER_GETSHOPMEMBERLIST)
+        params.put("shopid", userInfoBean.getUserId());
+        OkGo.<String>get(HostUrl.URL_UCERNTER_GETSHOPMEMBERLIST)
                 .params(params)
-                .execute(new MyStringCallBack(this){
+                .execute(new MyStringCallBack(this) {
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                    }
+
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
                             String body = response.body();
                             JSONObject obj = new JSONObject(body);
-                            List<MerchantsMemberBean> templist = JSON.parseArray(obj.optString("data").toString(),MerchantsMemberBean.class);
-                            if (templist!=null){
+                            List<MerchantsMemberBean> templist = JSON.parseArray(obj.optString("data").toString(), MerchantsMemberBean.class);
+                            if (templist != null) {
                                 datas.clear();
                                 datas.addAll(templist);
                                 adapter.notifyDataSetChanged();
-                                计算总金额();
+//                                计算总金额();
                             }
 
                         } catch (JSONException e) {
@@ -134,18 +135,25 @@ public class MerchantsMemberActivity extends BaseActivity {
                 });
     }
 
-    /**
-     * 计算总消费金额和卡金额
-     */
-    private void 计算总金额(){
-        double total = 0;
-        double cartotal = 0;
-        for (MerchantsMemberBean item:datas) {
-            total = total+ item.getTotalMoney();
-            cartotal = cartotal+item.getUserCardMoney();
-        }
+//    /**
+//     * 计算总消费金额和卡金额
+//     */
+//    private void 计算总金额() {
+//        double total = 0;
+//        double cartotal = 0;
+//        for (MerchantsMemberBean item : datas) {
+//            total = total + item.getTotalMoney();
+//            cartotal = cartotal + item.getUserCardMoney();
+//        }
+//
+//        tvMemberTotalCost.setText(total + "");
+//        tvMemberCartAmount.setText(cartotal + "");
+//    }
 
-        tvMemberTotalCost.setText(total+"");
-        tvMemberCartAmount.setText(cartotal+"");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

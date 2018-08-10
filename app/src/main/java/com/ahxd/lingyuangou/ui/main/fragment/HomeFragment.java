@@ -345,8 +345,12 @@ public class HomeFragment extends BaseFragment implements IHomeContract.IHomeVie
     protected void initData() {
         super.initData();
         L.e("HomeFragment -> initData");
-        mPresenter = new HomePresenter(this);
-        mPresenter.getHomeData();
+        try {
+            mPresenter = new HomePresenter(this);
+            mPresenter.getHomeData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -490,8 +494,6 @@ public class HomeFragment extends BaseFragment implements IHomeContract.IHomeVie
 
         @Override
         public void onReceive(Context context, Intent intent) {
-//            mAdapter.setLocationRefresh();
-//            mPresenter.getHomeData();
             if (mTv_location != null) {
                 Object city = SPUtils.get(mContext, Constant.KEY_CITY, "定位中");
                 mTv_location.setText(city == null ? "定位中" : city.toString());

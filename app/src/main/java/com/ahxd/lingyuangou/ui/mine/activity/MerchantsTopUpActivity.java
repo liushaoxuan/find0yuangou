@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -118,7 +119,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
     @BindView(R.id.ll_shengyu)
     RelativeLayout llShengyu;
     @BindView(R.id.cb_fanli)
-    RadioButton rbFanli;
+    CheckBox rbFanli;
 
 
     private PurchaseQualificatioCardAdapter adapter;
@@ -185,6 +186,14 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         rbFanli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+
+                if (checked) {
+                    isuseadfee = 1;
+                } else {
+                    isuseadfee = 0;
+                }
+
+
                 //选择了商家卡 并且选择了支付方式
                 if (ischeckedCard() && payflag) {
                     btnReportTopUp.setEnabled(true);
@@ -241,6 +250,8 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
             tvRebate.setText(userInfoBean.getUserIncome() + "元");
             tvIntegral.setText(userInfoBean.getUserScore());
         }
+
+        choseWeixinPay();
     }
 
     @Override
@@ -260,15 +271,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                 购买商家卡之前的准备();
                 break;
             case R.id.rb_online_pay_weixin:
-                payflag = true;
-                if (ischeckedCard()) {
-                    btnReportTopUp.setEnabled(true);
-                    btnReportTopUp.setSelected(true);
-                }
-                payType = Constant.PAY_TYPE_WX;
-                rbOnlinePayWallet.setSelected(false);
-                rbOnlinePayWeixin.setSelected(true);
-                rbOnlinePayZhifubao.setSelected(false);
+                choseWeixinPay();
                 break;
             case R.id.rb_online_pay_zhifubao:
                 payflag = true;
@@ -282,6 +285,21 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                 rbOnlinePayZhifubao.setSelected(true);
                 break;
         }
+    }
+
+    /**
+     * 选中微信支付
+     */
+    private void choseWeixinPay() {
+        payflag = true;
+        if (ischeckedCard()) {
+            btnReportTopUp.setEnabled(true);
+            btnReportTopUp.setSelected(true);
+        }
+        payType = Constant.PAY_TYPE_WX;
+        rbOnlinePayWallet.setSelected(false);
+        rbOnlinePayWeixin.setSelected(true);
+        rbOnlinePayZhifubao.setSelected(false);
     }
 
     /**
@@ -313,6 +331,12 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                             if (tempList != null) {
                                 cardList.clear();
                                 cardList.addAll(tempList);
+                                if (cardList.size()>0){
+                                    cardList.get(0).setIsselected(true);
+                                    membercardId = cardList.get(0).getMemberCardid();
+                                    businessCardBean = cardList.get(0);
+                                    获取卡信息();
+                                }
                                 adapter.notifyDataSetChanged();
                             }
 
@@ -409,6 +433,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                                 llReport.setVisibility(View.VISIBLE);
                                 tvReportRestMoney.setText(fanliBean.getBQDuserincome() + "元");
                                 tvReportUserdMoney.setText(fanliBean.getFreeUserincomebalance() + "元");
+                                rbFanli.setChecked(true);
                             } else {
                                 llReport.setVisibility(View.GONE);
                                 ToastUtils.showShort(MerchantsTopUpActivity.this, obj.optString("msg").toString());
@@ -467,6 +492,7 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
         params.put("userid", userInfoBean.getUserId());
         params.put("cardorderid", cardorderid);
         OkGo.<String>get(HostUrl.URL_UCERNTER_BUYUSERCARDCOMPLETE)
+                .params(params)
                 .execute(new MyStringCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -474,9 +500,9 @@ public class MerchantsTopUpActivity extends BaseActivity implements OnChangeItem
                             String body = response.body();
                             JSONObject obj = new JSONObject(body);
                             ToastUtils.showShort(MerchantsTopUpActivity.this, obj.optString("msg").toString());
-                            Intent intent = new Intent(MerchantsTopUpActivity.this, MainActivity.class);
-                            intent.putExtra("position", 3);
-                            startActivity(intent);
+//                            Intent intent = new Intent(MerchantsTopUpActivity.this, MainActivity.class);
+//                            intent.putExtra("position", 3);
+//                            startActivity(intent);
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
