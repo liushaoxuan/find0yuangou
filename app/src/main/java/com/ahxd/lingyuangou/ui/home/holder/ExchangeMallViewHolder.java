@@ -3,10 +3,14 @@ package com.ahxd.lingyuangou.ui.home.holder;
 import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ahxd.lingyuangou.R;
 import com.ahxd.lingyuangou.bean.HomeGiftBean;
+import com.ahxd.lingyuangou.ui.home.activity.ExchangeGiftActivity;
 import com.ahxd.lingyuangou.ui.home.activity.GiftGoodDetailActivity;
+import com.ahxd.lingyuangou.ui.mine.activity.LoginActivity;
+import com.ahxd.lingyuangou.utils.UserUtils;
 import com.ahxd.lingyuangou.widget.HomeBigGoodView;
 import com.ahxd.lingyuangou.widget.HomeSmallGoodView;
 
@@ -31,6 +35,9 @@ public class ExchangeMallViewHolder extends HomeBaseViewHolder<HomeGiftBean> {
     HomeSmallGoodView goodForth;
     @BindView(R.id.ll_home_gift_bottom)
     LinearLayout llHomeGiftBottom;
+    //积分商城
+    @BindView(R.id.tv_jifenshangcheng)
+    TextView tvshangcheng;
 
     private List<HomeGiftBean> mGiftData;
 
@@ -85,6 +92,19 @@ public class ExchangeMallViewHolder extends HomeBaseViewHolder<HomeGiftBean> {
                     intent.putExtra("goodsId", mGiftData.get(3).getGoodsId());
                     intent.putExtra("goodsName", mGiftData.get(3).getGoodsName());
                     mContext.startActivity(intent);
+                }
+            });
+
+            tvshangcheng.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!UserUtils.isLogin()) {
+                        Intent intent2 = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent2);
+                    } else {
+                        Intent exchangeGiftIntent = new Intent(mContext, ExchangeGiftActivity.class);
+                        mContext.startActivity(exchangeGiftIntent);
+                    }
                 }
             });
         }
